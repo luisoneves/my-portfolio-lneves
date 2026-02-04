@@ -21,7 +21,7 @@ git clone https://github.com/luisoneves/my-portfolio-lneves.git
 ```
 
 2. **Abra o projeto:**
-Você pode simplesmente abrir o arquivo `index.html` no seu navegador. 
+Você pode simplesmente abrir o arquivo `index.html` no seu navegador.
 
 **Recomendado:** Para garantir que os Módulos JavaScript funcionem corretamente (evitando erros de CORS), use uma extensão de "Live Server" no VSCode ou um servidor local simples, como:
 
@@ -34,23 +34,19 @@ Você pode simplesmente abrir o arquivo `index.html` no seu navegador.
 A estrutura foi reorganizada para facilitar a manutenção e escalabilidade:
 
 ```
-├── assets/
-│   ├── images/       # Imagens e ícones
+├── images/
+│   └── favicon/      # Favicons e ícones
+├── public/
+│   ├── favicon/      # Favicons públicos
+│   └── images/       # Imagens públicas
+├── src/
 │   ├── scripts/      # Javascript Modular (ES6)
 │   │   └── main.js   # Ponto de entrada
-│   ├── sections/     # Seções autocontidas (HTML/CSS/JS por seção)
-│   │   ├── header/
-│   │   ├── hero/
-│   │   ├── experiencia/
-│   │   ├── projetos/
-│   │   ├── cta/
-│   │   ├── footer/
-│   │   └── meta/
 │   └── styles/       # CSS Nativo (sem pre-processadores)
-│       ├── base/     # Reset, Tokens, Tipografia
-│       ├── layouts/  # Container, Grid
-│       ├── utilities/# Acessibilidade, Helpers
-│       └── main.css  # Ponto de entrada CSS
+│       ├── base.css      # Reset, Tokens, Tipografia
+│       ├── components.css# Componentes (Buttons, Cards, Tags)
+│       ├── layout.css    # Grid, Sections, Header, Footer
+│       └── main.css      # Ponto de entrada CSS
 ├── index.html        # Página principal
 └── README.md         # Documentação
 ```
