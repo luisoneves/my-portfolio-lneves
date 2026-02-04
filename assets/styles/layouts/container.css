@@ -1,0 +1,20 @@
+/**
+ * Container Layout
+ */
+
+.container {
+    width: min(var(--container-width), 92vw);
+    margin: 0 auto;
+}
+
+@media (max-width: 720px) {
+    .container {
+        width: 90vw;
+    }
+}
+
+@media (max-width: 1024px) and (min-width: 901px) {
+    .container {
+        width: 94vw;
+    }
+}

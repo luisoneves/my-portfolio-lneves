@@ -1,26 +1,31 @@
 <!DOCTYPE html>
 <html lang="pt-br">
+
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no, viewport-fit=cover">
+
+  <!-- Preload Critical Resources -->
+  <link rel="preload"
+    href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap"
+    as="style">
+  <link rel="dns-prefetch" href="https://fonts.googleapis.com">
+  <link rel="dns-prefetch" href="https://fonts.gstatic.com">
 
   <!-- CSS -->
-  <link rel="stylesheet" href="./src/styles/global.css">
+  <link rel="stylesheet" href="./assets/styles/main.css">
 
   <!-- Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link
     href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap"
-    rel="stylesheet"
-  >
+    rel="stylesheet">
 
   <!-- Primary SEO -->
   <title>Luis Neves | Desenvolvedor Fullstack e Front-end</title>
-  <meta
-    name="description"
-    content="Luis Neves é desenvolvedor fullstack e front-end especializado em interfaces web performáticas, acessíveis e bem estruturadas. HTML, CSS, JavaScript e SEO técnico."
-  >
+  <meta name="description"
+    content="Luis Neves é desenvolvedor fullstack e front-end especializado em interfaces web performáticas, acessíveis e bem estruturadas. HTML, CSS, JavaScript e SEO técnico.">
   <meta name="robots" content="index, follow">
   <meta name="author" content="Luis Neves">
 
@@ -28,25 +33,24 @@
   <link rel="canonical" href="https://www.luisneves.dev/">
 
   <!-- Theme -->
+  <!-- Dynamic update via JS -->
   <meta name="theme-color" content="#d76f30">
-  <meta name="color-scheme" content="light">
+  <meta name="color-scheme" content="light dark">
 
   <!-- Favicons -->
-  <link rel="icon" href="/src/img/favico/favico.svg" type="image/svg+xml">
-  <link rel="icon" href="/src/img/favico/favicon-32.png" type="image/png" sizes="32x32">
-  <link rel="apple-touch-icon" href="/src/img/favico/favicon-180.png" sizes="180x180">
+  <link rel="icon" href="./assets/images/favico/favicon.png" type="image/svg+xml">
+  <link rel="icon" href="./assets/images/favico/favicon-32.png" type="image/png" sizes="32x32">
+  <link rel="apple-touch-icon" href="./assets/images/favico/favicon.ico" sizes="180x180">
 
   <!-- Open Graph -->
   <meta property="og:type" content="website">
   <meta property="og:site_name" content="Luis Neves">
   <meta property="og:title" content="Luis Neves | Desenvolvedor Fullstack e Front-end">
-  <meta
-    property="og:description"
-    content="Interfaces web claras, acessíveis e performáticas. Especialista em HTML, CSS, JavaScript e SEO técnico."
-  >
+  <meta property="og:description"
+    content="Interfaces web claras, acessíveis e performáticas. Especialista em HTML, CSS, JavaScript e SEO técnico.">
   <meta property="og:url" content="https://www.luisneves.dev/">
   <meta property="og:locale" content="pt_BR">
-  <meta property="og:image" content="https://www.luisneves.dev/src/img/og-image.png">
+  <meta property="og:image" content="https://www.luisneves.dev/assets/images/og-image.png">
   <meta property="og:image:type" content="image/png">
   <meta property="og:image:width" content="1200">
   <meta property="og:image:height" content="630">
@@ -55,21 +59,23 @@
   <!-- Twitter -->
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content="Luis Neves | Desenvolvedor Fullstack e Front-end">
-  <meta
-    name="twitter:description"
-    content="Interfaces web claras, acessíveis e performáticas."
-  >
-  <meta name="twitter:image" content="https://www.luisneves.dev/src/img/og-image.png">
+  <meta name="twitter:description" content="Interfaces web claras, acessíveis e performáticas.">
+  <meta name="twitter:image" content="https://www.luisneves.dev/assets/images/og-image.png">
   <meta name="twitter:creator" content="@luisneves">
-  <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+
+  <!-- Module Script -->
+  <script type="module" src="./assets/scripts/main.js" defer></script>
 </head>
 
 <body>
   <a class="skip-link" href="#conteudo">Pular para o conteúdo</a>
 
-  <header class="site-header">
+  <!-- SECTION: Header (assets/sections/header) -->
+  <header class="site-header" role="banner">
     <div class="container header-inner">
-      <a class="logo" href="#inicio" aria-label="Voltar ao início">LN.</a>
+      <a class="logo" href="#inicio" aria-label="Voltar ao início">
+        <img id="logo-navbar" src="./assets/images/logo-LN_ligthmode.png" alt="LN" width="50" height="50">
+      </a>
 
       <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="menu" aria-label="Abrir menu">
         Menu
@@ -81,47 +87,49 @@
         <a href="#projetos">Projetos</a>
         <a href="#contato">Contato</a>
       </nav>
+
+      <!-- Botão Dark Mode -->
+      <button id="dark-mode-toggle" class="dark-mode-btn" aria-label="Alternar tema">
+        <span class="theme-icon" aria-hidden="true">◑</span>
+      </button>
     </div>
-    <button id="dark-mode-toggle" class="p-2 rounded">
-  <span class="dark:hidden">🌙</span>
-  <span class="hidden dark:inline">☀️</span>
-</button>
   </header>
 
-  <main id="conteudo">
-    <section class="hero" id="inicio">
-      <div class="container hero-grid">
-        <div class="hero-text">
+  <main id="conteudo" role="main">
+    <!-- SECTION: Hero (assets/sections/hero) -->
+    <section class="hero" id="inicio" aria-label="Introdução">
+      <div class="container hero__grid">
+        <div class="hero__text">
           <p class="eyebrow">Desenvolvedor Fullstack</p>
           <h1>Desenvolvimento Web performático.</h1>
           <p class="lead">
             Olá, sou Luis Neves. Trabalho com HTML, CSS e JavaScript para criar
             experiências digitais elegantes, rápidas e fáceis de usar.
           </p>
-          <div class="hero-actions">
+          <div class="hero__actions">
             <a class="btn primary" href="#projetos">Ver projetos</a>
             <a class="btn ghost" href="#contato">Falar comigo</a>
           </div>
-          <div class="hero-meta">
+          <div class="hero__meta">
             <span>Disponível no Brasil</span>
             <span>Disponível para freelas</span>
           </div>
         </div>
 
-        <div class="hero-card">
+        <div class="hero__card">
           <div class="stat">
-            <span class="stat-value">4+</span>
-            <span class="stat-label">Anos criando interfaces</span>
+            <span class="stat__value">4+</span>
+            <span class="stat__label">Anos criando interfaces</span>
           </div>
           <div class="stat">
-            <span class="stat-value">2</span>
-            <span class="stat-label">Projetos lançados</span>
+            <span class="stat__value">2</span>
+            <span class="stat__label">Projetos lançados</span>
           </div>
           <div class="stat">
-            <span class="stat-value">3</span>
-            <span class="stat-label">Focos principais</span>
+            <span class="stat__value">3</span>
+            <span class="stat__label">Focos principais</span>
           </div>
-          <ul class="tags">
+          <ul class="tags" aria-label="Habilidades principais">
             <li>Design System</li>
             <li>Landing Pages</li>
             <li>SEO</li>
@@ -130,18 +138,18 @@
       </div>
     </section>
 
-    <section class="section" id="sobre">
+    <!-- SECTION: Sobre (assets/sections/sobre) -->
+    <section class="section" id="sobre" aria-labelledby="sobre-titulo">
       <div class="container two-col">
         <div>
           <p class="eyebrow">Sobre</p>
-          <h2>Gosto de transformar ideias em produtos digitais acessíveis. Tenho capacidade de criar soluções eficientes e técnicas, escolhendo as melhores ferramentas para cada projeto.</h2>
-          <ul class="tags">
+          <h2 id="sobre-titulo">Gosto de transformar ideias em produtos digitais acessíveis. Tenho capacidade de criar
+            soluções eficientes e técnicas, escolhendo as melhores ferramentas para cada projeto.</h2>
+          <ul class="tags" aria-label="Competências técnicas">
             <li>Frameworks</li>
             <li>Deployment</li>
             <li>Versionamento</li>
             <li>Documentação</li>
-
-
           </ul>
         </div>
         <div>
@@ -155,7 +163,7 @@
             cada um, integrando frameworks quando necessário para garantir
             melhor performance, escalabilidade e manutenção.
           </p>
-          <ul class="list">
+          <ul class="list" aria-label="Áreas de foco">
             <li>UX writing e arquitetura de informação</li>
             <li>Layouts responsivos e acessibilidade</li>
             <li>Integração com APIs e CMSs</li>
@@ -164,17 +172,18 @@
       </div>
     </section>
 
-    <section class="section alt" id="experiencia">
+    <!-- SECTION: Experiência (assets/sections/experiencia) -->
+    <section class="section" id="experiencia" aria-labelledby="experiencia-titulo">
       <div class="container">
-        <div class="section-header">
+        <div class="section__header">
           <p class="eyebrow">Experiência</p>
         </div>
-        <h2>Caminho profissional focado no desenvolvimento.</h2>
+        <h2 id="experiencia-titulo">Caminho profissional focado no desenvolvimento.</h2>
         <div class="timeline">
           <article class="timeline-item">
             <header>
               <h3>Fullstack Developer · C4ts - Tecnologia e Inovação</h3>
-              <span>2022 — Atual</span>
+              <time datetime="2022">2022</time> — <span>Atual</span>
             </header>
             <p>
               Participo das escolhas técnicas e do desenvolvimento de landing pages e portais com componentes
@@ -184,17 +193,18 @@
           <article class="timeline-item">
             <header>
               <h3>Fullstack · Projetos autorais</h3>
-              <span>2022 — Atual</span>
+              <time datetime="2022">2022</time> — <span>Atual</span>
             </header>
             <p>
-              Projetos mais complexos e robustos usando Docker, CMS headless, Strapi, Turborepo, Makefiles e outras tecnologias
+              Projetos mais complexos e robustos usando Docker, CMS headless, Strapi, Turborepo, Makefiles e outras
+              tecnologias
               modernas para enriquecer minha visão do projeto como um todo.
             </p>
           </article>
           <article class="timeline-item">
             <header>
               <h3>Front-end · Freelancer</h3>
-              <span>2022 — Atual</span>
+              <time datetime="2022">2022</time> — <span>Atual</span>
             </header>
             <p>
               Criação de sites institucionais, sistemas internos e guias de estilo
@@ -203,8 +213,8 @@
           </article>
           <article class="timeline-item">
             <header>
-              <h3>Infraestrutura · FCN  - Faculdade Canção Nova </h3>
-              <span>2018 — 2020</span>
+              <h3>Infraestrutura · FCN - Faculdade Canção Nova</h3>
+              <time datetime="2018">2018</time> — <time datetime="2020">2020</time>
             </header>
             <p>
               Análise e manutenção de servidores, redes e sistemas internos da
@@ -213,8 +223,8 @@
           </article>
           <article class="timeline-item">
             <header>
-              <h3>Infraestrutura · INPE  - Instituto Nacional de Pesquisas Espaciais </h3>
-              <span>2008 — 2018</span>
+              <h3>Infraestrutura · INPE - Instituto Nacional de Pesquisas Espaciais</h3>
+              <time datetime="2008">2008</time> — <time datetime="2018">2018</time>
             </header>
             <p>
               Análise e manutenção de servidores, redes e sistemas internos da
@@ -225,12 +235,17 @@
       </div>
     </section>
 
-    <section class="section" id="projetos">
+    <!-- SECTION: Projetos (assets/sections/projetos) -->
+    <section class="section" id="projetos" aria-labelledby="projetos-titulo">
       <div class="container">
-        <div class="section-header">
+        <div class="section__header">
           <p class="eyebrow">Projetos</p>
         </div>
-        <h2>Seleção de trabalhos recentes.</h2>
+        <h2 id="projetos-titulo">Seleção de trabalhos recentes.</h2>
+
+        <!-- Indicador de scroll (mobile) -->
+        <p class="cards__hint" aria-hidden="true">← Arraste para ver mais →</p>
+
         <div class="cards">
           <article class="card">
             <h3>C4ts - Tecnologia e Inovação</h3>
@@ -238,7 +253,7 @@
               Landing page modular com páginas rápidas, layout editorial e foco em
               conversão.
             </p>
-            <a href="#contato" class="text-link">Solicitar detalhes C4ts</a>
+            <a href="#contato" class="text-link" aria-label="Detalhes sobre C4ts">Solicitar detalhes</a>
           </article>
           <article class="card">
             <h3>BeautyCare</h3>
@@ -246,7 +261,7 @@
               Website para captação de insights e levantamentos de dados reais
               para análise.
             </p>
-            <a href="#contato" class="text-link">Solicitar detalhes BeautyCare</a>
+            <a href="#contato" class="text-link" aria-label="Detalhes sobre BeautyCare">Solicitar detalhes</a>
           </article>
           <article class="card">
             <h3>Gestão de Capelas</h3>
@@ -254,32 +269,36 @@
               Landing page institucional com gestão de conteúdo utilizando Strapi v4,
               foco em agilidade e autonomia do cliente.
             </p>
-            <a href="#contato" class="text-link">Solicitar detalhes Gestão de Capelas</a>
+            <a href="#contato" class="text-link" aria-label="Detalhes sobre Gestão de Capelas">Solicitar detalhes</a>
           </article>
         </div>
       </div>
     </section>
 
-    <section class="section cta" id="contato">
-      <div class="container cta-inner">
+    <!-- SECTION: CTA (assets/sections/cta) -->
+    <section class="section" id="contato" aria-labelledby="contato-titulo">
+      <div class="container cta__inner">
         <div>
           <p class="eyebrow">Contato</p>
-          <h2>Vamos conversar sobre o seu próximo projeto.</h2>
+          <h2 id="contato-titulo">Vamos conversar sobre o seu próximo projeto.</h2>
           <p>
             Estou disponível para trabalhos freelance e parcerias. Respondo em
             até 48 horas úteis.
           </p>
         </div>
-        <div class="cta-actions">
+        <div class="cta__actions">
           <a class="btn primary" href="mailto:luis.fneves@proton.me">
             <svg aria-hidden="true" viewBox="0 0 24 24" focusable="false">
-              <path d="M4 5h16a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V6a1 1 0 0 1 1-1zm0 2v.2l8 5.2 8-5.2V7H4zm16 10V9.5l-7.4 4.8a1 1 0 0 1-1.2 0L4 9.5V17h16z"/>
+              <path
+                d="M4 5h16a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V6a1 1 0 0 1 1-1zm0 2v.2l8 5.2 8-5.2V7H4zm16 10V9.5l-7.4 4.8a1 1 0 0 1-1.2 0L4 9.5V17h16z" />
             </svg>
             Enviar email
           </a>
-          <a class="btn ghost" href="https://www.linkedin.com/in/luisneves-dev/">
+          <a class="btn ghost" href="https://www.linkedin.com/in/luisneves-dev/" target="_blank"
+            rel="noopener noreferrer">
             <svg aria-hidden="true" viewBox="0 0 24 24" focusable="false">
-              <path d="M6.94 8.5H3.5V20h3.44V8.5zM5.22 7.12a1.99 1.99 0 1 0 0-3.98 1.99 1.99 0 0 0 0 3.98zM20.5 13.16c0-3.38-1.8-4.95-4.2-4.95-1.94 0-2.8 1.06-3.28 1.8V8.5h-3.3c.04.99 0 11.5 0 11.5h3.3v-6.42c0-.34.02-.68.12-.92.26-.68.86-1.38 1.86-1.38 1.32 0 1.84 1 1.84 2.48V20h3.36v-6.84z"/>
+              <path
+                d="M6.94 8.5H3.5V20h3.44V8.5zM5.22 7.12a1.99 1.99 0 1 0 0-3.98 1.99 1.99 0 0 0 0 3.98zM20.5 13.16c0-3.38-1.8-4.95-4.2-4.95-1.94 0-2.8 1.06-3.28 1.8V8.5h-3.3c.04.99 0 11.5 0 11.5h3.3v-6.42c0-.34.02-.68.12-.92.26-.68.86-1.38 1.86-1.38 1.32 0 1.84 1 1.84 2.48V20h3.36v-6.84z" />
             </svg>
             Ver LinkedIn
           </a>
@@ -288,73 +307,17 @@
     </section>
   </main>
 
-  <footer class="site-footer">
-    <div class="container footer-inner">
-      <p>© 2024 Luis Neves. Feito com HTML, CSS e JavaScript.</p>
-      <div class="footer-links">
-        <a href="https://www.linkedin.com/in/luisneves-dev/">LinkedIn</a>
-        <a href="https://github.com/luisoneves">GitHub</a>
-        <a href="https://wa.me/5500000000000">WhatsApp</a>
+  <!-- SECTION: Footer (assets/sections/footer) -->
+  <footer class="site-footer" role="contentinfo">
+    <div class="container footer__inner">
+      <p>© 2024 Luis Neves.</p>
+      <div class="footer__links">
+        <a href="https://www.linkedin.com/in/luisneves-dev/" target="_blank" rel="noopener noreferrer">LinkedIn</a>
+        <a href="https://github.com/luisoneves" target="_blank" rel="noopener noreferrer">GitHub</a>
+        <a href="https://wa.me/55012992486884" target="_blank" rel="noopener noreferrer">WhatsApp</a>
       </div>
     </div>
   </footer>
-
-  <script src="./src/js/main.js"></script>
-  <script type="application/ld+json">
-{
-  "@context": "https://schema.org",
-  "@graph": [
-    {
-      "@type": "WebSite",
-      "@id": "https://www.luisneves.dev/#website",
-      "url": "https://www.luisneves.dev/",
-      "name": "Luis Neves | Portfólio",
-      "inLanguage": "pt-BR",
-      "publisher": {
-        "@id": "https://www.luisneves.dev/#person"
-      }
-    },
-    {
-      "@type": "ProfilePage",
-      "@id": "https://www.luisneves.dev/#profile",
-      "url": "https://www.luisneves.dev/",
-      "name": "Luis Neves | Desenvolvedor Fullstack e Front-end",
-      "inLanguage": "pt-BR",
-      "isPartOf": {
-        "@id": "https://www.luisneves.dev/#website"
-      },
-      "about": {
-        "@id": "https://www.luisneves.dev/#person"
-      }
-    },
-    {
-      "@type": "Person",
-      "@id": "https://www.luisneves.dev/#person",
-      "name": "Luis Neves",
-      "jobTitle": "Desenvolvedor Fullstack e Front-end",
-      "url": "https://www.luisneves.dev/",
-      "description": "Desenvolvedor fullstack especializado em interfaces web performáticas, acessíveis e bem estruturadas.",
-      "image": "https://www.luisneves.dev/src/img/og-image.png",
-      "sameAs": [
-        "https://www.linkedin.com/in/luisneves-dev/",
-        "https://github.com/luisoneves"
-      ],
-      "knowsAbout": [
-        "HTML",
-        "CSS",
-        "JavaScript",
-        "TypeScript",
-        "SEO técnico",
-        "Acessibilidade"
-      ]
-    }
-  ]
-}
-</script>
-<script>
-  tailwind = { config: { darkMode: 'class' } }
-</script>
-<script src="https://cdn.tailwindcss.com"></script>
-<script src="./src/js/dark-mode.js"></script>
 </body>
+
 </html>

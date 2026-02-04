@@ -1,0 +1,26 @@
+/**
+ * Grid Layouts
+ */
+
+.two-col {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: var(--space-2xl);
+}
+
+@media (max-width: 900px) {
+    .two-col {
+        grid-template-columns: 1fr;
+        gap: var(--space-xl);
+    }
+}
+
+@media (max-width: 720px) {
+    .two-col {
+        gap: var(--space-lg);
+    }
+
+    .two-col>div {
+        padding: 0 var(--space-xs);
+    }
+}

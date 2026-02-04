@@ -1,0 +1,32 @@
+/**
+ * Section Component
+ * Base styles for semantic section elements
+ */
+
+.section {
+    padding: var(--space-2xl) 0;
+    position: relative;
+}
+
+.section.alt {
+    background: var(--bg-surface-alt);
+}
+
+.section__header {
+    margin-bottom: var(--space-lg);
+}
+
+.section__header h2 {
+    font-size: var(--font-size-2xl);
+    font-weight: 700;
+    margin-bottom: var(--space-sm);
+}
+
+.section__header p {
+    font-size: var(--font-size-lg);
+    color: var(--text-secondary);
+}
+
+.section p {
+    max-width: 65ch;
+}

@@ -1,0 +1,129 @@
+/**
+ * Design Tokens
+ * Single source of truth for design values.
+ */
+
+:root {
+  /* ========================================
+     COLORS
+     ======================================== */
+  /* Primitive Colors */
+  --color-white: #ffffff;
+  --color-black: #000000;
+
+  --color-gray-50: #fafafa;
+  --color-gray-100: #f4f4f5;
+  --color-gray-200: #e4e4e7;
+  --color-gray-300: #d4d4d8;
+  --color-gray-400: #a1a1aa;
+  --color-gray-500: #71717a;
+  --color-gray-600: #52525b;
+  --color-gray-700: #3f3f46;
+  --color-gray-800: #27272a;
+  --color-gray-900: #18181b;
+  --color-gray-950: #09090b;
+
+  --color-primary-light: #fff7ed;
+  --color-primary-base: #d76f30;
+  --color-primary-dark: #b85a23;
+  --color-primary-neon: #00ff88;
+
+  /* Semantic Colors - Light (Default) */
+  --bg-body: #f4f1ed;
+  --bg-surface: #ffffff;
+  --bg-surface-alt: #ebe6df;
+
+  --text-primary: #1a1a1a;
+  --text-secondary: #4a4a4a;
+  --text-tertiary: #71717a;
+
+  --border-subtle: #d8d2c9;
+
+  --brand-primary: var(--color-primary-base);
+  --brand-secondary: var(--color-primary-dark);
+
+  /* ========================================
+     TYPOGRAPHY
+     ======================================== */
+  --font-display: "Space Grotesk", "Trebuchet MS", sans-serif;
+  --font-mono: "IBM Plex Mono", "Courier New", monospace;
+
+  --fw-regular: 400;
+  --fw-medium: 500;
+  --fw-bold: 700;
+
+  /* ========================================
+     SPACING
+     ======================================== */
+  --space-xs: 0.5rem;    /* 8px */
+  --space-sm: 0.75rem;   /* 12px */
+  --space-md: 1rem;      /* 16px */
+  --space-lg: 1.5rem;    /* 24px */
+  --space-xl: 2rem;      /* 32px */
+  --space-2xl: 2.5rem;   /* 40px */
+  --space-3xl: 3rem;     /* 48px */
+  --space-4xl: 4rem;     /* 64px */
+
+  /* ========================================
+     LAYOUT
+     ======================================== */
+  --container-width: 1100px;
+  --header-height: 80px;
+  --radius-sm: 0.5rem;
+  --radius-md: 1rem;
+  --radius-lg: 1.25rem;
+  --radius-full: 9999px;
+
+  /* ========================================
+     Z-INDEX
+     ======================================== */
+  --z-negative: -1;
+  --z-base: 1;
+  --z-sticky: 100;
+  --z-overlay: 200;
+  --z-modal: 300;
+  --z-toast: 400;
+
+  /* ========================================
+     SHADOWS
+     ======================================== */
+  --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+  --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+  --shadow-lg: 0 20px 40px rgba(26, 26, 26, 0.12);
+
+  /* ========================================
+     HERO DECORATIVE IMAGE
+     ======================================== */
+  --hero-illustration: none;
+
+  /* ========================================
+     ANIMATION
+     ======================================== */
+  --ease-in-out: cubic-bezier(0.4, 0, 0.2, 1);
+  --duration-fast: 150ms;
+  --duration-normal: 300ms;
+
+  color-scheme: light;
+}
+
+/* ========================================
+   DARK MODE
+   ======================================== */
+html.dark {
+  --bg-body: #0f0f0f;
+  --bg-surface: #1f1f1f;
+  --bg-surface-alt: #1a1a1a;
+
+  --text-primary: #f4f1ed;
+  --text-secondary: #b0b0b0;
+
+  --border-subtle: #3a3a3a;
+
+  --brand-primary: var(--color-primary-base);
+  --brand-secondary: var(--color-primary-neon);
+
+  --shadow-lg: 0 20px 40px rgba(0, 0, 0, 0.6);
+  --shadow-neon: 0 0 12px rgba(0, 255, 136, 0.15);
+
+  color-scheme: dark;
+}

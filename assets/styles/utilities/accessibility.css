@@ -1,0 +1,50 @@
+/**
+ * Accessibility Utilities
+ */
+
+/* Screen reader only */
+.sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border-width: 0;
+}
+
+/* Focus Visible */
+a:focus-visible,
+button:focus-visible,
+input:focus-visible,
+textarea:focus-visible {
+    outline: 3px solid var(--brand-primary);
+    outline-offset: 2px;
+}
+
+html.dark a:focus-visible,
+html.dark button:focus-visible {
+    outline-color: var(--brand-secondary);
+}
+
+/* Skip Link */
+.skip-link {
+    position: absolute;
+    left: -9999px;
+    top: var(--space-xs);
+    background: var(--brand-primary);
+    color: #fff;
+    padding: var(--space-xs) var(--space-md);
+    border-radius: var(--radius-full);
+    z-index: var(--z-toast);
+    font-weight: var(--fw-bold);
+    text-decoration: none;
+    transition: top 0.2s ease;
+}
+
+.skip-link:focus {
+    left: var(--space-md);
+    top: var(--space-md);
+}
