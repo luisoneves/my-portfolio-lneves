@@ -13,7 +13,7 @@
   <link rel="dns-prefetch" href="https://fonts.gstatic.com">
 
   <!-- CSS -->
-  <link rel="stylesheet" href="./assets/styles/main.css">
+  <link rel="stylesheet" href="./src/styles/main.css">
 
   <!-- Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -38,9 +38,9 @@
   <meta name="color-scheme" content="light dark">
 
   <!-- Favicons -->
-  <link rel="icon" href="./assets/images/favico/favicon.png" type="image/svg+xml">
-  <link rel="icon" href="./assets/images/favico/favicon-32.png" type="image/png" sizes="32x32">
-  <link rel="apple-touch-icon" href="./assets/images/favico/favicon.ico" sizes="180x180">
+  <link rel="icon" href="./images/favicon/favicon.png" type="image/png+xml">
+  <link rel="icon" href="./images/favicon/favicon.png" type="image/png" sizes="32x32">
+  <link rel="apple-touch-icon" href="./images/favicon/favicon.png" sizes="180x180">
 
   <!-- Open Graph -->
   <meta property="og:type" content="website">
@@ -50,7 +50,7 @@
     content="Interfaces web claras, acessíveis e performáticas. Especialista em HTML, CSS, JavaScript e SEO técnico.">
   <meta property="og:url" content="https://www.luisneves.dev/">
   <meta property="og:locale" content="pt_BR">
-  <meta property="og:image" content="https://www.luisneves.dev/assets/images/og-image.png">
+  <meta property="og:image" content="https://www.luisneves.dev/images/og-image.png">
   <meta property="og:image:type" content="image/png">
   <meta property="og:image:width" content="1200">
   <meta property="og:image:height" content="630">
@@ -60,11 +60,11 @@
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content="Luis Neves | Desenvolvedor Fullstack e Front-end">
   <meta name="twitter:description" content="Interfaces web claras, acessíveis e performáticas.">
-  <meta name="twitter:image" content="https://www.luisneves.dev/assets/images/og-image.png">
+  <meta name="twitter:image" content="https://www.luisneves.dev/images/og-image.png">
   <meta name="twitter:creator" content="@luisneves">
 
   <!-- Module Script -->
-  <script type="module" src="./assets/scripts/main.js" defer></script>
+  <script src="./src/scripts/main.js" defer></script>
 </head>
 
 <body>
@@ -74,24 +74,28 @@
   <header class="site-header" role="banner">
     <div class="container header-inner">
       <a class="logo" href="#inicio" aria-label="Voltar ao início">
-        <img id="logo-navbar" src="./assets/images/logo-LN_ligthmode.png" alt="LN" width="50" height="50">
+        <img id="logo-navbar" src="./images/logo-LN_ligthmode.png" alt="LN" width="50" height="50">
       </a>
 
-      <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="menu" aria-label="Abrir menu">
-        Menu
-      </button>
+      <div class="nav-controls">
 
-      <nav class="site-nav" id="menu" aria-label="Navegação principal">
-        <a href="#sobre">Sobre</a>
-        <a href="#experiencia">Experiência</a>
-        <a href="#projetos">Projetos</a>
-        <a href="#contato">Contato</a>
-      </nav>
 
-      <!-- Botão Dark Mode -->
-      <button id="dark-mode-toggle" class="dark-mode-btn" aria-label="Alternar tema">
-        <span class="theme-icon" aria-hidden="true">◑</span>
-      </button>
+        <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="menu" aria-label="Abrir menu">
+          Menu
+        </button>
+
+        <nav class="site-nav" id="menu" aria-label="Navegação principal">
+          <a href="#sobre">Sobre</a>
+          <a href="#experiencia">Experiência</a>
+          <a href="#projetos">Projetos</a>
+          <a href="#contato">Contato</a>
+        </nav>
+
+        <!-- Botão Dark Mode -->
+        <button id="dark-mode-toggle" class="dark-mode-btn" aria-label="Alternar tema">
+          <span aria-hidden="true">◑</span>
+        </button>
+      </div>
     </div>
   </header>
 
@@ -100,8 +104,8 @@
     <section class="hero" id="inicio" aria-label="Introdução">
       <div class="container hero__grid">
         <div class="hero__text">
-          <p class="eyebrow">Desenvolvedor Fullstack</p>
-          <h1>Desenvolvimento Web performático.</h1>
+          <p class="eyebrow">Desenvolvedor Front-end</p>
+          <h1>Desenvolvimento Web.</h1>
           <p class="lead">
             Olá, sou Luis Neves. Trabalho com HTML, CSS e JavaScript para criar
             experiências digitais elegantes, rápidas e fáceis de usar.
@@ -143,8 +147,12 @@
       <div class="container two-col">
         <div>
           <p class="eyebrow">Sobre</p>
-          <h2 id="sobre-titulo">Gosto de transformar ideias em produtos digitais acessíveis. Tenho capacidade de criar
-            soluções eficientes e técnicas, escolhendo as melhores ferramentas para cada projeto.</h2>
+          <p id="sobre-titulo">Gosto de transformar ideias em produtos digitais acessíveis. Tenho facilidade em criar
+            soluções eficientes e bem estruturadas, escolhendo as ferramentas mais adequadas para cada projeto.</p>
+          <p id="sobre-titulo">Atuo no desenvolvimento de landing pages com foco em conversão e SEO técnico,
+            além de sites institucionais baseados em design systems e acessibilidade. Também desenvolvo dashboards
+            voltados à visualização de dados e interatividade, e automatizo tarefas repetitivas por meio de scripts e
+            automações.</p>
           <ul class="tags" aria-label="Competências técnicas">
             <li>Frameworks</li>
             <li>Deployment</li>
@@ -178,12 +186,11 @@
         <div class="section__header">
           <p class="eyebrow">Experiência</p>
         </div>
-        <h2 id="experiencia-titulo">Caminho profissional focado no desenvolvimento.</h2>
         <div class="timeline">
           <article class="timeline-item">
             <header>
               <h3>Fullstack Developer · C4ts - Tecnologia e Inovação</h3>
-              <time datetime="2022">2022</time> — <span>Atual</span>
+              <time datetime="2022">2022</time>
             </header>
             <p>
               Participo das escolhas técnicas e do desenvolvimento de landing pages e portais com componentes
@@ -193,7 +200,7 @@
           <article class="timeline-item">
             <header>
               <h3>Fullstack · Projetos autorais</h3>
-              <time datetime="2022">2022</time> — <span>Atual</span>
+              <time datetime="2022">2022</time>
             </header>
             <p>
               Projetos mais complexos e robustos usando Docker, CMS headless, Strapi, Turborepo, Makefiles e outras
@@ -204,7 +211,7 @@
           <article class="timeline-item">
             <header>
               <h3>Front-end · Freelancer</h3>
-              <time datetime="2022">2022</time> — <span>Atual</span>
+              <time datetime="2022">2022</time>
             </header>
             <p>
               Criação de sites institucionais, sistemas internos e guias de estilo
@@ -214,7 +221,7 @@
           <article class="timeline-item">
             <header>
               <h3>Infraestrutura · FCN - Faculdade Canção Nova</h3>
-              <time datetime="2018">2018</time> — <time datetime="2020">2020</time>
+              <time datetime="2018">2018</time>
             </header>
             <p>
               Análise e manutenção de servidores, redes e sistemas internos da
@@ -224,7 +231,7 @@
           <article class="timeline-item">
             <header>
               <h3>Infraestrutura · INPE - Instituto Nacional de Pesquisas Espaciais</h3>
-              <time datetime="2008">2008</time> — <time datetime="2018">2018</time>
+              <time datetime="2008">2008</time>
             </header>
             <p>
               Análise e manutenção de servidores, redes e sistemas internos da
@@ -241,8 +248,6 @@
         <div class="section__header">
           <p class="eyebrow">Projetos</p>
         </div>
-        <h2 id="projetos-titulo">Seleção de trabalhos recentes.</h2>
-
         <!-- Indicador de scroll (mobile) -->
         <p class="cards__hint" aria-hidden="true">← Arraste para ver mais →</p>
 
@@ -280,7 +285,7 @@
       <div class="container cta__inner">
         <div>
           <p class="eyebrow">Contato</p>
-          <h2 id="contato-titulo">Vamos conversar sobre o seu próximo projeto.</h2>
+          <p id="contato-titulo">Vamos conversar sobre o seu próximo projeto.</p>
           <p>
             Estou disponível para trabalhos freelance e parcerias. Respondo em
             até 48 horas úteis.
