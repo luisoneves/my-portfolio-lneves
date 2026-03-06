@@ -300,3 +300,316 @@ html.dark .tags li {
 html.dark .list li::before {
     color: var(--color-primary-neon);
 }
+
+/* --- Project Card Details --- */
+.project-card__detail {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+}
+
+.project-card__label {
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    font-weight: var(--fw-medium);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--brand-primary);
+}
+
+html.dark .project-card__label {
+    color: var(--color-primary-neon);
+}
+
+.project-card__detail p {
+    font-size: 0.95rem;
+    margin: 0;
+}
+
+/* Stack Tags */
+.stack-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem;
+    margin-top: auto;
+    padding-top: var(--space-sm);
+}
+
+.stack-tag {
+    display: inline-flex;
+    align-items: center;
+    padding: 0.25rem 0.65rem;
+    font-family: var(--font-mono);
+    font-size: 0.7rem;
+    border-radius: var(--radius-full);
+    background: var(--bg-surface-alt);
+    border: 1px solid var(--border-subtle);
+    color: var(--text-secondary);
+    transition: border-color var(--duration-fast);
+}
+
+html.dark .stack-tag {
+    background: var(--bg-surface);
+    border-color: var(--color-gray-700);
+    color: var(--text-secondary);
+}
+
+/* --- Technology Cards --- */
+.tech-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: var(--space-lg);
+}
+
+.tech-card {
+    background: var(--bg-surface);
+    border: 1px solid var(--border-subtle);
+    border-radius: var(--radius-md);
+    padding: var(--space-xl);
+    box-shadow: var(--shadow-sm);
+    transition: transform var(--duration-fast) var(--ease-in-out),
+        box-shadow var(--duration-fast) var(--ease-in-out);
+}
+
+.tech-card:hover {
+    transform: translateY(-3px);
+    box-shadow: var(--shadow-md);
+}
+
+html.dark .tech-card {
+    border-color: var(--color-primary-neon);
+    box-shadow: var(--shadow-sm);
+}
+
+html.dark .tech-card:hover {
+    box-shadow: 0 0 16px rgba(0, 255, 136, 0.15);
+}
+
+.tech-card__header {
+    display: flex;
+    align-items: center;
+    gap: var(--space-sm);
+    margin-bottom: var(--space-md);
+}
+
+.tech-card__icon {
+    font-size: 1.5rem;
+    line-height: 1;
+}
+
+.tech-card__title {
+    font-size: 1rem;
+    font-weight: var(--fw-medium);
+}
+
+.tech-card__list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+}
+
+.tech-card__list li {
+    font-family: var(--font-mono);
+    font-size: 0.85rem;
+    color: var(--text-secondary);
+    padding-left: var(--space-md);
+    position: relative;
+}
+
+.tech-card__list li::before {
+    content: "›";
+    position: absolute;
+    left: 0;
+    color: var(--brand-primary);
+    font-weight: var(--fw-bold);
+}
+
+html.dark .tech-card__list li::before {
+    color: var(--color-primary-neon);
+}
+
+@media (max-width: 720px) {
+    .tech-grid {
+        grid-template-columns: 1fr 1fr;
+        gap: var(--space-md);
+    }
+
+    .tech-card {
+        padding: var(--space-lg);
+    }
+}
+
+@media (max-width: 480px) {
+    .tech-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* --- Note Cards --- */
+.notes-grid {
+    display: grid;
+    gap: var(--space-lg);
+}
+
+.note-card {
+    background: var(--bg-surface);
+    border: 1px solid var(--border-subtle);
+    border-radius: var(--radius-md);
+    padding: var(--space-xl) var(--space-2xl);
+    box-shadow: var(--shadow-sm);
+    transition: transform var(--duration-fast) var(--ease-in-out),
+        box-shadow var(--duration-fast) var(--ease-in-out);
+}
+
+.note-card:hover {
+    transform: translateX(4px);
+    box-shadow: var(--shadow-md);
+}
+
+html.dark .note-card {
+    border-color: var(--color-primary-neon);
+}
+
+html.dark .note-card:hover {
+    box-shadow: 0 0 12px rgba(0, 255, 136, 0.1);
+}
+
+.note-card__header {
+    margin-bottom: var(--space-sm);
+}
+
+.note-card__date {
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    color: var(--text-tertiary);
+}
+
+.note-card__title {
+    font-size: 1.15rem;
+    font-weight: var(--fw-medium);
+    line-height: 1.3;
+    margin-bottom: var(--space-xs);
+}
+
+.note-card__excerpt {
+    color: var(--text-secondary);
+    font-size: 0.95rem;
+    line-height: 1.6;
+}
+
+/* --- Reading Section --- */
+.reading__group {
+    margin-bottom: var(--space-2xl);
+}
+
+.reading__group:last-child {
+    margin-bottom: 0;
+}
+
+.reading__subtitle {
+    font-size: 1.25rem;
+    font-weight: var(--fw-medium);
+    margin-bottom: var(--space-lg);
+}
+
+.reading__items {
+    display: grid;
+    gap: var(--space-md);
+}
+
+.book-card,
+.course-card {
+    background: var(--bg-surface);
+    border: 1px solid var(--border-subtle);
+    border-radius: var(--radius-md);
+    padding: var(--space-lg) var(--space-xl);
+    box-shadow: var(--shadow-sm);
+    transition: transform var(--duration-fast) var(--ease-in-out);
+}
+
+.book-card:hover,
+.course-card:hover {
+    transform: translateX(4px);
+}
+
+html.dark .book-card,
+html.dark .course-card {
+    border-color: var(--color-primary-neon);
+}
+
+.book-card__title,
+.course-card__title {
+    font-size: 1.05rem;
+    font-weight: var(--fw-medium);
+    margin-bottom: 0.25rem;
+}
+
+.book-card__idea {
+    font-family: var(--font-mono);
+    font-size: 0.85rem;
+    color: var(--text-secondary);
+    font-style: italic;
+}
+
+/* --- About Section --- */
+.about__text {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-md);
+}
+
+.about__skills h3 {
+    margin-bottom: var(--space-md);
+}
+
+/* --- Contact Section --- */
+.contact__heading {
+    font-size: clamp(1.5rem, 3vw, 2rem);
+    font-weight: var(--fw-bold);
+    line-height: 1.2;
+    margin-bottom: var(--space-sm);
+}
+
+/* --- Hero Exploring Block --- */
+.hero__exploring {
+    margin: var(--space-md) 0;
+}
+
+.exploring__label {
+    font-family: var(--font-mono);
+    font-size: 0.85rem;
+    color: var(--text-secondary);
+    display: block;
+    margin-bottom: var(--space-xs);
+}
+
+.exploring__list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.3rem;
+}
+
+.exploring__list li {
+    font-family: var(--font-mono);
+    font-size: 0.9rem;
+    color: var(--text-primary);
+    padding-left: var(--space-md);
+    position: relative;
+}
+
+.exploring__list li::before {
+    content: "•";
+    position: absolute;
+    left: 0;
+    color: var(--brand-primary);
+}
+
+html.dark .exploring__list li::before {
+    color: var(--color-primary-neon);
+}

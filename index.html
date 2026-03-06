@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="pt-br">
+<html lang="en">
 
 <head>
   <meta charset="UTF-8">
@@ -23,9 +23,9 @@
     rel="stylesheet">
 
   <!-- Primary SEO -->
-  <title>Luis Neves | Desenvolvedor Fullstack e Front-end</title>
+  <title>Luis Neves | Software Engineer</title>
   <meta name="description"
-    content="Luis Neves é desenvolvedor fullstack e front-end especializado em interfaces web performáticas, acessíveis e bem estruturadas. HTML, CSS, JavaScript e SEO técnico.">
+    content="Software engineer building modular systems, SaaS platforms, and experimental products. Focused on architecture, clean code, and product engineering.">
   <meta name="robots" content="index, follow">
   <meta name="author" content="Luis Neves">
 
@@ -33,7 +33,6 @@
   <link rel="canonical" href="https://www.luisneves.dev/">
 
   <!-- Theme -->
-  <!-- Dynamic update via JS -->
   <meta name="theme-color" content="#d76f30">
   <meta name="color-scheme" content="light dark">
 
@@ -45,293 +44,143 @@
   <!-- Open Graph -->
   <meta property="og:type" content="website">
   <meta property="og:site_name" content="Luis Neves">
-  <meta property="og:title" content="Luis Neves | Desenvolvedor Fullstack e Front-end">
+  <meta property="og:title" content="Luis Neves | Software Engineer">
   <meta property="og:description"
-    content="Interfaces web claras, acessíveis e performáticas. Especialista em HTML, CSS, JavaScript e SEO técnico.">
+    content="Software engineer building modular systems, SaaS platforms, and experimental products.">
   <meta property="og:url" content="https://www.luisneves.dev/">
-  <meta property="og:locale" content="pt_BR">
+  <meta property="og:locale" content="en">
   <meta property="og:image" content="https://www.luisneves.dev/images/og-image.png">
   <meta property="og:image:type" content="image/png">
   <meta property="og:image:width" content="1200">
   <meta property="og:image:height" content="630">
-  <meta property="og:image:alt" content="Luis Neves, desenvolvedor fullstack e front-end">
+  <meta property="og:image:alt" content="Luis Neves, software engineer">
 
   <!-- Twitter -->
   <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="Luis Neves | Desenvolvedor Fullstack e Front-end">
-  <meta name="twitter:description" content="Interfaces web claras, acessíveis e performáticas.">
+  <meta name="twitter:title" content="Luis Neves | Software Engineer">
+  <meta name="twitter:description" content="Building modular systems, SaaS platforms, and experimental products.">
   <meta name="twitter:image" content="https://www.luisneves.dev/images/og-image.png">
   <meta name="twitter:creator" content="@luisneves">
 
-  <!-- Module Script -->
+  <!-- Scripts (vanilla, no modules) -->
+  <script src="./src/data/data.js" defer></script>
+  <script src="./src/scripts/components.js" defer></script>
   <script src="./src/scripts/main.js" defer></script>
 </head>
 
 <body>
-  <a class="skip-link" href="#conteudo">Pular para o conteúdo</a>
+  <a class="skip-link" href="#main-content">Skip to content</a>
 
-  <!-- SECTION: Header (assets/sections/header) -->
+  <!-- HEADER -->
   <header class="site-header" role="banner">
     <div class="container header-inner">
-      <a class="logo" href="#inicio" aria-label="Voltar ao início">
+      <a class="logo" href="#home" aria-label="Back to top">
         <img id="logo-navbar" src="./images/logo-LN_ligthmode.png" alt="LN" width="50" height="50">
       </a>
 
       <div class="nav-controls">
-
-
-        <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="menu" aria-label="Abrir menu">
+        <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="menu"
+          aria-label="Open menu">
           Menu
         </button>
 
-        <nav class="site-nav" id="menu" aria-label="Navegação principal">
-          <a href="#sobre">Sobre</a>
-          <a href="#experiencia">Experiência</a>
-          <a href="#projetos">Projetos</a>
-          <a href="#contato">Contato</a>
+        <nav class="site-nav" id="menu" aria-label="Main navigation">
+          <!-- Rendered by components.js -->
         </nav>
 
-        <!-- Botão Dark Mode -->
-        <button id="dark-mode-toggle" class="dark-mode-btn" aria-label="Alternar tema">
+        <!-- Dark Mode Toggle -->
+        <button id="dark-mode-toggle" class="dark-mode-btn" aria-label="Toggle theme">
           <span aria-hidden="true">◑</span>
         </button>
       </div>
     </div>
   </header>
 
-  <main id="conteudo" role="main">
-    <!-- SECTION: Hero (assets/sections/hero) -->
-    <section class="hero" id="inicio" aria-label="Introdução">
-      <div class="container hero__grid">
-        <div class="hero__text">
-          <p class="eyebrow">Desenvolvedor Front-end</p>
-          <h1>Desenvolvimento Web.</h1>
-          <p class="lead">
-            Olá, sou Luis Neves. Trabalho com HTML, CSS e JavaScript para criar
-            experiências digitais elegantes, rápidas e fáceis de usar.
-          </p>
-          <div class="hero__actions">
-            <a class="btn primary" href="#projetos">Ver projetos</a>
-            <a class="btn ghost" href="#contato">Falar comigo</a>
-          </div>
-          <div class="hero__meta">
-            <span>Disponível no Brasil</span>
-            <span>Disponível para freelas</span>
-          </div>
+  <main id="main-content" role="main">
+    <!-- SECTION: Hero / Home -->
+    <section class="hero" id="home" aria-label="Introduction">
+      <div class="container hero__grid" id="hero-content">
+        <!-- Rendered by components.js -->
+      </div>
+    </section>
+
+    <!-- SECTION: Projects -->
+    <section class="section" id="projects" aria-labelledby="projects-title">
+      <div class="container">
+        <div class="section__header">
+          <p class="eyebrow">Projects</p>
+          <h2 id="projects-title">Problem → Solution</h2>
         </div>
-
-        <div class="hero__card card-flip">
-          <div class="card-flip__inner">
-            <div class="card-flip__front">
-              <div class="stat">
-                <span class="stat__value">4+</span>
-                <span class="stat__label">Anos criando interfaces</span>
-              </div>
-              <div class="stat">
-                <span class="stat__value">2</span>
-                <span class="stat__label">Projetos lançados</span>
-              </div>
-              <div class="stat">
-                <span class="stat__value">3</span>
-                <span class="stat__label">Focos principais</span>
-              </div>
-              <ul class="tags" aria-label="Habilidades principais">
-                <li>Design System</li>
-                <li>Landing Pages</li>
-                <li>SEO</li>
-              </ul>
-            </div>
-
-            <div class="card-flip__back">
-              <!-- // aqui voce adiciona a foto -->
-              <img src="./public/images/LuisNeves.png" alt="Luis Neves">
-              <p class="card-flip__name">Luis Neves</p>
-              <p class="card-flip__role">Front-end</p>
-            </div>
-          </div>
+        <div class="cards" id="projects-content">
+          <!-- Rendered by components.js -->
         </div>
       </div>
     </section>
 
-    <!-- SECTION: Sobre (assets/sections/sobre) -->
-    <section class="section" id="sobre" aria-labelledby="sobre-titulo">
+    <!-- SECTION: Technologies -->
+    <section class="section" id="technologies" aria-labelledby="technologies-title">
+      <div class="container">
+        <div class="section__header">
+          <p class="eyebrow">Stack</p>
+          <h2 id="technologies-title">Technologies I Work With</h2>
+        </div>
+        <div class="tech-grid" id="technologies-content">
+          <!-- Rendered by components.js -->
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION: Engineering Notes -->
+    <section class="section" id="notes" aria-labelledby="notes-title">
+      <div class="container">
+        <div class="section__header">
+          <p class="eyebrow">Engineering Notes</p>
+          <h2 id="notes-title">Thinking in public</h2>
+        </div>
+        <div class="notes-grid" id="notes-content">
+          <!-- Rendered by components.js -->
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION: Reading -->
+    <section class="section" id="reading" aria-labelledby="reading-title">
+      <div class="container">
+        <div class="section__header">
+          <p class="eyebrow">Learning</p>
+          <h2 id="reading-title">Books & Courses</h2>
+        </div>
+        <div id="reading-content">
+          <!-- Rendered by components.js -->
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION: About -->
+    <section class="section" id="about" aria-labelledby="about-title">
       <div class="container two-col">
-        <div>
-          <p class="eyebrow">Sobre</p>
-          <p id="sobre-titulo">Gosto de transformar ideias em produtos digitais acessíveis. Tenho facilidade em criar
-            soluções eficientes e bem estruturadas, escolhendo as ferramentas mais adequadas para cada projeto.</p>
-          <p id="sobre-titulo">Atuo no desenvolvimento de landing pages com foco em conversão e SEO técnico,
-            além de sites institucionais baseados em design systems e acessibilidade. Também desenvolvo dashboards
-            voltados à visualização de dados e interatividade, e automatizo tarefas repetitivas por meio de scripts e
-            automações.</p>
-          <ul class="tags" aria-label="Competências técnicas">
-            <li>Frameworks</li>
-            <li>Deployment</li>
-            <li>Versionamento</li>
-            <li>Documentação</li>
-          </ul>
+        <div class="section__header" style="grid-column: 1 / -1;">
+          <p class="eyebrow">About</p>
+          <h2 id="about-title">My Journey</h2>
         </div>
-        <div>
-          <p>
-            Sou apaixonado por interfaces com hierarquia clara, micro interações
-            sutis e conteúdo bem estruturado. Meu foco é entregar produtos
-            simples de manter e com performance consistente em qualquer tela.
-          </p>
-          <p>
-            Hoje trabalho com HTML, CSS e TypeScript, aproveitando o melhor de
-            cada um, integrando frameworks quando necessário para garantir
-            melhor performance, escalabilidade e manutenção.
-          </p>
-          <ul class="list" aria-label="Áreas de foco">
-            <li>UX writing e arquitetura de informação</li>
-            <li>Layouts responsivos e acessibilidade</li>
-            <li>Integração com APIs e CMSs</li>
-          </ul>
+        <div id="about-content" style="display: contents;">
+          <!-- Rendered by components.js -->
         </div>
       </div>
     </section>
 
-    <!-- SECTION: Experiência (assets/sections/experiencia) -->
-    <section class="section" id="experiencia" aria-labelledby="experiencia-titulo">
-      <div class="container">
-        <div class="section__header">
-          <p class="eyebrow">Experiência</p>
-        </div>
-        <div class="timeline">
-          <article class="timeline-item">
-            <header>
-              <h3>Fullstack Developer · C4ts - Tecnologia e Inovação</h3>
-              <time datetime="2022">2022</time>
-            </header>
-            <p>
-              Participo das escolhas técnicas e do desenvolvimento de landing pages e portais com componentes
-              reutilizáveis, mantendo consistência visual e velocidade de entrega.
-            </p>
-          </article>
-          <article class="timeline-item">
-            <header>
-              <h3>Fullstack · Projetos autorais</h3>
-              <time datetime="2022">2022</time>
-            </header>
-            <p>
-              Projetos mais complexos e robustos usando Docker, CMS headless, Strapi, Turborepo, Makefiles e outras
-              tecnologias
-              modernas para enriquecer minha visão do projeto como um todo.
-            </p>
-          </article>
-          <article class="timeline-item">
-            <header>
-              <h3>Front-end · Freelancer</h3>
-              <time datetime="2022">2022</time>
-            </header>
-            <p>
-              Criação de sites institucionais, sistemas internos e guias de estilo
-              para marcas em crescimento.
-            </p>
-          </article>
-          <article class="timeline-item">
-            <header>
-              <h3>Infraestrutura · FCN - Faculdade Canção Nova</h3>
-              <time datetime="2018">2018</time>
-            </header>
-            <p>
-              Análise e manutenção de servidores, redes e sistemas internos da
-              instituição, com scripts para automação.
-            </p>
-          </article>
-          <article class="timeline-item">
-            <header>
-              <h3>Infraestrutura · INPE - Instituto Nacional de Pesquisas Espaciais</h3>
-              <time datetime="2008">2008</time>
-            </header>
-            <p>
-              Análise e manutenção de servidores, redes e sistemas internos da
-              instituição, com scripts para automação tanto no Windows quanto no Linux.
-            </p>
-          </article>
-        </div>
-      </div>
-    </section>
-
-    <!-- SECTION: Projetos (assets/sections/projetos) -->
-    <section class="section" id="projetos" aria-labelledby="projetos-titulo">
-      <div class="container">
-        <div class="section__header">
-          <p class="eyebrow">Projetos</p>
-        </div>
-        <!-- Indicador de scroll (mobile) -->
-        <p class="cards__hint" aria-hidden="true">← Arraste para ver mais →</p>
-
-        <div class="cards">
-          <article class="card">
-            <h3>C4ts - Tecnologia e Inovação</h3>
-            <p>
-              Landing page modular com páginas rápidas, layout editorial e foco em
-              conversão.
-            </p>
-            <a href="#contato" class="text-link" aria-label="Detalhes sobre C4ts">Solicitar detalhes</a>
-          </article>
-          <article class="card">
-            <h3>BeautyCare</h3>
-            <p>
-              Website para captação de insights e levantamentos de dados reais
-              para análise.
-            </p>
-            <a href="#contato" class="text-link" aria-label="Detalhes sobre BeautyCare">Solicitar detalhes</a>
-          </article>
-          <article class="card">
-            <h3>Gestão de Capelas</h3>
-            <p>
-              Landing page institucional com gestão de conteúdo utilizando Strapi v4,
-              foco em agilidade e autonomia do cliente.
-            </p>
-            <a href="#contato" class="text-link" aria-label="Detalhes sobre Gestão de Capelas">Solicitar detalhes</a>
-          </article>
-        </div>
-      </div>
-    </section>
-
-    <!-- SECTION: CTA (assets/sections/cta) -->
-    <section class="section" id="contato" aria-labelledby="contato-titulo">
-      <div class="container cta__inner">
-        <div>
-          <p class="eyebrow">Contato</p>
-          <p id="contato-titulo">Vamos conversar sobre o seu próximo projeto.</p>
-          <p>
-            Estou disponível para trabalhos freelance e parcerias. Respondo em
-            até 48 horas úteis.
-          </p>
-        </div>
-        <div class="cta__actions">
-          <a class="btn primary" href="mailto:luis.fneves@proton.me">
-            <svg aria-hidden="true" viewBox="0 0 24 24" focusable="false">
-              <path
-                d="M4 5h16a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V6a1 1 0 0 1 1-1zm0 2v.2l8 5.2 8-5.2V7H4zm16 10V9.5l-7.4 4.8a1 1 0 0 1-1.2 0L4 9.5V17h16z" />
-            </svg>
-            Enviar email
-          </a>
-          <a class="btn ghost" href="https://www.linkedin.com/in/luisneves-dev/" target="_blank"
-            rel="noopener noreferrer">
-            <svg aria-hidden="true" viewBox="0 0 24 24" focusable="false">
-              <path
-                d="M6.94 8.5H3.5V20h3.44V8.5zM5.22 7.12a1.99 1.99 0 1 0 0-3.98 1.99 1.99 0 0 0 0 3.98zM20.5 13.16c0-3.38-1.8-4.95-4.2-4.95-1.94 0-2.8 1.06-3.28 1.8V8.5h-3.3c.04.99 0 11.5 0 11.5h3.3v-6.42c0-.34.02-.68.12-.92.26-.68.86-1.38 1.86-1.38 1.32 0 1.84 1 1.84 2.48V20h3.36v-6.84z" />
-            </svg>
-            Ver LinkedIn
-          </a>
-        </div>
+    <!-- SECTION: Contact -->
+    <section class="section" id="contact" aria-labelledby="contact-title">
+      <div class="container cta__inner" id="contact-content">
+        <!-- Rendered by components.js -->
       </div>
     </section>
   </main>
 
-  <!-- SECTION: Footer (assets/sections/footer) -->
+  <!-- FOOTER -->
   <footer class="site-footer" role="contentinfo">
-    <div class="container footer__inner">
-      <p>© 2024 Luis Neves.</p>
-      <div class="footer__links">
-        <a href="https://www.linkedin.com/in/luisneves-dev/" target="_blank" rel="noopener noreferrer">LinkedIn</a>
-        <a href="https://github.com/luisoneves" target="_blank" rel="noopener noreferrer">GitHub</a>
-        <a href="https://wa.me/55012992486884" target="_blank" rel="noopener noreferrer">WhatsApp</a>
-      </div>
+    <div class="container footer__inner" id="footer-content">
+      <!-- Rendered by components.js -->
     </div>
   </footer>
 </body>

@@ -1,0 +1,533 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Luis Otavio Neves Faustino — Currículo</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --navy:   #0F1D35;
+    --blue:   #1C4ED8;
+    --blue2:  #2563EB;
+    --sky:    #BFDBFE;
+    --gray:   #64748B;
+    --lgray:  #F8FAFC;
+    --border: #E2E8F0;
+    --black:  #0F172A;
+    --white:  #FFFFFF;
+    --tag-bg: #EFF6FF;
+    --tag-fg: #1D4ED8;
+    --green:  #059669;
+  }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 9pt;
+    color: var(--black);
+    background: var(--white);
+    line-height: 1.55;
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+
+  /* ── LAYOUT ── */
+  .page {
+    width: 210mm;
+    min-height: 297mm;
+    margin: 0 auto;
+    background: var(--white);
+  }
+
+  /* ── HEADER ── */
+  .header {
+    background: var(--navy);
+    padding: 20px 24px 16px;
+    position: relative;
+    overflow: hidden;
+  }
+  .header::after {
+    content: '';
+    position: absolute;
+    right: -40px; top: -40px;
+    width: 180px; height: 180px;
+    border-radius: 50%;
+    background: rgba(37, 99, 235, 0.18);
+  }
+  .header::before {
+    content: '';
+    position: absolute;
+    right: 60px; bottom: -20px;
+    width: 100px; height: 100px;
+    border-radius: 50%;
+    background: rgba(37, 99, 235, 0.10);
+  }
+
+  .name {
+    font-size: 20pt;
+    font-weight: 600;
+    color: var(--white);
+    letter-spacing: -0.3px;
+    line-height: 1.1;
+  }
+  .title-line {
+    font-size: 8.5pt;
+    font-weight: 300;
+    color: var(--sky);
+    margin-top: 3px;
+    letter-spacing: 0.3px;
+  }
+  .contact-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 4px 16px;
+    margin-top: 10px;
+  }
+  .contact-item {
+    font-size: 7.5pt;
+    color: #93C5FD;
+    font-family: 'DM Mono', monospace;
+  }
+  .contact-item span { color: rgba(255,255,255,0.45); margin-right: 4px; }
+
+  /* ── BODY ── */
+  .body { padding: 0 24px 20px; }
+
+  /* ── SECTION ── */
+  .section { margin-top: 13px; }
+  .sec-head {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 6px;
+  }
+  .sec-label {
+    font-size: 7pt;
+    font-weight: 600;
+    letter-spacing: 1.4px;
+    text-transform: uppercase;
+    color: var(--blue);
+  }
+  .sec-rule {
+    flex: 1;
+    height: 1px;
+    background: linear-gradient(to right, var(--blue), var(--border));
+  }
+
+  /* ── SOBRE ── */
+  .sobre-text {
+    font-size: 8.5pt;
+    color: #334155;
+    line-height: 1.6;
+    max-width: 172mm;
+  }
+  .sobre-text strong { color: var(--navy); font-weight: 600; }
+
+  /* ── SKILLS GRID ── */
+  .skills-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 4px;
+  }
+  .skill-row {
+    display: flex;
+    align-items: baseline;
+    gap: 6px;
+    padding: 4px 8px;
+    background: var(--lgray);
+    border: 1px solid var(--border);
+    border-radius: 4px;
+  }
+  .skill-cat {
+    font-size: 7pt;
+    font-weight: 600;
+    color: var(--blue2);
+    white-space: nowrap;
+    min-width: 78px;
+  }
+  .skill-val {
+    font-size: 7.5pt;
+    color: #334155;
+    line-height: 1.4;
+  }
+
+  /* ── EXP ── */
+  .exp-block { margin-bottom: 10px; }
+  .exp-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+  }
+  .exp-role { font-size: 9pt; font-weight: 600; color: var(--navy); }
+  .exp-period { font-size: 7.5pt; color: var(--gray); font-family: 'DM Mono', monospace; }
+  .exp-company { font-size: 7.5pt; color: var(--blue2); font-style: italic; margin-bottom: 3px; }
+  .exp-bullets { padding-left: 0; list-style: none; }
+  .exp-bullets li {
+    font-size: 8pt;
+    color: #334155;
+    line-height: 1.55;
+    padding-left: 11px;
+    position: relative;
+    margin-bottom: 1px;
+  }
+  .exp-bullets li::before {
+    content: '›';
+    position: absolute;
+    left: 0;
+    color: var(--blue2);
+    font-weight: 600;
+  }
+
+  /* ── TRACK LABEL ── */
+  .proj-track-label {
+    font-size: 7pt;
+    font-weight: 600;
+    letter-spacing: 0.8px;
+    text-transform: uppercase;
+    color: var(--gray);
+    border-left: 3px solid var(--blue2);
+    padding-left: 7px;
+    margin-bottom: 5px;
+    margin-top: 2px;
+  }
+
+  /* ── PROJECTS ── */
+  .projects-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 7px;
+  }
+  .proj-card {
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 8px 10px;
+    position: relative;
+    overflow: hidden;
+  }
+  .proj-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0;
+    width: 3px; height: 100%;
+    background: var(--blue2);
+    border-radius: 6px 0 0 6px;
+  }
+  .proj-title { font-size: 8.5pt; font-weight: 600; color: var(--navy); margin-bottom: 1px; }
+  .proj-phase {
+    font-size: 6pt;
+    font-weight: 500;
+    color: var(--gray);
+    background: var(--border);
+    border-radius: 3px;
+    padding: 1px 4px;
+    margin-left: 4px;
+    font-family: 'DM Mono', monospace;
+    vertical-align: middle;
+  }
+  .proj-phase.featured { background: #DBEAFE; color: var(--blue2); }
+  .proj-card--featured { border-color: #93C5FD; background: #F8FBFF; }
+  .proj-card--featured::before { background: var(--blue2); width: 4px; }
+  .proj-url { font-size: 6.5pt; color: var(--gray); font-family: 'DM Mono', monospace; margin-bottom: 4px; }
+  .proj-desc { font-size: 7.5pt; color: #475569; line-height: 1.5; margin-bottom: 5px; }
+  .proj-badge { font-size: 7pt; font-weight: 600; color: var(--gray); margin-bottom: 3px; }
+  .tags { display: flex; flex-wrap: wrap; gap: 3px; }
+  .tag {
+    font-size: 6.5pt;
+    font-weight: 500;
+    color: var(--tag-fg);
+    background: var(--tag-bg);
+    border: 1px solid #BFDBFE;
+    border-radius: 3px;
+    padding: 1px 5px;
+    font-family: 'DM Mono', monospace;
+  }
+
+  /* ── AI BOX ── */
+  .ai-box {
+    border: 1px solid #BFDBFE;
+    background: #EFF6FF;
+    border-radius: 6px;
+    padding: 7px 10px;
+    display: flex;
+    gap: 10px;
+    align-items: flex-start;
+  }
+  .ai-icon { font-size: 14pt; line-height: 1; }
+  .ai-title { font-size: 8pt; font-weight: 600; color: var(--navy); margin-bottom: 2px; }
+  .ai-desc { font-size: 7.5pt; color: #334155; line-height: 1.55; }
+  .ai-desc strong { color: var(--blue2); }
+
+  /* ── FORMATION ── */
+  .edu-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    margin-bottom: 1px;
+  }
+  .edu-course { font-size: 8.5pt; font-weight: 600; color: var(--navy); }
+  .edu-period { font-size: 7.5pt; color: var(--gray); font-family: 'DM Mono', monospace; }
+  .edu-inst { font-size: 7.5pt; color: var(--gray); font-style: italic; margin-bottom: 5px; }
+
+  /* ── LANGS ── */
+  .langs-row { display: flex; gap: 16px; }
+  .lang-item { display: flex; gap: 5px; align-items: center; }
+  .lang-name { font-size: 8pt; font-weight: 600; color: var(--navy); }
+  .lang-level { font-size: 7.5pt; color: var(--gray); }
+
+  /* ── DIVIDER ── */
+  .col-divider {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+  }
+
+  /* ── PRINT ── */
+  @media print {
+    body { font-size: 9pt; }
+    .page { width: 100%; margin: 0; }
+    .header { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  }
+  @page { margin: 0; size: A4; }
+</style>
+</head>
+<body>
+<div class="page">
+
+  <!-- HEADER -->
+  <div class="header">
+    <div class="name">Luis Otavio Neves Faustino</div>
+    <div class="title-line">Desenvolvedor Fullstack &nbsp;·&nbsp; Product Engineer (em formação) &nbsp;·&nbsp; Arquitetura de Sistemas</div>
+    <div class="contact-row">
+      <span class="contact-item"><span>📍</span>Cachoeira Paulista, SP</span>
+      <span class="contact-item"><span>📱</span>(12) 99248-6884</span>
+      <span class="contact-item"><span>✉</span><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="71404848401d1e051007181e1f31161c10181d5f121e1c">[email&#160;protected]</a></span>
+      <span class="contact-item"><span>🔗</span>linkedin.com/in/luisneves-dev</span>
+      <span class="contact-item"><span>💻</span>github.com/luisoneves</span>
+      <span class="contact-item"><span>🌐</span>dev-luisneves.me</span>
+    </div>
+  </div>
+
+  <div class="body">
+
+    <!-- SOBRE -->
+    <div class="section">
+      <div class="sec-head"><span class="sec-label">Sobre Mim</span><div class="sec-rule"></div></div>
+      <p class="sobre-text">
+        Desenvolvedor Fullstack com mais de 15 anos de bagagem em TI e infraestrutura, em transição consolidada para
+        desenvolvimento de software moderno. Meu interesse central é <strong>Engenharia de Produto e Arquitetura de Sistemas</strong> —
+        como estruturar soluções bem definidas para que a execução seja eficiente e escalável, especialmente num
+        contexto onde IAs precisam de <strong>contexto e regras claros</strong> para entregar bem.
+        Busco vaga de <strong>estágio, trainee ou júnior</strong> para crescer em equipe e aprofundar minha formação
+        em engenharia de software.
+      </p>
+    </div>
+
+    <!-- SKILLS -->
+    <div class="section">
+      <div class="sec-head"><span class="sec-label">Competências Técnicas</span><div class="sec-rule"></div></div>
+      <div class="skills-grid">
+        <div class="skill-row"><span class="skill-cat">Frontend</span><span class="skill-val">Next.js 15/16, React 19, TypeScript Strict, Tailwind CSS, Shadcn/ui</span></div>
+        <div class="skill-row"><span class="skill-cat">Backend &amp; Dados</span><span class="skill-val">Fastify, Node.js, Prisma ORM, PostgreSQL, APIs REST, Zod</span></div>
+        <div class="skill-row"><span class="skill-cat">Infra &amp; DevOps</span><span class="skill-val">Docker, Docker Compose, CI/CD (Vercel / Railway), Git Flow, Turborepo</span></div>
+        <div class="skill-row"><span class="skill-cat">Data &amp; Growth</span><span class="skill-val">Microsoft Clarity, Google Tag Manager, Yandex Metrica, SEO Técnico</span></div>
+        <div class="skill-row"><span class="skill-cat">Arquitetura</span><span class="skill-val">Monorepo, Multi-tenancy, RLS, Feature Flags, Registry Pattern, Config-driven</span></div>
+        <div class="skill-row"><span class="skill-cat">Engenharia de IA</span><span class="skill-val">Structured prompting, knowledge base, fluxos agentic com contexto versionado</span></div>
+      </div>
+    </div>
+
+    <!-- EXPERIÊNCIA -->
+    <div class="section">
+      <div class="sec-head"><span class="sec-label">Experiência Profissional</span><div class="sec-rule"></div></div>
+
+      <div class="exp-block">
+        <div class="exp-header">
+          <span class="exp-role">Co-fundador &amp; Desenvolvedor Fullstack</span>
+          <span class="exp-period">Jan 2024 – Atual</span>
+        </div>
+        <div class="exp-company">C4ts Solutions — Laboratório de projetos autorais</div>
+        <ul class="exp-bullets">
+          <li>Desenvolvimento de produtos digitais no ciclo completo: arquitetura, código, deploy e observabilidade.</li>
+          <li>Adoção de Next.js 16, TypeScript Strict e Turborepo com monorepo multi-app (web, admin, api, packages).</li>
+          <li>Implementação de telemetria (Clarity / Yandex) para decisões de UX orientadas por dados reais.</li>
+          <li>Containerização com Docker Compose para paridade total entre ambiente de desenvolvimento e produção.</li>
+          <li>Uso de fluxos estruturados de IA (knowledge base versionada, tarefas atômicas, AGENTS.md) para manter produtividade e consistência arquitetural.</li>
+        </ul>
+      </div>
+
+      <div class="exp-block">
+        <div class="exp-header">
+          <span class="exp-role">Analista de TI / Infraestrutura — Resumo</span>
+          <span class="exp-period">2007 – 2021</span>
+        </div>
+        <div class="exp-company">INPE, Faculdade Canção Nova, AcPark, Gloobert</div>
+        <ul class="exp-bullets">
+          <li>15+ anos em suporte técnico, redes, servidores e automação em ambientes corporativos críticos.</li>
+          <li>Base sólida em troubleshooting sistemático, documentação técnica e sustentação de ambientes de produção.</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- PROJETOS -->
+    <div class="section">
+      <div class="sec-head"><span class="sec-label">Projetos em Destaque</span><div class="sec-rule"></div></div>
+
+      <!-- TRILHA CAPELAS -->
+      <div class="proj-track-label">Trilha de aprendizado: Capelas → Diocese SaaS</div>
+      <div class="projects-grid" style="margin-bottom:8px;">
+
+        <div class="proj-card">
+          <div class="proj-title">Capelas — Mockup <span class="proj-phase">v1 · front only</span></div>
+          <div class="proj-url">web-static-mockup.vercel.app</div>
+          <div class="proj-desc">
+            Mockup frontend para apresentar features ao cliente. Script de extração automática de dados
+            do site original para popular o protótipo. Permitiu validar layout e navegação antes de
+            qualquer backend — e revelar o que o cliente realmente precisava gerenciar.
+          </div>
+          <div class="tags">
+            <span class="tag">Next.js</span><span class="tag">TypeScript</span>
+            <span class="tag">Script extração</span><span class="tag">Prototipagem</span>
+          </div>
+        </div>
+
+        <div class="proj-card">
+          <div class="proj-title">Sistema de Gestão de Capelas <span class="proj-phase">v2 · headless</span></div>
+          <div class="proj-url">gestao-capelas.vercel.app</div>
+          <div class="proj-desc">
+            1 administrador + 200 filiais com layouts e conteúdo editáveis. Arquitetura headless
+            com Strapi v4 + Next.js + Docker. Ao escalar para multi-filial, identificou que o
+            Strapi não era a ferramenta ideal — motivando a próxima refatoração.
+          </div>
+          <div class="tags">
+            <span class="tag">Next.js 15</span><span class="tag">Strapi v4</span>
+            <span class="tag">PostgreSQL</span><span class="tag">Docker</span><span class="tag">RLS</span>
+          </div>
+        </div>
+
+        <div class="proj-card proj-card--featured" style="grid-column: span 2;">
+          <div class="proj-title">Diocese SaaS Platform <span class="proj-phase featured">v3 · privado · em desenvolvimento</span></div>
+          <div class="proj-url">github.com/luisoneves</div>
+          <div class="proj-desc">
+            Refatoração completa motivada pelos aprendizados das versões anteriores. Monorepo com Turborepo
+            (apps: web, admin, api · packages: database, types, validators). Arquitetura em camadas
+            (domain / application / transport), RBAC hierárquico (Diocese → Chapel → Editor),
+            feature flags por tenant e Row-Level Security. Stack própria sem dependência de CMS externo.
+          </div>
+          <div class="tags">
+            <span class="tag">Fastify</span><span class="tag">Next.js 16</span><span class="tag">Prisma</span>
+            <span class="tag">PostgreSQL</span><span class="tag">Turborepo</span><span class="tag">Docker</span>
+            <span class="tag">Multi-tenancy</span><span class="tag">RBAC</span><span class="tag">Feature Flags</span>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- TRILHA WAAS + OUTROS -->
+      <div class="proj-track-label">Estudos &amp; Produto</div>
+      <div class="projects-grid">
+
+        <div class="proj-card proj-card--featured">
+          <div class="proj-title">WaaS — Website as a Service <span class="proj-phase featured">privado · em desenvolvimento</span></div>
+          <div class="proj-url">github.com/luisoneves</div>
+          <div class="proj-desc">
+            Plataforma para otimizar freelances: 1 deploy + N clientes. Engine config-driven com
+            Registry Pattern, renderer dinâmico e theme engine via CSS variables. Multi-tenant por
+            host com conteúdo, features, layout e componentes isolados por tenant-id.
+            Futuro backbone para manutenção escalável de projetos.
+          </div>
+          <div class="tags">
+            <span class="tag">Next.js 15</span><span class="tag">Tailwind 4</span><span class="tag">Zod</span>
+            <span class="tag">Registry Pattern</span><span class="tag">Config-driven</span><span class="tag">Multi-tenant</span>
+          </div>
+        </div>
+
+        <div style="display:flex; flex-direction:column; gap:7px;">
+          <div class="proj-card">
+            <div class="proj-title">C4ts Market Research <span class="proj-phase">beta</span></div>
+            <div class="proj-url">c4ts-project-market-research.vercel.app</div>
+            <div class="proj-desc">
+              Plataforma para captação de clientes freela e posicionamento local. Forms e blob
+              funcionando para receber pedidos de orçamento e briefings de produto.
+            </div>
+            <div class="tags">
+              <span class="tag">Next.js 16</span><span class="tag">TypeScript</span><span class="tag">Git Flow</span>
+            </div>
+          </div>
+
+          <div class="proj-card">
+            <div class="proj-title">BeautyCare — Estudo Vue.js + UI/UX</div>
+            <div class="proj-url">beauty-care-smoky.vercel.app</div>
+            <div class="proj-desc">
+              Exploração de Vue.js para comparar com React/Next.js. Foco em identidade visual
+              elegante e validação de produto via Clarity e GTM com análise de mapas de calor.
+            </div>
+            <div class="tags">
+              <span class="tag">Vue.js</span><span class="tag">M. Clarity</span>
+              <span class="tag">GTM</span><span class="tag">SEO</span>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- ENGENHARIA COM IA -->
+    <div class="section">
+      <div class="sec-head"><span class="sec-label">Uso de IA no Desenvolvimento</span><div class="sec-rule"></div></div>
+      <div class="ai-box">
+        <div class="ai-icon">⚙️</div>
+        <div>
+          <div class="ai-title">Fluxos estruturados com IA (2025–2026)</div>
+          <div class="ai-desc">
+            Uso IA como ferramenta de engenharia, não como atalho: <strong>knowledge base versionada em Git</strong>
+            (.ai/ com AGENTS.md, PRD, tarefas atômicas), <strong>contexto explícito por sessão</strong> (sem depender
+            de histórico de chat), e decisões arquiteturais documentadas antes do código.
+            Resultado: projetos com arquitetura consistente e onboarding de agentes previsível.
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- FORMAÇÃO + IDIOMAS lado a lado -->
+    <div class="col-divider" style="margin-top:13px;">
+
+      <div>
+        <div class="sec-head"><span class="sec-label">Formação</span><div class="sec-rule"></div></div>
+        <div class="edu-row">
+          <span class="edu-course">Análise e Desenvolvimento de Sistemas</span>
+          <span class="edu-period">2024 – 2026</span>
+        </div>
+        <div class="edu-inst">FATEC São Paulo · cursando</div>
+
+        <div class="edu-row">
+          <span class="edu-course">Gestão de Tecnologia da Informação</span>
+          <span class="edu-period">2012 – 2015</span>
+        </div>
+        <div class="edu-inst">Universidade Metropolitana de Santos</div>
+
+        <div class="edu-row">
+          <span class="edu-course">Técnico em Hardware e Informática</span>
+          <span class="edu-period">2010 – 2011</span>
+        </div>
+        <div class="edu-inst">Senac São Paulo</div>
+      </div>
+
+      <div>
+        <div class="sec-head"><span class="sec-label">Idiomas</span><div class="sec-rule"></div></div>
+        <div class="langs-row" style="flex-direction:column; gap:5px;">
+          <div class="lang-item">
+            <span class="lang-name">Português</span>
+            <span class="lang-level">— Nativo</span>
+          </div>
+          <div class="lang-item">
+            <span class="lang-name">Inglês</span>
+            <span class="lang-level">— A2–B1 (leitura e escrita técnica)</span>
+          </div>
+        </div>
+
+        <div class="sec-head" style="margin-top:10px;"><span class="sec-label">Estudos em andamento</span><div class="sec-rule"></div></div>
+        <div style="font-size:7.5pt; color:#475569; line-height:1.7;">
+          System Design &nbsp;·&nbsp; Arquitetura SaaS &nbsp;·&nbsp; Clean Architecture<br>
+          RBAC avançado &nbsp;·&nbsp; Observabilidade &nbsp;·&nbsp

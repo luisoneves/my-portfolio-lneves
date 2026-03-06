@@ -61,7 +61,13 @@ const Navigation = {
         this.toggle = document.querySelector(Constants.DOM.navigation.toggle);
         this.nav = document.querySelector(Constants.DOM.navigation.nav);
         this.header = document.querySelector(Constants.DOM.navigation.header);
+    },
+
+    rebindLinks() {
         this.links = document.querySelectorAll(Constants.DOM.navigation.links);
+        this.links.forEach(link => {
+            link.addEventListener('click', () => this.closeMenu());
+        });
     },
 
     validateElements() {
@@ -70,12 +76,7 @@ const Navigation = {
 
     bindEvents() {
         this.toggle.addEventListener('click', () => this.toggleMenu());
-        this.links.forEach(link => {
-            link.addEventListener('click', () => this.closeMenu());
-        });
 
-        // Bind methods for listeners to maintain scope/reference if needed, 
-        // or use arrow functions in addEventListener
         this.handleKeydown = this.handleKeydown.bind(this);
         this.handleClickOutside = this.handleClickOutside.bind(this);
     },
@@ -88,7 +89,7 @@ const Navigation = {
         this.isOpen = true;
         this.nav.classList.add('is-open');
         this.toggle.setAttribute('aria-expanded', 'true');
-        this.toggle.setAttribute('aria-label', 'Fechar menu');
+        this.toggle.setAttribute('aria-label', 'Close menu');
         document.body.style.overflow = 'hidden';
 
         document.addEventListener('keydown', this.handleKeydown);
@@ -99,7 +100,7 @@ const Navigation = {
         this.isOpen = false;
         this.nav.classList.remove('is-open');
         this.toggle.setAttribute('aria-expanded', 'false');
-        this.toggle.setAttribute('aria-label', 'Abrir menu');
+        this.toggle.setAttribute('aria-label', 'Open menu');
         document.body.style.overflow = '';
 
         document.removeEventListener('keydown', this.handleKeydown);
@@ -129,7 +130,6 @@ const Theme = {
     },
 
     cacheDOM() {
-        // Handle ID selectors by removing '#' if needed, dependent on how we query
         const toggleId = Constants.DOM.theme.toggle.replace('#', '');
         const logoId = Constants.DOM.theme.logo.replace('#', '');
 
@@ -228,16 +228,16 @@ const Schema = {
                     "@type": "WebSite",
                     "@id": "https://www.luisneves.dev/#website",
                     "url": "https://www.luisneves.dev/",
-                    "name": "Luis Neves | Portfólio",
-                    "inLanguage": "pt-BR",
+                    "name": "Luis Neves | Software Engineer",
+                    "inLanguage": "en",
                     "publisher": { "@id": "https://www.luisneves.dev/#person" }
                 },
                 {
                     "@type": "ProfilePage",
                     "@id": "https://www.luisneves.dev/#profile",
                     "url": "https://www.luisneves.dev/",
-                    "name": "Luis Neves | Desenvolvedor Fullstack e Front-end",
-                    "inLanguage": "pt-BR",
+                    "name": "Luis Neves | Software Engineer",
+                    "inLanguage": "en",
                     "isPartOf": { "@id": "https://www.luisneves.dev/#website" },
                     "about": { "@id": "https://www.luisneves.dev/#person" }
                 },
@@ -245,15 +245,15 @@ const Schema = {
                     "@type": "Person",
                     "@id": "https://www.luisneves.dev/#person",
                     "name": "Luis Neves",
-                    "jobTitle": "Desenvolvedor Fullstack e Front-end",
+                    "jobTitle": "Software Engineer",
                     "url": "https://www.luisneves.dev/",
-                    "description": "Desenvolvedor fullstack especializado em interfaces web performáticas, acessíveis e bem estruturadas.",
+                    "description": "Software engineer building modular systems, SaaS platforms, and experimental products.",
                     "image": "https://www.luisneves.dev/images/og-image.png",
                     "sameAs": [
                         "https://www.linkedin.com/in/luisneves-dev/",
                         "https://github.com/luisoneves"
                     ],
-                    "knowsAbout": ["HTML", "CSS", "JavaScript", "TypeScript", "SEO técnico", "Acessibilidade"]
+                    "knowsAbout": ["HTML", "CSS", "JavaScript", "TypeScript", "Software Architecture", "SaaS", "SEO"]
                 }
             ]
         };
@@ -269,12 +269,19 @@ const Schema = {
 
 // Init
 document.addEventListener('DOMContentLoaded', () => {
+    // Render components from data
+    Components.init(siteData);
+
+    // Init navigation (must run after nav links are rendered)
     Navigation.init();
+    Navigation.rebindLinks();
+
+    // Init theme and schema
     Theme.init();
     Schema.init();
 
     console.log(
-        '%cLuis Neves | Developer',
+        '%cLuis Neves | Software Engineer',
         'background: #d76f30; color: white; padding: 4px 8px; border-radius: 4px; font-weight: bold;'
     );
 });
