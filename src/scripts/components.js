@@ -65,7 +65,7 @@ export const Components = {
           </div>
           <div class="card-flip__back">
             <div class="profile-avatar">
-              <img src="${shared.photo}" alt="${hero.name}" width="160" height="160" loading="lazy">
+              <img src="${shared.photo}" alt="${hero.name}" width="460" height="260" loading="lazy">
             </div>
             <p class="card-flip__name">${hero.name}</p>
             <p class="card-flip__role">${hero.cardRole}</p>
@@ -118,9 +118,9 @@ export const Components = {
       card.addEventListener("click", (e) => {
         // Prevent interfering with actual links inside the card
         if (e.target.closest("a") || e.target.tagName.toLowerCase() === "a") return;
-        
+
         const isAlreadyHero = card.classList.contains("is-hero");
-        
+
         // Reset all cards first
         cards.forEach((c) => {
           c.classList.remove("is-hero");
@@ -135,7 +135,7 @@ export const Components = {
           card.setAttribute("aria-expanded", "true");
         }
       });
-      
+
       // Accessibility: Allow keyboard to trigger click
       card.addEventListener("keydown", (e) => {
         if (e.key === "Enter" || e.key === " ") {
@@ -173,10 +173,10 @@ export const Components = {
         if (entry.isIntersecting) {
           const value = entry.target.dataset.progress;
           entry.target.style.width = value + "%";
-          
+
           // Add visible class to the parent .skill for the fade-in transform
           entry.target.closest('.skill').classList.add('visible');
-          
+
           obs.unobserve(entry.target);
         }
       });

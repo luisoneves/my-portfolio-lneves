@@ -202,16 +202,24 @@ html.dark .badge--dev {
 .hero__card {
     position: relative;
     perspective: 1000px;
-    background: transparent;
-    border: none;
+    width: min(420px, 100%);
+    max-width: 420px;
+    justify-self: end;
+    background: rgba(20, 20, 20, 0.6);
+    /* backdrop-filter: blur(8px); */
+    /* -webkit-backdrop-filter: blur(8px); */
+    border: 1px solid rgba(0, 255, 136, 0.25);
+    border-radius: var(--radius-lg);
+    overflow: hidden;
     padding: 0;
-    box-shadow: none;
+    box-shadow: var(--shadow-lg);
     animation: slideUp 0.8s ease 0.2s both;
 }
 
 .card-flip__inner {
     position: relative;
     width: 100%;
+    min-height: 440px;
     height: 100%;
     transform-style: preserve-3d;
     transition: transform 0.6s ease;
@@ -228,13 +236,13 @@ html.dark .badge--dev {
     inset: 0;
     backface-visibility: hidden;
     -webkit-backface-visibility: hidden;
-    background: rgba(255, 255, 255, 0.7);
-    backdrop-filter: blur(8px);
-    -webkit-backdrop-filter: blur(8px);
-    border: 1px solid rgba(216, 210, 201, 0.5);
+    background: rgba(255, 255, 255, 0.35);
+    /* backdrop-filter: blur(8px); */
+    /* -webkit-backdrop-filter: blur(8px); */
+    border: 1px solid rgba(216, 210, 201, 0.35);
     border-radius: var(--radius-lg);
     padding: var(--space-xl);
-    box-shadow: var(--shadow-lg);
+    box-shadow: none;
 }
 
 .card-flip__front {
@@ -255,8 +263,8 @@ html.dark .badge--dev {
 }
 
 .profile-avatar {
-    width: 160px;
-    height: 160px;
+    width: 360px;
+    height: 360px;
     border-radius: 50%;
     overflow: hidden;
     position: relative;
@@ -305,19 +313,20 @@ html.dark .profile-avatar:hover {
 html.dark .card-flip__front,
 html.dark .card-flip__back {
     background: rgba(20, 20, 20, 0.6);
-    backdrop-filter: blur(8px);
-    -webkit-backdrop-filter: blur(8px);
+    /* backdrop-filter: blur(8px); */
+    /* -webkit-backdrop-filter: blur(8px); */
     border: 1px solid rgba(0, 255, 136, 0.4);
 }
 
 html.dark .hero__card {
-    border: 1px solid var(--color-primary-neon);
+    border: 1px solid rgba(0, 255, 136, 0.4);
     box-shadow: 0 0 12px rgba(0, 255, 136, 0.15);
 }
 
 @media (max-width: 900px) {
     .hero__card {
-        padding: var(--space-lg);
+        justify-self: center;
+        width: min(320px, 100%);
     }
 }
 

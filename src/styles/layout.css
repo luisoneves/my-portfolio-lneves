@@ -19,7 +19,7 @@
     pointer-events: none;
     z-index: var(--z-negative);
     will-change: transform;
-    filter: blur(0.3px);
+    /* filter: blur(0.3px); */
 }
 
 html.dark .watermark {
@@ -94,8 +94,8 @@ html.dark .watermark {
 .site-header {
     position: sticky;
     top: 0;
-    backdrop-filter: blur(10px);
-    -webkit-backdrop-filter: blur(10px);
+    /* backdrop-filter: blur(10px); */
+    /* -webkit-backdrop-filter: blur(10px); */
     background: rgba(244, 241, 237, 0.85);
     border-bottom: 1px solid var(--border-subtle);
     z-index: var(--z-sticky);
