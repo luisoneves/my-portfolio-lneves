@@ -23,8 +23,8 @@
 
     --color-primary-light: #fff7ed;
     --color-primary-base: #d76f30;
-    --color-primary-dark: #b85a23;
-    --color-primary-neon: #00ff88;
+    --color-primary-dark: #a04f1e;
+    --color-primary-neon: #00ff88; /* Keep old green neon for dark mode */
 
     /* Cores Semânticas - Light Mode */
     --bg-body: #f4f1ed;
@@ -33,7 +33,7 @@
 
     --text-primary: #1a1a1a;
     --text-secondary: #4a4a4a;
-    --text-tertiary: #71717a;
+    --text-tertiary: #636369;
 
     --border-subtle: #d8d2c9;
 
@@ -87,7 +87,7 @@
     --duration-normal: 300ms;
 
     /* Decoração Hero */
-    --hero-illustration: none;
+    --hero-illustration: url("--hero-illustration: none;");
 
     color-scheme: light;
 }
@@ -188,7 +188,7 @@ select {
 
 /* --- Typography --- */
 body {
-    font-family: var(--font-display);
+    font-family: var(--font-sans);
     color: var(--text-primary);
     line-height: 1.6;
 }

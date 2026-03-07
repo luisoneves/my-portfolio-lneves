@@ -7,7 +7,7 @@
 
   <!-- Preload Critical Resources -->
   <link rel="preload"
-    href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap"
+    href="https://fonts.googleapis.com/css2?family=Syne:wght@600;700;800&family=DM+Sans:wght@300;400;500&family=DM+Mono:wght@400;500&display=swap"
     as="style">
   <link rel="dns-prefetch" href="https://fonts.googleapis.com">
   <link rel="dns-prefetch" href="https://fonts.gstatic.com">
@@ -19,13 +19,13 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link
-    href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap"
+    href="https://fonts.googleapis.com/css2?family=Syne:wght@600;700;800&family=DM+Sans:wght@300;400;500&family=DM+Mono:wght@400;500&display=swap"
     rel="stylesheet">
 
   <!-- Primary SEO -->
-  <title>Luis Neves | Software Engineer</title>
+  <title>Luis Neves — Software Engineer · Product Engineering</title>
   <meta name="description"
-    content="Software engineer building modular systems, SaaS platforms, and experimental products. Focused on architecture, clean code, and product engineering.">
+    content="Desenvolvedor Fullstack com foco em Engenharia de Produto e Arquitetura de Sistemas. Construindo plataformas SaaS, WaaS e sistemas modulares.">
   <meta name="robots" content="index, follow">
   <meta name="author" content="Luis Neves">
 
@@ -62,13 +62,14 @@
   <meta name="twitter:image" content="https://www.luisneves.dev/images/og-image.png">
   <meta name="twitter:creator" content="@luisneves">
 
-  <!-- Scripts (vanilla, no modules) -->
-  <script src="./src/data/data.js" defer></script>
-  <script src="./src/scripts/components.js" defer></script>
-  <script src="./src/scripts/main.js" defer></script>
+  <!-- Scripts (ES Modules) -->
+  <script type="module" src="./src/scripts/main.js"></script>
 </head>
 
 <body>
+  <!-- Watermark (parallax background) -->
+  <div class="watermark" aria-hidden="true"></div>
+
   <a class="skip-link" href="#main-content">Skip to content</a>
 
   <!-- HEADER -->
@@ -88,9 +89,14 @@
           <!-- Rendered by components.js -->
         </nav>
 
-        <!-- Dark Mode Toggle -->
-        <button id="dark-mode-toggle" class="dark-mode-btn" aria-label="Toggle theme">
-          <span aria-hidden="true">◑</span>
+        <!-- Language Switcher -->
+        <button id="lang-toggle" class="lang-btn" type="button" aria-label="Mudar para Português">
+          Português
+        </button>
+
+        <!-- Theme Toggle (3-state) -->
+        <button id="experimental-theme-toggle" class="dark-mode-btn" aria-label="Toggle theme">
+          <span aria-hidden="true" id="theme-icon">◑</span>
         </button>
       </div>
     </div>

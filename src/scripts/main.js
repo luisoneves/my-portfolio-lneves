@@ -1,11 +1,14 @@
 /**
  * Main JS
  * - Constants
- * - Navigation
+ * - Navigation (with scroll spy for aria-current)
  * - Theme
  * - Schema
- * - Init
+ * - Init (I18n → Components → Navigation → Theme → Schema → Parallax)
  */
+import { I18n } from './i18n.js';
+import { Components } from './components.js';
+import { Parallax } from './parallax.js';
 
 const Constants = {
     DOM: {
@@ -79,6 +82,10 @@ const Navigation = {
 
         this.handleKeydown = this.handleKeydown.bind(this);
         this.handleClickOutside = this.handleClickOutside.bind(this);
+
+        // Scroll spy for aria-current
+        this._scrollSpyTicking = false;
+        window.addEventListener('scroll', () => this.onScrollSpy(), { passive: true });
     },
 
     toggleMenu() {
@@ -89,7 +96,10 @@ const Navigation = {
         this.isOpen = true;
         this.nav.classList.add('is-open');
         this.toggle.setAttribute('aria-expanded', 'true');
-        this.toggle.setAttribute('aria-label', 'Close menu');
+
+        const data = I18n.getData();
+        this.toggle.setAttribute('aria-label', data.menuClose);
+        this.toggle.textContent = data.menuClose;
         document.body.style.overflow = 'hidden';
 
         document.addEventListener('keydown', this.handleKeydown);
@@ -100,7 +110,10 @@ const Navigation = {
         this.isOpen = false;
         this.nav.classList.remove('is-open');
         this.toggle.setAttribute('aria-expanded', 'false');
-        this.toggle.setAttribute('aria-label', 'Open menu');
+
+        const data = I18n.getData();
+        this.toggle.setAttribute('aria-label', data.menuOpen);
+        this.toggle.textContent = 'Menu';
         document.body.style.overflow = '';
 
         document.removeEventListener('keydown', this.handleKeydown);
@@ -117,7 +130,36 @@ const Navigation = {
         if (!this.nav.contains(event.target) && !this.toggle.contains(event.target)) {
             this.closeMenu();
         }
-    }
+    },
+
+    /** Scroll spy — sets aria-current on the closest section link */
+    onScrollSpy() {
+        if (this._scrollSpyTicking) return;
+        this._scrollSpyTicking = true;
+
+        requestAnimationFrame(() => {
+            const links = document.querySelectorAll(Constants.DOM.navigation.links);
+            const sections = document.querySelectorAll('main > section[id]');
+            const scrollY = window.scrollY + 120;
+
+            let currentId = '';
+            sections.forEach(section => {
+                if (section.offsetTop <= scrollY) {
+                    currentId = section.id;
+                }
+            });
+
+            links.forEach(link => {
+                if (link.getAttribute('href') === `#${currentId}`) {
+                    link.setAttribute('aria-current', 'true');
+                } else {
+                    link.removeAttribute('aria-current');
+                }
+            });
+
+            this._scrollSpyTicking = false;
+        });
+    },
 };
 
 const Theme = {
@@ -130,11 +172,9 @@ const Theme = {
     },
 
     cacheDOM() {
-        const toggleId = Constants.DOM.theme.toggle.replace('#', '');
-        const logoId = Constants.DOM.theme.logo.replace('#', '');
-
-        this.toggleBtn = document.getElementById(toggleId);
-        this.logo = document.getElementById(logoId);
+        this.toggleBtn = document.getElementById('experimental-theme-toggle');
+        this.icon = document.getElementById('theme-icon');
+        this.logo = document.getElementById('logo-navbar');
         this.metaThemeColor = document.querySelector(Constants.DOM.theme.metaThemeColor);
         this.html = document.documentElement;
     },
@@ -149,15 +189,15 @@ const Theme = {
 
     bindEvents() {
         this.toggleBtn.addEventListener('click', () => {
-            const isDark = this.html.classList.contains('dark');
-            this.setTheme(isDark ? Constants.THEMES.LIGHT : Constants.THEMES.DARK);
+            const current = this.html.getAttribute('data-theme') || 'light';
+            this.setTheme(current === 'dark' ? 'light' : 'dark');
         });
 
         document.addEventListener('keydown', (e) => {
             const shortcut = Constants.KEYBOARD.toggleTheme;
             if (e.ctrlKey === shortcut.ctrl && e.shiftKey === shortcut.shift && e.key === shortcut.key) {
-                const isDark = this.html.classList.contains('dark');
-                this.setTheme(isDark ? Constants.THEMES.LIGHT : Constants.THEMES.DARK);
+                const current = this.html.getAttribute('data-theme') || 'light';
+                this.setTheme(current === 'dark' ? 'light' : 'dark');
             }
         });
     },
@@ -165,7 +205,7 @@ const Theme = {
     watchSystemTheme() {
         window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', e => {
             if (!localStorage.getItem(Constants.STORAGE_KEYS.theme)) {
-                this.setTheme(e.matches ? Constants.THEMES.DARK : Constants.THEMES.LIGHT);
+                this.setTheme(e.matches ? 'dark' : 'light');
             }
         });
     },
@@ -177,21 +217,24 @@ const Theme = {
         if (savedTheme) {
             this.setTheme(savedTheme);
         } else if (systemDark) {
-            this.setTheme(Constants.THEMES.DARK);
+            this.setTheme('dark');
         } else {
-            this.setTheme(Constants.THEMES.LIGHT);
+            this.setTheme('light');
         }
     },
 
     setTheme(theme) {
-        const isDark = theme === Constants.THEMES.DARK;
-
-        if (isDark) {
+        this.html.classList.remove('dark');
+        this.html.setAttribute('data-theme', theme);
+        
+        if (theme === 'dark') {
             this.html.classList.add('dark');
+            if (this.icon) this.icon.textContent = '◑';
         } else {
-            this.html.classList.remove('dark');
+            if (this.icon) this.icon.textContent = '☼';
         }
 
+        const isDark = theme === 'dark';
         this.updateLogo(isDark);
         this.updateMetaColor(isDark);
         localStorage.setItem(Constants.STORAGE_KEYS.theme, theme);
@@ -203,16 +246,18 @@ const Theme = {
     },
 
     updateMetaColor(isDark) {
-        if (this.metaThemeColor) {
-            this.metaThemeColor.setAttribute('content', isDark ? '#1a1a1a' : '#d76f30');
-        }
+        if (!this.metaThemeColor) return;
+        this.metaThemeColor.setAttribute('content', isDark ? '#1a1a1a' : '#d76f30');
     }
 };
 
 const Schema = {
     init() {
         try {
-            if (document.querySelector('script[type="application/ld+json"]')) return;
+            // Remove existing schema (for re-renders on lang switch)
+            const existing = document.querySelector('script[type="application/ld+json"]');
+            if (existing) existing.remove();
+
             const data = this.generate();
             this.inject(data);
         } catch (error) {
@@ -221,6 +266,10 @@ const Schema = {
     },
 
     generate() {
+        const locale = I18n.getLocale();
+        const langData = I18n.getData();
+        const inLanguage = locale === 'pt' ? 'pt-BR' : 'en';
+
         return {
             "@context": "https://schema.org",
             "@graph": [
@@ -228,16 +277,16 @@ const Schema = {
                     "@type": "WebSite",
                     "@id": "https://www.luisneves.dev/#website",
                     "url": "https://www.luisneves.dev/",
-                    "name": "Luis Neves | Software Engineer",
-                    "inLanguage": "en",
+                    "name": langData.meta.title,
+                    "inLanguage": inLanguage,
                     "publisher": { "@id": "https://www.luisneves.dev/#person" }
                 },
                 {
                     "@type": "ProfilePage",
                     "@id": "https://www.luisneves.dev/#profile",
                     "url": "https://www.luisneves.dev/",
-                    "name": "Luis Neves | Software Engineer",
-                    "inLanguage": "en",
+                    "name": langData.meta.title,
+                    "inLanguage": inLanguage,
                     "isPartOf": { "@id": "https://www.luisneves.dev/#website" },
                     "about": { "@id": "https://www.luisneves.dev/#person" }
                 },
@@ -245,9 +294,9 @@ const Schema = {
                     "@type": "Person",
                     "@id": "https://www.luisneves.dev/#person",
                     "name": "Luis Neves",
-                    "jobTitle": "Software Engineer",
+                    "jobTitle": locale === 'pt' ? 'Engenheiro de Software' : 'Software Engineer',
                     "url": "https://www.luisneves.dev/",
-                    "description": "Software engineer building modular systems, SaaS platforms, and experimental products.",
+                    "description": langData.meta.description,
                     "image": "https://www.luisneves.dev/images/og-image.png",
                     "sameAs": [
                         "https://www.linkedin.com/in/luisneves-dev/",
@@ -269,16 +318,28 @@ const Schema = {
 
 // Init
 document.addEventListener('DOMContentLoaded', () => {
-    // Render components from data
-    Components.init(siteData);
+    // 1. I18n — detect locale, bind switcher
+    I18n.init();
 
-    // Init navigation (must run after nav links are rendered)
+    // 2. Render components with locale data
+    Components.init(I18n.getData());
+
+    // 3. Navigation (after nav links are rendered)
     Navigation.init();
     Navigation.rebindLinks();
 
-    // Init theme and schema
+    // Setup I18n callback to re-render when language changes
+    I18n.onChange = () => {
+        Components.init(I18n.getData());
+        Navigation.rebindLinks();
+    };
+
+    // 4. Theme & Schema
     Theme.init();
     Schema.init();
+
+    // 5. Parallax watermark
+    Parallax.init();
 
     console.log(
         '%cLuis Neves | Software Engineer',

@@ -1,7 +1,37 @@
 /**
  * Layout CSS
- * Grid, Sections, Header, Footer
+ * Grid, Sections, Header, Footer, Watermark
  */
+
+/* --- Watermark (Parallax Background) --- */
+.watermark {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: clamp(300px, 40vw, 600px);
+    height: clamp(300px, 40vw, 600px);
+    background-image: url("../../images/logo.svg");
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: contain;
+    opacity: 0.04;
+    pointer-events: none;
+    z-index: var(--z-negative);
+    will-change: transform;
+    filter: blur(0.3px);
+}
+
+html.dark .watermark {
+    background-image: url("../../images/logo-darkmode.svg");
+    opacity: 0.06;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .watermark {
+        transform: translate(-50%, -50%) !important;
+    }
+}
 
 /* --- Grid & Containers --- */
 .container {
@@ -124,12 +154,21 @@ html.dark .site-header {
 }
 
 .site-nav a:hover::after,
-.site-nav a:focus-visible::after {
+.site-nav a:focus-visible::after,
+.site-nav a[aria-current="true"]::after {
     width: 100%;
+}
+
+.site-nav a[aria-current="true"] {
+    color: var(--brand-primary);
 }
 
 html.dark .site-nav a {
     color: #b0ffb0;
+}
+
+html.dark .site-nav a[aria-current="true"] {
+    color: var(--color-primary-neon);
 }
 
 html.dark .site-nav a::after {
@@ -212,23 +251,7 @@ html.dark .nav-toggle {
     overflow: hidden;
 }
 
-.hero::before {
-    content: "";
-    position: absolute;
-    inset: 0;
-    background-image: url("../../images/logo.svg");
-    background-repeat: no-repeat;
-    background-position: 22% 50%;
-    background-size: clamp(320px, 35vw, 700px);
-    opacity: 0.06;
-    pointer-events: none;
-    z-index: var(--z-base);
-    filter: blur(0.2px);
-}
-
-.dark .hero::before {
-    background-image: url("../../images/logo-darkmode.svg");
-}
+/* hero::before watermark removed — replaced by global .watermark parallax */
 
 .hero__grid {
     display: grid;
@@ -399,6 +422,47 @@ html.dark .timeline-item {
     grid-template-columns: repeat(3, minmax(0, 1fr));
     gap: var(--space-lg);
     align-items: stretch;
+    transition: gap var(--duration-normal) var(--ease-in-out);
+}
+
+/* Base card transition for grid layout */
+.cards .project-card {
+    cursor: pointer;
+    transition: transform 0.4s ease-out, opacity 0.4s ease-out, grid-column 0.4s ease-out, row-gap 0.4s ease-out, box-shadow 0.4s ease-out;
+}
+
+/* Hover highlight effect on desktop for non-hero cards */
+.cards:not(.has-hero) .project-card:hover {
+    transform: translateY(-4px) scale(1.01);
+    box-shadow: var(--shadow-md);
+    border-color: var(--brand-primary);
+}
+
+/* When the grid has a hovered card */
+.cards.has-hero {
+    gap: var(--space-md);
+}
+
+/* The other cards when one is hero */
+.cards.has-hero .project-card:not(.is-hero) {
+    transform: scale(0.96);
+    opacity: 0.6;
+}
+
+/* The hero card */
+.cards.has-hero .project-card.is-hero {
+    transform: scale(1.02);
+    opacity: 1;
+    grid-column: 1 / -1; /* spans full width */
+    order: -1; /* moves to top */
+    z-index: 10;
+    box-shadow: var(--shadow-xl);
+    border-color: var(--brand-primary);
+}
+
+html.dark .cards.has-hero .project-card.is-hero {
+    border-color: var(--color-primary-neon);
+    box-shadow: 0 0 25px rgba(0, 255, 136, 0.2);
 }
 
 .cards__hint {
