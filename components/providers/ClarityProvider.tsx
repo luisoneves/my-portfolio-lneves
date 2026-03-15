@@ -6,7 +6,7 @@ export function ClarityProvider() {
     const s = document.createElement("script")
     s.type = "text/javascript"
     s.async = true
-    s.src = `https://www.clarity.ms/tag/SEU_PROJECT_ID`
+    s.src = `https://www.clarity.ms/tag/vw2ovtzbwy`
     document.head.appendChild(s)
   }, [])
   return null
