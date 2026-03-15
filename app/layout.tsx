@@ -24,7 +24,7 @@ export const metadata: Metadata = {
   description:
     "Fullstack com arquitetura-primeiro. 15+ anos de TI. Diocese SaaS, multi-tenancy, monorepo. FATEC ADS.",
   verification: {
-    google: "SEU_CODIGO_AQUI",
+    google: "LYRKoi0rwXdY7lPgurO5Z9n_bEHMZqGoEnLb-86PG6U"
   },
   openGraph: {
     title: "Luis Neves — Engineering Lead",
@@ -57,8 +57,8 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-        <ClarityProvider />
         <SmoothScrollProvider>
+          <ClarityProvider />
           <Navbar />
           <CommandPalette />
           <PageTransition>
