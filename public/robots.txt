@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://dev-luisneves.me/sitemap.xml
