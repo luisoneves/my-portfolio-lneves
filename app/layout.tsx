@@ -6,6 +6,7 @@ import { PageTransition } from "@/components/providers/PageTransition"
 import { Navbar } from "@/components/Navbar"
 import { Footer } from "@/components/Footer"
 import { CommandPalette } from "@/components/CommandPalette"
+import { ClarityProvider } from "@/components/providers/ClarityProvider"
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -18,9 +19,13 @@ const geistMono = Geist_Mono({
 })
 
 export const metadata: Metadata = {
+  metadataBase: new URL("https://dev-luisneves.me"),
   title: "Luis Neves — Engineering Lead · Software Architect",
   description:
     "Fullstack com arquitetura-primeiro. 15+ anos de TI. Diocese SaaS, multi-tenancy, monorepo. FATEC ADS.",
+  verification: {
+    google: "SEU_CODIGO_AQUI",
+  },
   openGraph: {
     title: "Luis Neves — Engineering Lead",
     description: "Não escrevo features. Estruturo sistemas.",
@@ -28,11 +33,13 @@ export const metadata: Metadata = {
     siteName: "Luis Neves",
     locale: "pt_BR",
     type: "website",
+    images: [{ url: "/og-image.png", width: 1200, height: 630 }],
   },
   twitter: {
     card: "summary_large_image",
     title: "Luis Neves — Engineering Lead",
     description: "Não escrevo features. Estruturo sistemas.",
+    images: ["/og-image.png"],
   },
   robots: {
     index: true,
@@ -50,6 +57,7 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
+        <ClarityProvider />
         <SmoothScrollProvider>
           <Navbar />
           <CommandPalette />

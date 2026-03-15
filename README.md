@@ -1,64 +1,113 @@
-# Luis Neves Portfolio
+# Luis Neves — Portfolio
 
-![Luis Neves Portfolio](assets/images/og-image.png)
+Portfólio pessoal de Luis Otavio Neves Faustino — Engineering Lead · Software Architect · FATEC ADS.
 
-Portfólio pessoal de Luis Neves, Desenvolvedor Fullstack e Front-end.
+Construído com foco em arquitetura-primeiro: identidade de produto, animações físicas e narrativa de projeto real.
 
-## 🚀 Tecnologias
+---
 
-- **HTML5**: Semântico e acessível.
-- **CSS3**: Arquitetura modular com Design Tokens e variáveis CSS.
-- **JavaScript**: ES6+ Modules (Vanilla).
-- **Tooling**: Vite, PostCSS, ESBuild, Prettier, ESLint.
+## Stack
 
-## 🛠️ Como Usar
+| Tecnologia       | Versão   | Função                            |
+|------------------|----------|-----------------------------------|
+| Next.js          | 16.1.6   | Framework principal (App Router)  |
+| React            | 19.2.3   | UI                                |
+| TypeScript       | ^5       | Tipagem strict                    |
+| Tailwind CSS     | ^4       | Estilização                       |
+| Framer Motion    | ^12      | Animações físicas (spring, tilt)  |
+| Lenis            | ^1.3     | Smooth scroll com inércia         |
+| cmdk             | ^1.1     | Command palette (⌘K)              |
+| Radix UI Dialog  | ^1.1     | Acessibilidade do palette         |
+| Vaul             | ^1.1     | Drawer                            |
+| Sonner           | ^2.0     | Toasts                            |
 
-Este projeto foi construído para ser simples e leve, sem necessidade de dependências complexas ou processos de build.
+---
 
-1. **Clone o repositório:**
+## Rodando Localmente
+
 ```bash
-git clone https://github.com/luisoneves/my-portfolio-lneves.git
+# Instalar dependências
+npm install
+
+# Rodar em desenvolvimento
+npm run dev
+
+# Build de produção
+npm run build
+
+# Lint
+npm run lint
 ```
 
-2. **Abra o projeto:**
-Você pode simplesmente abrir o arquivo `index.html` no seu navegador.
+Acesse `http://localhost:3000`
 
-**Recomendado:** Para garantir que os Módulos JavaScript funcionem corretamente (evitando erros de CORS), use uma extensão de "Live Server" no VSCode ou um servidor local simples, como:
+---
 
-- **VSCode:** Instale a extensão "Live Server" e clique em "Go Live".
-- **Python:** `python3 -m http.server`
-- **Node (npx):** `npx serve`
-
-## 📂 Estrutura de Pastas
-
-A estrutura foi reorganizada para facilitar a manutenção e escalabilidade:
+## Estrutura do Projeto
 
 ```
-├── images/
-│   └── favicon/      # Favicons e ícones
-├── public/
-│   ├── favicon/      # Favicons públicos
-│   └── images/       # Imagens públicas
-├── src/
-│   ├── scripts/      # Javascript Modular (ES6)
-│   │   └── main.js   # Ponto de entrada
-│   └── styles/       # CSS Nativo (sem pre-processadores)
-│       ├── base.css      # Reset, Tokens, Tipografia
-│       ├── components.css# Componentes (Buttons, Cards, Tags)
-│       ├── layout.css    # Grid, Sections, Header, Footer
-│       └── main.css      # Ponto de entrada CSS
-├── index.html        # Página principal
-└── README.md         # Documentação
+├── app/
+│   ├── curriculo/         # Rota /curriculo — currículo interativo
+│   ├── globals.css        # Design tokens, selection, scrollbar
+│   ├── layout.tsx         # Providers globais + meta OG
+│   └── page.tsx           # Home — composição das seções
+│
+├── components/
+│   ├── hero/
+│   │   ├── AnimatedHeading.tsx    # Heading com stagger por palavra
+│   │   └── TypingCycle.tsx        # Texto rotativo animado
+│   ├── projects/
+│   │   ├── EvolutionTimeline.tsx  # Trilha v1→v2→v3→v4
+│   │   └── ProjectCard.tsx        # Card com tilt 3D + glow
+│   ├── providers/
+│   │   ├── PageTransition.tsx     # Transição entre páginas (blur+fade)
+│   │   └── SmoothScrollProvider.tsx # Lenis smooth scroll
+│   ├── resume/
+│   │   └── ResumeDownloadButton.tsx
+│   ├── sections/
+│   │   ├── ArchitectureSection.tsx  # Monorepo + Clean Architecture
+│   │   ├── CICDSection.tsx          # Pipeline visual
+│   │   ├── ManifestoBlock.tsx       # Quote de posicionamento
+│   │   ├── NotesSection.tsx         # Engineering notes cards
+│   │   ├── ProjectsSection.tsx      # Grid de projetos com stagger
+│   │   └── StackSection.tsx         # Stack por contexto de uso
+│   ├── CommandPalette.tsx    # Palette ⌘K com navegação e links
+│   ├── CommandPaletteHint.tsx
+│   ├── Footer.tsx
+│   └── Navbar.tsx
+│
+├── lib/
+│   └── notes.ts            # Dados das engineering notes
+│
+└── public/
+    └── robots.txt
 ```
 
-## 🎨 Design System
+---
 
-O projeto utiliza **CSS Nativo** com variáveis (Custom Properties) para garantir consistência, substituindo a necessidade de frameworks como Tailwind. Isso resulta em um código mais leve e performático.
+## Funcionalidades
 
-### Cores Principais
-- Brand Primary: `#d76f30`
-- Brand Neon (Dark Mode): `#00ff88`
+- **Page transitions** — fade + blur entre rotas via Framer Motion
+- **Smooth scroll** — inércia física via Lenis
+- **Hero animado** — texto cíclico rotativo e entrada por palavras
+- **Trilha de projetos** — timeline v1→v4 com narrative de evolução
+- **Cards 3D** — tilt seguindo o mouse + glow radial
+- **Stagger reveal** — seções e cards animam ao entrar na viewport
+- **Architecture section** — monorepo e camadas Clean Architecture
+- **Command palette** — `⌘K` / `Ctrl+K` para navegar e abrir links
+- **Currículo interativo** — rota `/curriculo` com download PDF
+- **Dark mode** — via `prefers-color-scheme`
 
-## 📄 Licença
+---
 
-Este projeto é para fins de portfólio pessoal. Todos os direitos reservados.
+## Deploy
+
+Hospedado na **Vercel** com deploy automático via push na `main`.
+
+`dev-luisneves.me`
+
+---
+
+## Licença
+
+Portfólio pessoal. Todos os direitos reservados.
