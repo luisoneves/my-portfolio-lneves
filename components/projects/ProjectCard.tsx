@@ -2,21 +2,24 @@
 import { motion, useMotionValue, useSpring, useTransform, MotionValue } from "framer-motion"
 import { useRef } from "react"
 
+type ProjectStatus = "production" | "inDev" | "beta" | "done"
+
 interface Project {
   title: string
   description: string
   version: string
-  status: "produção" | "em dev" | "beta" | "concluído"
+  statusKey: ProjectStatus
+  statusLabel: string
   chips: string[]
   href?: string
   highlight?: boolean
 }
 
-const statusStyles: Record<string, string> = {
-  "produção":  "bg-green-500/10  text-green-600  dark:text-green-400",
-  "em dev":    "bg-amber-500/10  text-amber-600  dark:text-amber-400",
-  "beta":      "bg-blue-500/10   text-blue-600   dark:text-blue-400",
-  "concluído": "bg-muted         text-muted-foreground",
+const statusStyles: Record<ProjectStatus, string> = {
+  production: "bg-green-500/10  text-green-600  dark:text-green-400",
+  inDev: "bg-amber-500/10  text-amber-600  dark:text-amber-400",
+  beta: "bg-blue-500/10   text-blue-600   dark:text-blue-400",
+  done: "bg-muted         text-muted-foreground",
 }
 
 function GlowOverlay({ glowX, glowY }: { glowX: MotionValue<string>; glowY: MotionValue<string> }) {
@@ -65,7 +68,7 @@ export function ProjectCard({ project }: { project: Project }) {
       whileHover={{ scale: 1.025 }}
       transition={{ type: "spring", stiffness: 300, damping: 25 }}
       tabIndex={0}
-      aria-label={project.title}
+      aria-label={`${project.title} — ${project.statusLabel}`}
       onClick={() => project.href && window.open(project.href, "_blank")}
       onKeyDown={(e) => {
         if ((e.key === "Enter" || e.key === " ") && project.href) {
@@ -82,8 +85,8 @@ export function ProjectCard({ project }: { project: Project }) {
 
       <div className="relative z-10">
         <div className="flex justify-between items-start mb-3">
-          <span className={`text-xs px-2.5 py-0.5 rounded-full font-medium ${statusStyles[project.status]}`}>
-            {project.status}
+          <span className={`text-xs px-2.5 py-0.5 rounded-full font-medium ${statusStyles[project.statusKey]}`}>
+            {project.statusLabel}
           </span>
           <span className="font-mono text-xs text-muted-foreground">{project.version}</span>
         </div>

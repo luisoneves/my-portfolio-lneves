@@ -1,26 +1,28 @@
 "use client"
 import { useState, useEffect, useCallback } from "react"
 import { Command } from "cmdk"
-
-const commands = [
-  { group: "Navegação", items: [
-    { label: "Ir para Projetos",    action: () => document.getElementById("projetos")?.scrollIntoView({ behavior: "smooth" }) },
-    { label: "Ir para Stack",       action: () => document.getElementById("stack")?.scrollIntoView({ behavior: "smooth" }) },
-    { label: "Ir para Notas",       action: () => document.getElementById("notas")?.scrollIntoView({ behavior: "smooth" }) },
-    { label: "Ir para Arquitetura", action: () => document.getElementById("arquitetura")?.scrollIntoView({ behavior: "smooth" }) },
-  ]},
-  { group: "Links", items: [
-    { label: "Abrir GitHub",    action: () => window.open("https://github.com/luisoneves", "_blank") },
-    { label: "Ver Diocese SaaS", action: () => window.open("https://github.com/luisoneves", "_blank") },
-    { label: "Ver Gestão Capelas", action: () => window.open("https://gestao-capelas.vercel.app", "_blank") },
-    { label: "Enviar email",    action: () => window.open("mailto:contato@luisneves.dev.br") },
-    { label: "LinkedIn",        action: () => window.open("https://linkedin.com/in/luisneves-dev", "_blank") },
-  ]},
-]
+import { useTranslations } from "next-intl"
 
 export function CommandPalette() {
+  const t = useTranslations("commandPalette")
   const [open, setOpen] = useState(false)
   const [search, setSearch] = useState("")
+
+  const commands = [
+    { group: t("groups.navigation"), items: [
+      { label: t("items.goProjects"),    action: () => document.getElementById("projetos")?.scrollIntoView({ behavior: "smooth" }) },
+      { label: t("items.goStack"),       action: () => document.getElementById("stack")?.scrollIntoView({ behavior: "smooth" }) },
+      { label: t("items.goNotes"),       action: () => document.getElementById("notas")?.scrollIntoView({ behavior: "smooth" }) },
+      { label: t("items.goArchitecture"), action: () => document.getElementById("arquitetura")?.scrollIntoView({ behavior: "smooth" }) },
+    ]},
+    { group: t("groups.links"), items: [
+      { label: t("items.openGithub"),    action: () => window.open("https://github.com/luisoneves", "_blank") },
+      { label: t("items.openDiocese"), action: () => window.open("https://github.com/luisoneves", "_blank") },
+      { label: t("items.openCapelas"), action: () => window.open("https://gestao-capelas.vercel.app", "_blank") },
+      { label: t("items.sendEmail"),    action: () => window.open("mailto:contato@luisneves.dev.br") },
+      { label: t("items.openLinkedIn"),        action: () => window.open("https://linkedin.com/in/luisneves-dev", "_blank") },
+    ]},
+  ]
 
   const handleKeydown = useCallback((e: KeyboardEvent) => {
     if ((e.key === "k" && (e.metaKey || e.ctrlKey))) {
@@ -50,7 +52,7 @@ export function CommandPalette() {
           <div className="flex items-center gap-3 px-4 py-3 border-b border-border">
             <span className="text-muted-foreground text-sm">⌘</span>
             <Command.Input
-              placeholder="Buscar projetos, links..."
+              placeholder={t("searchPlaceholder")}
               value={search}
               onValueChange={setSearch}
               className="flex-1 bg-transparent text-sm text-foreground placeholder:text-muted-foreground outline-none"
@@ -59,7 +61,7 @@ export function CommandPalette() {
           </div>
           <Command.List className="max-h-80 overflow-y-auto p-2">
             <Command.Empty className="text-center text-sm text-muted-foreground py-8">
-              Nenhum resultado.
+              {t("empty")}
             </Command.Empty>
             {commands.map((group) => (
               <Command.Group

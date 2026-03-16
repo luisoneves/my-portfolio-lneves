@@ -1,0 +1,185 @@
+{
+  "nav": {
+    "projects": "projects",
+    "architecture": "architecture",
+    "stack": "stack",
+    "notes": "notes",
+    "resume": "resume",
+    "contact": "contact"
+  },
+  "hero": {
+    "badge": "Engineering Lead · Software Architect · FATEC ADS",
+    "available": "available",
+    "title1": "I don't write features.",
+    "phrases": ["I architect systems.", "I drive the AI.", "I ship to production.", "I think in architecture."],
+    "description": "15+ years in IT and infrastructure. Modern fullstack with architecture-first approach.",
+    "highlight": "Those who understand the system drive the AI.",
+    "subtitle": "Those who only know syntax compete with it.",
+    "stats": {
+      "yearsLabel": "years in IT",
+      "projectsLabel": "projects in production",
+      "iterationsLabel": "iterations / system",
+      "readingLabel": "currently reading"
+    },
+    "cta": {
+      "projects": "view projects ↓",
+      "github": "github ↗",
+      "contact": "contact ↗"
+    }
+  },
+  "manifesto": {
+    "quote": "I won't be the dev who grabs the biggest feature. I'll be the one who ensures everyone's features work together — on standard, with quality, production-ready.",
+    "author": "Contribution Plan · March 2025"
+  },
+  "projects": {
+    "sectionLabel": "// project trail — problem → solution → refactoring",
+    "title": "Projects",
+    "timeline": {
+      "v1": "frontend mockup only",
+      "v2": "headless Strapi CMS",
+      "v3": "Diocese SaaS",
+      "v3current": "← now",
+      "v4": "WaaS in dev"
+    },
+    "status": {
+      "production": "production",
+      "inDev": "in dev",
+      "beta": "beta",
+      "done": "done"
+    },
+    "diocese": {
+      "title": "Diocese SaaS Platform",
+      "description": "Turborepo monorepo. RBAC Diocese→Chapel→Editor. Multi-tenancy with RLS and per-tenant Feature Flags. Own stack without external CMS dependency."
+    },
+    "capelas": {
+      "title": "Chapel Management",
+      "description": "1 admin + 200 branches with editable layouts. Headless Strapi architecture. Scaling limits motivated a complete refactor to own stack."
+    },
+    "waas": {
+      "title": "Website as a Service",
+      "description": "1 deploy + N clients. Config-driven engine with Registry Pattern, dynamic renderer and theme engine via CSS variables. Multi-tenant by host."
+    },
+    "market": {
+      "title": "C4ts Market Research",
+      "description": "Platform for freelance client acquisition and local positioning. Forms and blob for quote requests and product briefs."
+    }
+  },
+  "architecture": {
+    "sectionLabel": "// architecture — decisions that allow swapping technology without rewriting the system",
+    "title": "Architecture",
+    "monorepoTitle": "monorepo structure",
+    "layersTitle": "layers (clean architecture)",
+    "monorepo": {
+      "appsWeb": "Next.js frontend",
+      "appsAdmin": "internal admin",
+      "appsApi": "Fastify server",
+      "packagesTypes": "shared contracts",
+      "packagesDatabase": "Prisma schema",
+      "packagesValidators": "Zod schemas"
+    },
+    "layerTitles": {
+      "transport": "Transport",
+      "application": "Application",
+      "domain": "Domain",
+      "infrastructure": "Infrastructure"
+    },
+    "layers": {
+      "transport": "HTTP / WebSocket",
+      "application": "use cases",
+      "domain": "entities / rules",
+      "infrastructure": "Prisma / Redis"
+    }
+  },
+  "cicd": {
+    "sectionLabel": "// ci/cd pipeline — \"works on my machine\" is not a done criterion",
+    "steps": {
+      "pr": "git push",
+      "lint": "ESLint · TS",
+      "test": "Vitest",
+      "build": "Turbo cache",
+      "deploy": "Vercel · Railway"
+    }
+  },
+  "stack": {
+    "sectionLabel": "// stack in context — not a list, a decision",
+    "title": "Stack",
+    "groups": {
+      "frontend": "frontend",
+      "backend": "backend & data",
+      "infra": "infra & devops",
+      "architecture": "architecture & patterns",
+      "ai": "ai engineering"
+    }
+  },
+  "notes": {
+    "sectionLabel": "// engineering notes — thinking in public",
+    "title": "Engineering Notes",
+    "note1": {
+      "date": "2025-03",
+      "category": "architecture",
+      "title": "Why I abandoned Strapi and built my own stack",
+      "summary": "Multi-tenancy with RLS, feature flags and the decision that transformed a headless system into a real SaaS. What Strapi can't do when you scale to 200 branches."
+    },
+    "note2": {
+      "date": "2025-02",
+      "category": "ai + engineering",
+      "title": "AGENTS.md and atomic tasks — AI as a tool, not a shortcut",
+      "summary": "How I structure context (versioned knowledge base, PRD, AGENTS.md) so the agent produces consistent architecture instead of random code."
+    },
+    "note3": {
+      "date": "2025-01",
+      "category": "clean architecture",
+      "title": "Transport → Application → Domain → Infra in practice",
+      "summary": "Real layer separation in a Fastify project with concrete examples from Diocese SaaS. What changes day-to-day when you respect boundaries."
+    }
+  },
+  "footer": {
+    "available": "available",
+    "contact": "get in touch ↗",
+    "emailCopied": "email copied!",
+    "privacy": "This website uses Microsoft Clarity to understand how visitors interact with the content and improve the experience."
+  },
+  "resume": {
+    "title": "Resume",
+    "download": "download PDF ↓",
+    "role": "Fullstack Developer · Product Engineer · Systems Architecture",
+    "about": "About me",
+    "skills": "Technical skills",
+    "experience": "Experience",
+    "projects": "Featured projects",
+    "aiUsage": "AI usage in development",
+    "education": "Education",
+    "languages": "Languages"
+  },
+  "commandPalette": {
+    "searchPlaceholder": "Search projects, links...",
+    "empty": "No results.",
+    "groups": {
+      "navigation": "Navigation",
+      "links": "Links"
+    },
+    "items": {
+      "goProjects": "Go to Projects",
+      "goStack": "Go to Stack",
+      "goNotes": "Go to Notes",
+      "goArchitecture": "Go to Architecture",
+      "openGithub": "Open GitHub",
+      "openDiocese": "View Diocese SaaS",
+      "openCapelas": "View Chapel Management",
+      "sendEmail": "Send email",
+      "openLinkedIn": "LinkedIn"
+    }
+  },
+  "a11y": {
+    "highContrastToggle": "High contrast",
+    "highContrastOn": "Enable high contrast",
+    "highContrastOff": "Disable high contrast",
+    "themeToggleDark": "Enable dark mode",
+    "themeToggleLight": "Enable light mode",
+    "langToggle": "Change language",
+    "openMenu": "Open menu",
+    "closeMenu": "Close menu",
+    "commandPalette": "Open command palette",
+    "externalLink": "Opens in new tab"
+  }
+}

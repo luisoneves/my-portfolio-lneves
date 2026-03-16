@@ -2,24 +2,18 @@
 import { motion } from "framer-motion"
 import { useInView } from "framer-motion"
 import { useRef } from "react"
+import { useTranslations } from "next-intl"
+type ArchitectureLayer = { name: string; sub: string; highlight: boolean }
 
-const monorepoStructure = [
-  { path: "apps/web",       desc: "Next.js frontend",       color: "text-amber-500",   border: "border-amber-500/30",   bg: "bg-amber-500/5"  },
-  { path: "apps/admin",     desc: "painel interno",          color: "text-amber-500",   border: "border-amber-500/30",   bg: "bg-amber-500/5"  },
-  { path: "apps/api",       desc: "Fastify server",          color: "text-blue-500",    border: "border-blue-500/30",    bg: "bg-blue-500/5"   },
-  { path: "packages/types",      desc: "contratos compartilhados", color: "text-muted-foreground", border: "border-border", bg: "bg-muted/40" },
-  { path: "packages/database",   desc: "Prisma schema",           color: "text-muted-foreground", border: "border-border", bg: "bg-muted/40" },
-  { path: "packages/validators", desc: "Zod schemas",             color: "text-muted-foreground", border: "border-border", bg: "bg-muted/40" },
-]
-
-const layers = [
-  { name: "Transport",      sub: "HTTP / WebSocket",  highlight: false },
-  { name: "Application",    sub: "use cases",         highlight: true  },
-  { name: "Domain",         sub: "entities / rules",  highlight: false },
-  { name: "Infrastructure", sub: "Prisma / Redis",    highlight: false },
-]
-
-function AnimatedLayer({ layer, index }: { layer: typeof layers[0]; index: number }) {
+function AnimatedLayer({
+  layer,
+  index,
+  isLast,
+}: {
+  layer: ArchitectureLayer
+  index: number
+  isLast: boolean
+}) {
   const ref = useRef(null)
   const inView = useInView(ref, { once: true, margin: "-40px" })
 
@@ -43,7 +37,7 @@ function AnimatedLayer({ layer, index }: { layer: typeof layers[0]; index: numbe
           {layer.sub}
         </span>
       </div>
-      {index < layers.length - 1 && (
+      {!isLast && (
         <div className="text-center text-muted-foreground text-sm py-1">↓</div>
       )}
     </motion.div>
@@ -51,19 +45,36 @@ function AnimatedLayer({ layer, index }: { layer: typeof layers[0]; index: numbe
 }
 
 export function ArchitectureSection() {
+  const t = useTranslations("architecture")
+  const monorepoStructure = [
+    { path: "apps/web",       desc: t("monorepo.appsWeb"),         color: "text-amber-500",   border: "border-amber-500/30",   bg: "bg-amber-500/5"  },
+    { path: "apps/admin",     desc: t("monorepo.appsAdmin"),       color: "text-amber-500",   border: "border-amber-500/30",   bg: "bg-amber-500/5"  },
+    { path: "apps/api",       desc: t("monorepo.appsApi"),         color: "text-blue-500",    border: "border-blue-500/30",    bg: "bg-blue-500/5"   },
+    { path: "packages/types",      desc: t("monorepo.packagesTypes"),      color: "text-muted-foreground", border: "border-border", bg: "bg-muted/40" },
+    { path: "packages/database",   desc: t("monorepo.packagesDatabase"),   color: "text-muted-foreground", border: "border-border", bg: "bg-muted/40" },
+    { path: "packages/validators", desc: t("monorepo.packagesValidators"), color: "text-muted-foreground", border: "border-border", bg: "bg-muted/40" },
+  ]
+
+  const layers: ArchitectureLayer[] = [
+    { name: t("layerTitles.transport"),      sub: t("layers.transport"),      highlight: false },
+    { name: t("layerTitles.application"),    sub: t("layers.application"),    highlight: true  },
+    { name: t("layerTitles.domain"),         sub: t("layers.domain"),         highlight: false },
+    { name: t("layerTitles.infrastructure"), sub: t("layers.infrastructure"), highlight: false },
+  ]
+
   return (
     <section id="arquitetura" className="py-16">
       <div className="mb-2">
         <span className="font-mono text-xs text-muted-foreground tracking-wider">
-          {"// arquitetura — decisões que permitem trocar tecnologia sem reescrever o sistema"}
+          {t("sectionLabel")}
         </span>
       </div>
-      <h2 className="text-2xl font-medium mb-8">Arquitetura</h2>
+      <h2 className="text-2xl font-medium mb-8">{t("title")}</h2>
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         {/* Monorepo */}
         <div className="rounded-xl border border-border bg-card p-5">
-          <h3 className="font-mono text-sm font-medium text-foreground mb-4">estrutura monorepo</h3>
+          <h3 className="font-mono text-sm font-medium text-foreground mb-4">{t("monorepoTitle")}</h3>
           <div className="flex flex-col gap-2">
             {monorepoStructure.map((item) => (
               <div
@@ -79,10 +90,15 @@ export function ArchitectureSection() {
 
         {/* Clean Architecture */}
         <div className="rounded-xl border border-border bg-card p-5">
-          <h3 className="font-mono text-sm font-medium text-foreground mb-4">camadas (clean architecture)</h3>
+          <h3 className="font-mono text-sm font-medium text-foreground mb-4">{t("layersTitle")}</h3>
           <div className="flex flex-col">
             {layers.map((layer, i) => (
-              <AnimatedLayer key={layer.name} layer={layer} index={i} />
+              <AnimatedLayer
+                key={layer.name}
+                layer={layer}
+                index={i}
+                isLast={i === layers.length - 1}
+              />
             ))}
           </div>
         </div>

@@ -1,0 +1,185 @@
+{
+  "nav": {
+    "projects": "projetos",
+    "architecture": "arquitetura",
+    "stack": "stack",
+    "notes": "notas",
+    "resume": "currículo",
+    "contact": "contato"
+  },
+  "hero": {
+    "badge": "Engineering Lead · Software Architect · FATEC ADS",
+    "available": "disponível",
+    "title1": "Não escrevo features.",
+    "phrases": ["Estruturo sistemas.", "Dirijo a IA.", "Entrego produção.", "Penso em arquitetura."],
+    "description": "15+ anos de TI e infraestrutura. Fullstack moderno com arquitetura-primeiro.",
+    "highlight": "Quem entende o sistema dirige a IA.",
+    "subtitle": "Quem só sabe sintaxe concorre com ela.",
+    "stats": {
+      "yearsLabel": "anos em TI",
+      "projectsLabel": "projetos em produção",
+      "iterationsLabel": "iterações / sistema",
+      "readingLabel": "lendo agora"
+    },
+    "cta": {
+      "projects": "ver projetos ↓",
+      "github": "github ↗",
+      "contact": "contato ↗"
+    }
+  },
+  "manifesto": {
+    "quote": "Não serei o dev que pega a maior feature. Serei quem garante que as features de todos funcionam juntas — dentro do padrão, com qualidade, prontas para produção.",
+    "author": "Plano de Contribuição · março 2025"
+  },
+  "projects": {
+    "sectionLabel": "// trilha de projetos — problema → solução → refatoração",
+    "title": "Projetos",
+    "timeline": {
+      "v1": "mockup front-only",
+      "v2": "headless Strapi CMS",
+      "v3": "Diocese SaaS",
+      "v3current": "← agora",
+      "v4": "WaaS em dev"
+    },
+    "status": {
+      "production": "produção",
+      "inDev": "em dev",
+      "beta": "beta",
+      "done": "concluído"
+    },
+    "diocese": {
+      "title": "Diocese SaaS Platform",
+      "description": "Monorepo Turborepo. RBAC Diocese→Chapel→Editor. Multi-tenancy com RLS e Feature Flags por tenant. Stack própria sem dependência de CMS externo."
+    },
+    "capelas": {
+      "title": "Gestão de Capelas",
+      "description": "1 admin + 200 filiais com layouts editáveis. Arquitetura headless Strapi. O limite ao escalar motivou a refatoração completa para stack própria."
+    },
+    "waas": {
+      "title": "Website as a Service",
+      "description": "1 deploy + N clientes. Engine config-driven com Registry Pattern, renderer dinâmico e theme engine via CSS variables. Multi-tenant por host."
+    },
+    "market": {
+      "title": "C4ts Market Research",
+      "description": "Plataforma para captação de clientes freela e posicionamento local. Forms e blob para receber pedidos de orçamento."
+    }
+  },
+  "architecture": {
+    "sectionLabel": "// arquitetura — decisões que permitem trocar tecnologia sem reescrever o sistema",
+    "title": "Arquitetura",
+    "monorepoTitle": "estrutura monorepo",
+    "layersTitle": "camadas (clean architecture)",
+    "monorepo": {
+      "appsWeb": "Next.js frontend",
+      "appsAdmin": "painel interno",
+      "appsApi": "Fastify server",
+      "packagesTypes": "contratos compartilhados",
+      "packagesDatabase": "Prisma schema",
+      "packagesValidators": "Zod schemas"
+    },
+    "layerTitles": {
+      "transport": "Transport",
+      "application": "Application",
+      "domain": "Domain",
+      "infrastructure": "Infrastructure"
+    },
+    "layers": {
+      "transport": "HTTP / WebSocket",
+      "application": "use cases",
+      "domain": "entities / rules",
+      "infrastructure": "Prisma / Redis"
+    }
+  },
+  "cicd": {
+    "sectionLabel": "// pipeline ci/cd — \"funciona na minha máquina\" não é critério de done",
+    "steps": {
+      "pr": "git push",
+      "lint": "ESLint · TS",
+      "test": "Vitest",
+      "build": "Turbo cache",
+      "deploy": "Vercel · Railway"
+    }
+  },
+  "stack": {
+    "sectionLabel": "// stack em contexto — não uma lista, uma decisão",
+    "title": "Stack",
+    "groups": {
+      "frontend": "frontend",
+      "backend": "backend & dados",
+      "infra": "infra & devops",
+      "architecture": "arquitetura & padrões",
+      "ai": "engenharia de ia"
+    }
+  },
+  "notes": {
+    "sectionLabel": "// notas de engenharia — thinking in public",
+    "title": "Notas de Engenharia",
+    "note1": {
+      "date": "2025-03",
+      "category": "arquitetura",
+      "title": "Por que abandonei o Strapi e construí minha própria stack",
+      "summary": "Multi-tenancy com RLS, feature flags e a decisão que transformou um sistema headless num SaaS real. O que o Strapi não consegue fazer quando você escala para 200 filiais."
+    },
+    "note2": {
+      "date": "2025-02",
+      "category": "ia + engenharia",
+      "title": "AGENTS.md e tarefas atômicas — IA como ferramenta, não atalho",
+      "summary": "Como estruturo contexto (knowledge base versionada, PRD, AGENTS.md) para que o agente produza arquitetura consistente em vez de código aleatório."
+    },
+    "note3": {
+      "date": "2025-01",
+      "category": "clean architecture",
+      "title": "Transport → Application → Domain → Infra na prática",
+      "summary": "Separação real de camadas num projeto Fastify com exemplos concretos do Diocese SaaS. O que muda no dia a dia quando você respeita as fronteiras."
+    }
+  },
+  "footer": {
+    "available": "disponível",
+    "contact": "entrar em contato ↗",
+    "emailCopied": "email copiado!",
+    "privacy": "Este site utiliza Microsoft Clarity para entender como visitantes interagem com o conteúdo e melhorar a experiência."
+  },
+  "resume": {
+    "title": "Currículo",
+    "download": "download PDF ↓",
+    "role": "Desenvolvedor Fullstack · Product Engineer · Arquitetura de Sistemas",
+    "about": "Sobre mim",
+    "skills": "Competências técnicas",
+    "experience": "Experiência",
+    "projects": "Projetos em destaque",
+    "aiUsage": "Uso de IA no desenvolvimento",
+    "education": "Formação",
+    "languages": "Idiomas"
+  },
+  "commandPalette": {
+    "searchPlaceholder": "Buscar projetos, links...",
+    "empty": "Nenhum resultado.",
+    "groups": {
+      "navigation": "Navegação",
+      "links": "Links"
+    },
+    "items": {
+      "goProjects": "Ir para Projetos",
+      "goStack": "Ir para Stack",
+      "goNotes": "Ir para Notas",
+      "goArchitecture": "Ir para Arquitetura",
+      "openGithub": "Abrir GitHub",
+      "openDiocese": "Ver Diocese SaaS",
+      "openCapelas": "Ver Gestão Capelas",
+      "sendEmail": "Enviar email",
+      "openLinkedIn": "LinkedIn"
+    }
+  },
+  "a11y": {
+    "highContrastToggle": "Alto contraste",
+    "highContrastOn": "Ativar alto contraste",
+    "highContrastOff": "Desativar alto contraste",
+    "themeToggleDark": "Ativar modo escuro",
+    "themeToggleLight": "Ativar modo claro",
+    "langToggle": "Mudar idioma",
+    "openMenu": "Abrir menu",
+    "closeMenu": "Fechar menu",
+    "commandPalette": "Abrir paleta de comandos",
+    "externalLink": "Abre em nova aba"
+  }
+}

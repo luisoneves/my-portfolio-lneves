@@ -1,36 +1,33 @@
-/**
- * LangToggle — i18n placeholder
- *
- * Para ativar:
- *   1. npm install next-intl
- *   2. Descomentar todo o conteúdo abaixo
- *   3. Configurar next.config.ts com createNextIntlPlugin
- *   4. Criar app/[locale]/layout.tsx e mensagens em messages/pt.json, messages/en.json
- *   5. Descomentar NextIntlClientProvider em app/layout.tsx
- *   6. Descomentar <LangToggle /> no Navbar
- */
+"use client"
+import { useLocale } from "next-intl"
+import { useRouter, usePathname } from "next/navigation"
+import { useTransition } from "react"
 
-// "use client"
-// import { useRouter, usePathname } from "next/navigation"
-// import { useLocale } from "next-intl"
-//
-// export function LangToggle() {
-//   const router = useRouter()
-//   const pathname = usePathname()
-//   const locale = useLocale()
-//
-//   function toggleLocale() {
-//     const nextLocale = locale === "pt" ? "en" : "pt"
-//     router.replace(`/${nextLocale}${pathname}`)
-//   }
-//
-//   return (
-//     <button
-//       onClick={toggleLocale}
-//       aria-label="Alternar idioma"
-//       className="text-xs font-mono text-muted-foreground hover:text-foreground transition-colors"
-//     >
-//       {locale === "pt" ? "EN" : "PT"}
-//     </button>
-//   )
-// }
+export function LangToggle() {
+	const locale = useLocale()
+	const router = useRouter()
+	const pathname = usePathname()
+	const [isPending, startTransition] = useTransition()
+
+	function switchLocale() {
+		const nextLocale = locale === "pt" ? "en" : "pt"
+		const segments = pathname.split("/")
+		segments[1] = nextLocale
+		const newPath = segments.join("/") || "/"
+		startTransition(() => {
+			router.push(newPath)
+		})
+	}
+
+	return (
+		<button
+			onClick={switchLocale}
+			aria-label="Mudar idioma"
+			title={locale === "pt" ? "Switch to English" : "Trocar para português"}
+			disabled={isPending}
+			className="text-xs font-mono text-muted-foreground hover:text-foreground transition-colors"
+		>
+			{locale === "pt" ? "EN" : "PT"}
+		</button>
+	)
+}

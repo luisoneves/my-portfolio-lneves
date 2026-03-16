@@ -1,6 +1,7 @@
 "use client"
 import { motion } from "framer-motion"
-import { notes } from "@/lib/notes"
+import { useTranslations } from "next-intl"
+import { notesData } from "@/lib/data"
 
 const container = {
   hidden: {},
@@ -12,14 +13,16 @@ const card = {
 }
 
 export function NotesSection() {
+  const t = useTranslations("notes")
+
   return (
     <section id="notas" className="py-16">
       <div className="mb-2">
         <span className="font-mono text-xs text-muted-foreground tracking-wider">
-          {"// notas de engenharia — thinking in public"}
+          {t("sectionLabel")}
         </span>
       </div>
-      <h2 className="text-2xl font-medium mb-8">Notas de Engenharia</h2>
+      <h2 className="text-2xl font-medium mb-8">{t("title")}</h2>
 
       <motion.div
         className="grid grid-cols-1 md:grid-cols-3 gap-4"
@@ -28,22 +31,22 @@ export function NotesSection() {
         whileInView="show"
         viewport={{ once: true, margin: "-60px" }}
       >
-        {notes.map((note) => (
+        {notesData.map((note) => (
           <motion.a
-            key={note.slug}
+            key={note.key}
             href={note.href ?? "#"}
             variants={card}
             whileHover={{ y: -3, transition: { type: "spring", stiffness: 400, damping: 20 } }}
             className="rounded-xl border border-border bg-card p-5 no-underline group block"
           >
             <div className="font-mono text-xs text-muted-foreground mb-2">
-              {note.date} · {note.category}
+              {t(`${note.key}.date`)} · {t(`${note.key}.category`)}
             </div>
             <h3 className="font-medium text-sm text-foreground leading-snug mb-2 group-hover:text-amber-500 transition-colors">
-              {note.title}
+              {t(`${note.key}.title`)}
             </h3>
             <p className="text-xs text-muted-foreground leading-relaxed">
-              {note.summary}
+              {t(`${note.key}.summary`)}
             </p>
           </motion.a>
         ))}
