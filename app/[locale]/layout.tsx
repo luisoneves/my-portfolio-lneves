@@ -1,4 +1,3 @@
-import type { Metadata } from "next"
 import { Geist, Geist_Mono } from "next/font/google"
 import { NextIntlClientProvider } from "next-intl"
 import { getMessages } from "next-intl/server"
@@ -23,39 +22,70 @@ const geistMono = Geist_Mono({
   subsets: ["latin"],
 })
 
-export const metadata: Metadata = {
-  metadataBase: new URL("https://dev-luisneves.me"),
-  title: "Luis Neves — Engineering Lead · Software Architect",
-  description:
-    "Fullstack com arquitetura-primeiro. 15+ anos de TI. Diocese SaaS, multi-tenancy, monorepo. FATEC ADS.",
-  verification: {
-    google: "LYRKoi0rwXdY7lPgurO5Z9n_bEHMZqGoEnLb-86PG6U"
-  },
-  openGraph: {
-    title: "Luis Neves — Engineering Lead",
-    description: "Não escrevo features. Estruturo sistemas.",
-    url: "https://dev-luisneves.me",
-    siteName: "Luis Neves",
-    locale: "pt_BR",
-    type: "website",
-    images: [{ url: "/og-image.png", width: 1200, height: 630 }],
-  },
-  twitter: {
-    card: "summary_large_image",
-    title: "Luis Neves — Engineering Lead",
-    description: "Não escrevo features. Estruturo sistemas.",
-    images: ["/og-image.png"],
-  },
-  robots: {
-    index: true,
-    follow: true,
-  },
-  alternates: {
-    canonical: "https://dev-luisneves.me",
-  },
-  icons: {
-    icon: "/favicon.ico",
-  },
+const BASE_URL = "https://dev-luisneves.me"
+
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ locale: string }>
+}) {
+  const { locale } = await params
+  const isEn = locale === "en"
+
+  return {
+    metadataBase: new URL(BASE_URL),
+    title: {
+      default: "Luis Neves — Engineering Lead · Software Architect",
+      template: "%s | Luis Neves",
+    },
+    description: isEn
+      ? "Architecture-first fullstack. 15+ years in IT. Diocese SaaS, multi-tenancy, monorepo. FATEC ADS."
+      : "Fullstack com arquitetura-primeiro. 15+ anos de TI. Diocese SaaS, multi-tenancy, monorepo. FATEC ADS.",
+    verification: {
+      google: "LYRKoi0rwXdY7lPgurO5Z9n_bEHMZqGoEnLb-86PG6U",
+    },
+    openGraph: {
+      title: "Luis Neves — Engineering Lead · Software Architect",
+      description: isEn
+        ? "I don't write features. I architect systems."
+        : "Não escrevo features. Estruturo sistemas.",
+      url: `${BASE_URL}/${locale}`,
+      siteName: "Luis Neves",
+      images: [
+        {
+          url: "/og-image.png",
+          width: 1200,
+          height: 630,
+          alt: "Luis Neves — Engineering Lead",
+        },
+      ],
+      locale: isEn ? "en_US" : "pt_BR",
+      alternateLocale: isEn ? "pt_BR" : "en_US",
+      type: "website",
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: "Luis Neves — Engineering Lead",
+      description: isEn
+        ? "I don't write features. I architect systems."
+        : "Não escrevo features. Estruturo sistemas.",
+      images: ["/og-image.png"],
+    },
+    robots: {
+      index: true,
+      follow: true,
+    },
+    alternates: {
+      canonical: `${BASE_URL}/${locale}`,
+      languages: {
+        "pt-BR": `${BASE_URL}/pt`,
+        "en-US": `${BASE_URL}/en`,
+      },
+    },
+    icons: {
+      icon: "/favicon.ico",
+    },
+  }
 }
 
 export default async function LocaleLayout({
