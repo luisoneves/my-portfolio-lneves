@@ -2,6 +2,7 @@
 import Link from "next/link"
 import Image from "next/image"
 import { CommandPaletteHint } from "@/components/CommandPaletteHint"
+import { ThemeToggle } from "@/components/ThemeToggle"
 
 const navItems = [
   { label: "projetos", href: "#projetos" },
@@ -46,6 +47,7 @@ export function Navbar() {
         </nav>
 
         <div className="flex items-center gap-3">
+          <ThemeToggle />
           <CommandPaletteHint />
           <a
             href="https://github.com/luisoneves"

@@ -7,6 +7,7 @@ import { Navbar } from "@/components/Navbar"
 import { Footer } from "@/components/Footer"
 import { CommandPalette } from "@/components/CommandPalette"
 import { ClarityProvider } from "@/components/providers/ClarityProvider"
+import { ThemeProvider } from "@/components/providers/ThemeProvider"
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -53,10 +54,11 @@ export default function RootLayout({
   children: React.ReactNode
 }>) {
   return (
-    <html lang="pt-BR" className="dark">
+    <html lang="pt-BR" suppressHydrationWarning>
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
+        <ThemeProvider>
         <SmoothScrollProvider>
           <ClarityProvider />
           <Navbar />
@@ -66,6 +68,7 @@ export default function RootLayout({
           </PageTransition>
           <Footer />
         </SmoothScrollProvider>
+        </ThemeProvider>
       </body>
     </html>
   )
