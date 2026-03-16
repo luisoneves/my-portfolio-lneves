@@ -172,6 +172,8 @@
   },
   "a11y": {
     "highContrastToggle": "Alto contraste",
+    "highContrastOn": "Ativar alto contraste",
+    "highContrastOff": "Desativar alto contraste",
     "themeToggleDark": "Ativar modo escuro",
     "themeToggleLight": "Ativar modo claro",
     "langToggle": "Mudar idioma",

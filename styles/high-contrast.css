@@ -1,0 +1,44 @@
+/* Alto contraste — overrides quando data-high-contrast="true" */
+:root[data-high-contrast] {
+  --foreground: #000000;
+  --background: #ffffff;
+  --card: #ffffff;
+  --card-foreground: #000000;
+  --muted: #f2f2f2;
+  --muted-foreground: #1f1f1f;
+  --border: #000000;
+  --amber-brand: #b45309;
+  --amber-brand-light: #d97706;
+}
+
+:root[data-high-contrast].dark {
+  --foreground: #ffffff;
+  --background: #000000;
+  --card: #000000;
+  --card-foreground: #ffffff;
+  --muted: #1a1a1a;
+  --muted-foreground: #e5e5e5;
+  --border: #ffffff;
+  --amber-brand: #fbbf24;
+  --amber-brand-light: #fcd34d;
+}
+
+:root[data-high-contrast] a:not(.no-underline) {
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+:root[data-high-contrast] .border {
+  border-width: 2px;
+}
+
+:root[data-high-contrast] *:focus-visible {
+  outline: 3px solid currentColor;
+  outline-offset: 3px;
+}
+
+:root[data-high-contrast] [class*="chip"],
+:root[data-high-contrast] [class*="badge"] {
+  border-width: 2px;
+  font-weight: 600;
+}

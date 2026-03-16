@@ -11,6 +11,7 @@ import { NotesSection } from "@/components/sections/NotesSection"
 
 export default function Home() {
   const t = useTranslations("hero")
+  const a11y = useTranslations("a11y")
 
   return (
     <main className="max-w-5xl mx-auto px-4">
@@ -45,6 +46,8 @@ export default function Home() {
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.25, duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
           className="text-4xl md:text-5xl font-medium leading-tight mb-6"
+          aria-live="polite"
+          aria-atomic="true"
         >
           <TypingCycle />
         </motion.p>
@@ -98,7 +101,15 @@ export default function Home() {
           className="flex gap-3 flex-wrap"
         >
           <a href="#projetos" className="btn-primary">{t("cta.projects")}</a>
-          <a href="https://github.com/luisoneves" target="_blank" rel="noopener noreferrer" className="btn-secondary">{t("cta.github")}</a>
+          <a
+            href="https://github.com/luisoneves"
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label={`GitHub (${a11y("externalLink")})`}
+            className="btn-secondary"
+          >
+            {t("cta.github")}
+          </a>
           <a href="mailto:contato@luisneves.dev.br" className="btn-secondary">{t("cta.contact")}</a>
         </motion.div>
       </section>

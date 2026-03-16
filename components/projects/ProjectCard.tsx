@@ -68,7 +68,7 @@ export function ProjectCard({ project }: { project: Project }) {
       whileHover={{ scale: 1.025 }}
       transition={{ type: "spring", stiffness: 300, damping: 25 }}
       tabIndex={0}
-      aria-label={project.title}
+      aria-label={`${project.title} — ${project.statusLabel}`}
       onClick={() => project.href && window.open(project.href, "_blank")}
       onKeyDown={(e) => {
         if ((e.key === "Enter" || e.key === " ") && project.href) {

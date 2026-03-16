@@ -172,6 +172,8 @@
   },
   "a11y": {
     "highContrastToggle": "High contrast",
+    "highContrastOn": "Enable high contrast",
+    "highContrastOff": "Disable high contrast",
     "themeToggleDark": "Enable dark mode",
     "themeToggleLight": "Enable light mode",
     "langToggle": "Change language",

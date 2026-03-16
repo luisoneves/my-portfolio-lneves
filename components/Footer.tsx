@@ -3,6 +3,7 @@ import { useTranslations } from "next-intl"
 
 export function Footer() {
   const t = useTranslations("footer")
+  const a11y = useTranslations("a11y")
 
   return (
     <footer className="border-t border-border py-8 mt-16">
@@ -20,6 +21,7 @@ export function Footer() {
             href="https://github.com/luisoneves"
             target="_blank"
             rel="noopener noreferrer"
+            aria-label={`GitHub (${a11y("externalLink")})`}
             className="text-xs text-muted-foreground hover:text-foreground transition-colors font-mono"
           >
             github
@@ -28,6 +30,7 @@ export function Footer() {
             href="https://linkedin.com/in/luisneves-dev"
             target="_blank"
             rel="noopener noreferrer"
+            aria-label={`LinkedIn (${a11y("externalLink")})`}
             className="text-xs text-muted-foreground hover:text-foreground transition-colors font-mono"
           >
             linkedin

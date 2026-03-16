@@ -3,6 +3,7 @@ import Link from "next/link"
 import Image from "next/image"
 import { useTranslations } from "next-intl"
 import { CommandPaletteHint } from "@/components/CommandPaletteHint"
+import { HighContrastToggle } from "@/components/HighContrastToggle"
 import { LangToggle } from "@/components/LangToggle"
 import { ThemeToggle } from "@/components/ThemeToggle"
 
@@ -16,6 +17,7 @@ const navItems = [
 
 export function Navbar() {
   const t = useTranslations("nav")
+  const a11y = useTranslations("a11y")
 
   return (
     <header className="sticky top-0 z-40 border-b border-border/50 bg-background/80 backdrop-blur-md">
@@ -52,12 +54,14 @@ export function Navbar() {
 
         <div className="flex items-center gap-3">
           <LangToggle />
+          <HighContrastToggle />
           <ThemeToggle />
           <CommandPaletteHint />
           <a
             href="https://github.com/luisoneves"
             target="_blank"
             rel="noopener noreferrer"
+            aria-label={`GitHub (${a11y("externalLink")})`}
             className="text-xs font-mono text-muted-foreground hover:text-foreground transition-colors"
           >
             github ↗
