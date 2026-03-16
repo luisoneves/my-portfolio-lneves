@@ -2,6 +2,7 @@
 import Link from "next/link"
 import Image from "next/image"
 import { CommandPaletteHint } from "@/components/CommandPaletteHint"
+import { ThemeToggle } from "@/components/ThemeToggle"
 
 const navItems = [
   { label: "projetos", href: "#projetos" },
@@ -17,7 +18,7 @@ export function Navbar() {
       <div className="max-w-5xl mx-auto flex items-center justify-between px-4 py-3">
         <Link href="/" className="flex items-center gap-2">
           <Image
-            src="/logo-LN_darkmode.png"
+            src="/logo-LN_darkmode-new.png"
             alt="LN"
             width={32}
             height={32}
@@ -46,6 +47,10 @@ export function Navbar() {
         </nav>
 
         <div className="flex items-center gap-3">
+          {/* i18n: descomentar quando next-intl estiver instalado
+              <LangToggle />
+          */}
+          <ThemeToggle />
           <CommandPaletteHint />
           <a
             href="https://github.com/luisoneves"

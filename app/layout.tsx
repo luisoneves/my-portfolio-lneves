@@ -7,6 +7,7 @@ import { Navbar } from "@/components/Navbar"
 import { Footer } from "@/components/Footer"
 import { CommandPalette } from "@/components/CommandPalette"
 import { ClarityProvider } from "@/components/providers/ClarityProvider"
+import { ThemeProvider } from "@/components/providers/ThemeProvider"
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -45,6 +46,12 @@ export const metadata: Metadata = {
     index: true,
     follow: true,
   },
+  alternates: {
+    canonical: "https://dev-luisneves.me",
+  },
+  icons: {
+    icon: "/favicon.ico",
+  },
 }
 
 export default function RootLayout({
@@ -53,10 +60,17 @@ export default function RootLayout({
   children: React.ReactNode
 }>) {
   return (
-    <html lang="pt-BR" className="dark">
+    <html lang="pt-BR" suppressHydrationWarning>
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
+        <ThemeProvider>
+        {/* i18n: quando ativar, instalar next-intl e descomentar abaixo
+            import { NextIntlClientProvider } from 'next-intl'
+            <NextIntlClientProvider locale="pt" messages={messages}>
+              {children}
+            </NextIntlClientProvider>
+        */}
         <SmoothScrollProvider>
           <ClarityProvider />
           <Navbar />
@@ -66,6 +80,7 @@ export default function RootLayout({
           </PageTransition>
           <Footer />
         </SmoothScrollProvider>
+        </ThemeProvider>
       </body>
     </html>
   )

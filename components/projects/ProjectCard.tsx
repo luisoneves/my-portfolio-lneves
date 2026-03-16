@@ -57,18 +57,26 @@ export function ProjectCard({ project }: { project: Project }) {
   }
 
   return (
-    <motion.div
+    <motion.article
       ref={ref}
       onMouseMove={handleMouseMove}
       onMouseLeave={handleMouseLeave}
       style={{ rotateX, rotateY, transformPerspective: 800 }}
       whileHover={{ scale: 1.025 }}
       transition={{ type: "spring", stiffness: 300, damping: 25 }}
+      tabIndex={0}
+      aria-label={project.title}
+      onClick={() => project.href && window.open(project.href, "_blank")}
+      onKeyDown={(e) => {
+        if ((e.key === "Enter" || e.key === " ") && project.href) {
+          e.preventDefault()
+          window.open(project.href, "_blank")
+        }
+      }}
       className={`
         relative rounded-xl border bg-card p-5 cursor-pointer overflow-hidden
         ${project.highlight ? "border-amber-500/50" : "border-border"}
       `}
-      onClick={() => project.href && window.open(project.href, "_blank")}
     >
       <GlowOverlay glowX={glowX} glowY={glowY} />
 
@@ -96,6 +104,6 @@ export function ProjectCard({ project }: { project: Project }) {
           ))}
         </div>
       </div>
-    </motion.div>
+    </motion.article>
   )
 }

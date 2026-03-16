@@ -133,4 +133,59 @@ Estrutura madura (v2.3). Cresce via knowledge/ com experiência real.
 
 ---
 
-*Última atualização: março 2025*
+## ADR-006: i18n pt-BR/en vai para backlog (sem implementacao agora)
+
+**Data:** 2026-03-15
+**Status:** aceito — placeholder implementado
+
+### Contexto
+O portfolio original tinha trilha bilingue (pt/en), mas a versao atual em Next.js esta 100% em pt-BR.
+No momento, o foco imediato e consolidar base tecnica (SEO, a11y, dark mode real, favicon/logo) sem ampliar complexidade de manutencao de conteudo.
+
+### Decisao
+Nao implementar i18n agora.
+Registrar i18n (pt-BR/en) no backlog para fase posterior, com gatilho por demanda real de publico internacional/recrutadores.
+Estrutura comentada implementada: components/LangToggle.tsx + comentario em app/layout.tsx e Navbar.tsx.
+Para ativar: instalar next-intl e descomentar os blocos marcados.
+
+### Alternativas consideradas
+- **Implementar i18n agora (next-intl/roteamento por locale)**: rejeitado por prioridade; aumentaria escopo e custo de manutencao neste ciclo.
+- **Duplicar paginas manualmente em /en**: rejeitado por risco de divergencia de conteudo.
+- **Manter apenas pt-BR por ora**: aceito como trade-off consciente.
+
+### Consequências
+Positivas: foco em correcoes de maior impacto imediato e menor risco de regressao.
+Negativas: experiencia em ingles fica pendente para usuarios internacionais.
+
+### Revisão
+Reavaliar apos fechar pendencias de UX/SEO/a11y e quando houver evidencia de demanda internacional.
+
+---
+
+## ADR-007: Dark mode com next-themes + toggle manual no Navbar
+
+**Data:** 2026-03-15
+**Status:** aceito
+
+### Contexto
+O site tinha `className="dark"` hardcoded no `<html>`, forçando modo escuro para todos os usuários
+e ignorando `prefers-color-scheme`. Solicitação de toggle dark/light foi identificada no audit.
+
+### Decisao
+Instalar next-themes. ThemeProvider com `defaultTheme="system"` e `enableSystem={true}`.
+Toggle manual via ThemeToggle.tsx no Navbar com ícone sol/lua e aria-label acessível.
+
+### Alternativas consideradas
+- **CSS puro com prefers-color-scheme**: rejeitado — sem toggle manual por usuário
+- **Estado global React**: rejeitado — next-themes é o padrão da comunidade Next.js, sem overhead
+
+### Consequências
+Positivas: respeita preferência do sistema, permite override manual, sem flash de tema errado (suppressHydrationWarning).
+Negativas: hydration assíncrona do botão (mounted guard necessário no ThemeToggle).
+
+### Revisão
+Reavaliar se next-themes introduzir breaking change ou se migrar para solução CSS-only.
+
+---
+
+*Última atualização: março 2026*
