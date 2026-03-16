@@ -4,6 +4,9 @@ import { ResumeDownloadButton } from "@/components/resume/ResumeDownloadButton"
 export const metadata: Metadata = {
   title: "Currículo — Luis Otavio Neves Faustino",
   description: "Desenvolvedor Fullstack · Engineering Lead · Software Architect",
+  alternates: {
+    canonical: "https://dev-luisneves.me/curriculo",
+  },
 }
 
 const experiencia = [

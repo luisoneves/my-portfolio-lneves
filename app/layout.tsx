@@ -46,6 +46,9 @@ export const metadata: Metadata = {
     index: true,
     follow: true,
   },
+  alternates: {
+    canonical: "https://dev-luisneves.me",
+  },
 }
 
 export default function RootLayout({
