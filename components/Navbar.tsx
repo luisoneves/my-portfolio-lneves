@@ -18,7 +18,7 @@ export function Navbar() {
       <div className="max-w-5xl mx-auto flex items-center justify-between px-4 py-3">
         <Link href="/" className="flex items-center gap-2">
           <Image
-            src="/logo-LN_darkmode.png"
+            src="/logo-LN_darkmode-new.png"
             alt="LN"
             width={32}
             height={32}
