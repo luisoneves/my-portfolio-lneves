@@ -133,4 +133,31 @@ Estrutura madura (v2.3). Cresce via knowledge/ com experiência real.
 
 ---
 
-*Última atualização: março 2025*
+## ADR-006: i18n pt-BR/en vai para backlog (sem implementacao agora)
+
+**Data:** 2026-03-15
+**Status:** aceito
+
+### Contexto
+O portfolio original tinha trilha bilingue (pt/en), mas a versao atual em Next.js esta 100% em pt-BR.
+No momento, o foco imediato e consolidar base tecnica (SEO, a11y, dark mode real, favicon/logo) sem ampliar complexidade de manutencao de conteudo.
+
+### Decisao
+Nao implementar i18n agora.
+Registrar i18n (pt-BR/en) no backlog para fase posterior, com gatilho por demanda real de publico internacional/recrutadores.
+
+### Alternativas consideradas
+- **Implementar i18n agora (next-intl/roteamento por locale)**: rejeitado por prioridade; aumentaria escopo e custo de manutencao neste ciclo.
+- **Duplicar paginas manualmente em /en**: rejeitado por risco de divergencia de conteudo.
+- **Manter apenas pt-BR por ora**: aceito como trade-off consciente.
+
+### Consequências
+Positivas: foco em correcoes de maior impacto imediato e menor risco de regressao.
+Negativas: experiencia em ingles fica pendente para usuarios internacionais.
+
+### Revisão
+Reavaliar apos fechar pendencias de UX/SEO/a11y e quando houver evidencia de demanda internacional.
+
+---
+
+*Última atualização: março 2026*
