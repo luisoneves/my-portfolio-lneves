@@ -1,6 +1,10 @@
 import type { Metadata } from "next"
 import { Geist, Geist_Mono } from "next/font/google"
-import "./globals.css"
+import { NextIntlClientProvider } from "next-intl"
+import { getMessages } from "next-intl/server"
+import { notFound } from "next/navigation"
+import { routing } from "@/i18n/routing"
+import "../globals.css"
 import { SmoothScrollProvider } from "@/components/providers/SmoothScrollProvider"
 import { PageTransition } from "@/components/providers/PageTransition"
 import { Navbar } from "@/components/Navbar"
@@ -54,33 +58,39 @@ export const metadata: Metadata = {
   },
 }
 
-export default function RootLayout({
+export default async function LocaleLayout({
   children,
+  params,
 }: Readonly<{
   children: React.ReactNode
+  params: Promise<{ locale: string }>
 }>) {
+  const { locale } = await params
+
+  if (!routing.locales.includes(locale as "pt" | "en")) {
+    notFound()
+  }
+
+  const messages = await getMessages()
+
   return (
-    <html lang="pt-BR" suppressHydrationWarning>
+    <html lang={locale} suppressHydrationWarning>
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-        <ThemeProvider>
-        {/* i18n: quando ativar, instalar next-intl e descomentar abaixo
-            import { NextIntlClientProvider } from 'next-intl'
-            <NextIntlClientProvider locale="pt" messages={messages}>
-              {children}
-            </NextIntlClientProvider>
-        */}
-        <SmoothScrollProvider>
-          <ClarityProvider />
-          <Navbar />
-          <CommandPalette />
-          <PageTransition>
-            {children}
-          </PageTransition>
-          <Footer />
-        </SmoothScrollProvider>
-        </ThemeProvider>
+        <NextIntlClientProvider messages={messages}>
+          <ThemeProvider>
+            <SmoothScrollProvider>
+              <ClarityProvider />
+              <Navbar />
+              <CommandPalette />
+              <PageTransition>
+                {children}
+              </PageTransition>
+              <Footer />
+            </SmoothScrollProvider>
+          </ThemeProvider>
+        </NextIntlClientProvider>
       </body>
     </html>
   )

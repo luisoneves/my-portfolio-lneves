@@ -1,14 +1,16 @@
 "use client"
 import { motion } from "framer-motion"
-
-const versions = [
-  { version: "v1", label: "mockup front-only", status: "concluído", color: "text-muted-foreground" },
-  { version: "v2", label: "headless Strapi CMS", status: "concluído", color: "text-blue-500" },
-  { version: "v3", label: "Diocese SaaS", status: "agora", color: "text-amber-500", current: true },
-  { version: "v4", label: "WaaS em dev", status: "em breve", color: "text-muted-foreground/50", dashed: true },
-]
+import { useTranslations } from "next-intl"
 
 export function EvolutionTimeline() {
+  const t = useTranslations("projects")
+  const versions = [
+    { version: "v1", label: t("timeline.v1"), color: "text-muted-foreground" },
+    { version: "v2", label: t("timeline.v2"), color: "text-blue-500" },
+    { version: "v3", label: t("timeline.v3"), color: "text-amber-500", current: true },
+    { version: "v4", label: t("timeline.v4"), color: "text-muted-foreground/50", dashed: true },
+  ]
+
   return (
     <div className="flex items-center gap-0 mb-8 p-4 rounded-xl bg-muted/40 overflow-x-auto">
       {versions.map((v, i) => (
@@ -27,7 +29,7 @@ export function EvolutionTimeline() {
               {v.label}
             </span>
             {v.current && (
-              <span className="text-[10px] font-mono text-amber-500">← agora</span>
+              <span className="text-[10px] font-mono text-amber-500">{t("timeline.v3current")}</span>
             )}
           </div>
           {i < versions.length - 1 && (

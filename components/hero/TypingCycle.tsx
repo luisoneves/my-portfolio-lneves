@@ -1,15 +1,11 @@
 "use client"
 import { useState, useEffect } from "react"
 import { motion, AnimatePresence } from "framer-motion"
-
-const phrases = [
-  "Estruturo sistemas.",
-  "Dirijo a IA.",
-  "Entrego produção.",
-  "Penso em arquitetura.",
-]
+import { useTranslations } from "next-intl"
 
 export function TypingCycle() {
+  const t = useTranslations("hero")
+  const phrases = t.raw("phrases") as string[]
   const [index, setIndex] = useState(0)
 
   useEffect(() => {

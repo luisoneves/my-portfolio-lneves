@@ -1,4 +1,5 @@
 import { Metadata } from "next"
+import { getTranslations } from "next-intl/server"
 import { ResumeDownloadButton } from "@/components/resume/ResumeDownloadButton"
 
 export const metadata: Metadata = {
@@ -46,7 +47,9 @@ const trilha = [
   { versao: "WaaS", nome: "Website as a Service", status: "Em desenvolvimento" },
 ]
 
-export default function CurriculoPage() {
+export default async function CurriculoPage() {
+  const t = await getTranslations("resume")
+
   return (
     <main className="max-w-3xl mx-auto py-16 px-4">
       {/* Header */}
@@ -54,7 +57,7 @@ export default function CurriculoPage() {
         <div>
           <h1 className="text-2xl font-medium text-foreground">Luis Otavio Neves Faustino</h1>
           <p className="text-sm text-muted-foreground mt-1">
-            Desenvolvedor Fullstack · Product Engineer · Arquitetura de Sistemas
+            {t("role")}
           </p>
           <p className="font-mono text-xs text-muted-foreground mt-0.5">
             Cachoeira Paulista, SP · contato@luisneves.dev.br
@@ -65,7 +68,7 @@ export default function CurriculoPage() {
 
       {/* Sobre */}
       <section className="mb-10">
-        <h2 className="font-mono text-xs text-muted-foreground tracking-wider mb-3 uppercase">Sobre</h2>
+        <h2 className="font-mono text-xs text-muted-foreground tracking-wider mb-3 uppercase">{t("about")}</h2>
         <p className="text-sm text-foreground leading-relaxed">
           Profissional com 15+ anos em TI e infraestrutura, em transição para desenvolvimento fullstack moderno.
           Foco em arquitetura-primeiro: construo sistemas com separação de camadas, multi-tenancy, monorepo e
@@ -76,7 +79,7 @@ export default function CurriculoPage() {
 
       {/* Competências */}
       <section className="mb-10">
-        <h2 className="font-mono text-xs text-muted-foreground tracking-wider mb-3 uppercase">Competências Técnicas</h2>
+        <h2 className="font-mono text-xs text-muted-foreground tracking-wider mb-3 uppercase">{t("skills")}</h2>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
           {competencias.map((g) => (
             <div key={g.grupo} className="rounded-lg border border-border p-3">
@@ -95,7 +98,7 @@ export default function CurriculoPage() {
 
       {/* Experiência */}
       <section className="mb-10">
-        <h2 className="font-mono text-xs text-muted-foreground tracking-wider mb-3 uppercase">Experiência</h2>
+        <h2 className="font-mono text-xs text-muted-foreground tracking-wider mb-3 uppercase">{t("experience")}</h2>
         <div className="flex flex-col gap-8">
           {experiencia.map((exp) => (
             <div key={exp.cargo}>
@@ -118,7 +121,7 @@ export default function CurriculoPage() {
 
       {/* Trilha de Projetos */}
       <section className="mb-10">
-        <h2 className="font-mono text-xs text-muted-foreground tracking-wider mb-3 uppercase">Trilha de Projetos</h2>
+        <h2 className="font-mono text-xs text-muted-foreground tracking-wider mb-3 uppercase">{t("projects")}</h2>
         <div className="flex flex-col gap-2">
           {trilha.map((t) => (
             <div key={t.versao} className="flex items-center gap-3 px-3 py-2 rounded-md border border-border bg-muted/40">
@@ -132,7 +135,7 @@ export default function CurriculoPage() {
 
       {/* Uso de IA */}
       <section className="mb-10">
-        <h2 className="font-mono text-xs text-muted-foreground tracking-wider mb-3 uppercase">Uso de IA no Desenvolvimento</h2>
+        <h2 className="font-mono text-xs text-muted-foreground tracking-wider mb-3 uppercase">{t("aiUsage")}</h2>
         <p className="text-sm text-foreground leading-relaxed mb-3">
           Utilizo agentes de IA como ferramentas de produtividade, não como atalho.
           Estruturo contexto (knowledge base versionada, PRD, AGENTS.md) para que o agente
@@ -149,7 +152,7 @@ export default function CurriculoPage() {
 
       {/* Formação */}
       <section className="mb-10">
-        <h2 className="font-mono text-xs text-muted-foreground tracking-wider mb-3 uppercase">Formação</h2>
+        <h2 className="font-mono text-xs text-muted-foreground tracking-wider mb-3 uppercase">{t("education")}</h2>
         <div>
           <h3 className="font-medium text-sm text-foreground">Análise e Desenvolvimento de Sistemas</h3>
           <p className="text-xs text-muted-foreground">FATEC · Em andamento</p>

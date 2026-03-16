@@ -1,13 +1,6 @@
 "use client"
 import { motion } from "framer-motion"
-
-const steps = [
-  { id: "pr",    label: "PR",     sub: "git push",          color: "bg-blue-500/10   border-blue-500/30   text-blue-500"   },
-  { id: "lint",  label: "lint",   sub: "ESLint · TS",       color: "bg-muted/60      border-border        text-muted-foreground" },
-  { id: "test",  label: "test",   sub: "Vitest",            color: "bg-muted/60      border-border        text-muted-foreground" },
-  { id: "build", label: "build",  sub: "Turbo cache",       color: "bg-muted/60      border-border        text-muted-foreground" },
-  { id: "vcl",   label: "deploy", sub: "Vercel · Railway",  color: "bg-green-500/10  border-green-500/30  text-green-500"  },
-]
+import { useTranslations } from "next-intl"
 
 const container = {
   hidden: {},
@@ -19,11 +12,20 @@ const step = {
 }
 
 export function CICDSection() {
+  const t = useTranslations("cicd")
+  const steps = [
+    { id: "pr",    label: "PR",     sub: t("steps.pr"),     color: "bg-blue-500/10   border-blue-500/30   text-blue-500"   },
+    { id: "lint",  label: "lint",   sub: t("steps.lint"),   color: "bg-muted/60      border-border        text-muted-foreground" },
+    { id: "test",  label: "test",   sub: t("steps.test"),   color: "bg-muted/60      border-border        text-muted-foreground" },
+    { id: "build", label: "build",  sub: t("steps.build"),  color: "bg-muted/60      border-border        text-muted-foreground" },
+    { id: "vcl",   label: "deploy", sub: t("steps.deploy"), color: "bg-green-500/10  border-green-500/30  text-green-500"  },
+  ]
+
   return (
     <section className="py-12">
       <div className="mb-2">
         <span className="font-mono text-xs text-muted-foreground tracking-wider">
-          {"// pipeline ci/cd — \"funciona na minha máquina\" não é critério de done"}
+          {t("sectionLabel")}
         </span>
       </div>
 

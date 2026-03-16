@@ -2,8 +2,10 @@
 import { motion } from "framer-motion"
 import { useInView } from "framer-motion"
 import { useRef } from "react"
+import { useTranslations } from "next-intl"
 
 export function ManifestoBlock() {
+  const t = useTranslations("manifesto")
   const ref = useRef(null)
   const inView = useInView(ref, { once: true, margin: "-80px" })
 
@@ -17,11 +19,10 @@ export function ManifestoBlock() {
         bg-muted/40 rounded-r-xl pr-5"
     >
       <p className="text-base font-medium text-foreground leading-relaxed">
-        &ldquo;Não serei o dev que pega a maior feature. Serei quem garante que as features
-        de todos funcionam juntas — dentro do padrão, com qualidade, prontas para produção.&rdquo;
+        &ldquo;{t("quote")}&rdquo;
       </p>
       <footer className="mt-2 text-xs text-muted-foreground font-mono">
-        — Plano de Contribuição · março 2025
+        — {t("author")}
       </footer>
     </motion.blockquote>
   )
