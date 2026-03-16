@@ -1,7 +1,7 @@
 "use client"
 import { motion } from "framer-motion"
 import { useTranslations } from "next-intl"
-import { notes } from "@/lib/notes"
+import { notesData } from "@/lib/data"
 
 const container = {
   hidden: {},
@@ -31,7 +31,7 @@ export function NotesSection() {
         whileInView="show"
         viewport={{ once: true, margin: "-60px" }}
       >
-        {notes.map((note) => (
+        {notesData.map((note) => (
           <motion.a
             key={note.key}
             href={note.href ?? "#"}

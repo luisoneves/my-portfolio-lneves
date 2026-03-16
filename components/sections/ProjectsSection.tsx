@@ -3,6 +3,7 @@ import { motion } from "framer-motion"
 import { useTranslations } from "next-intl"
 import { EvolutionTimeline } from "@/components/projects/EvolutionTimeline"
 import { ProjectCard } from "@/components/projects/ProjectCard"
+import { projectsData } from "@/lib/data"
 
 const container = {
   hidden: {},
@@ -18,45 +19,16 @@ const item = {
 
 export function ProjectsSection() {
   const t = useTranslations("projects")
-  const projects = [
-    {
-      title: t("diocese.title"),
-      description: t("diocese.description"),
-      version: "v3",
-      statusKey: "inDev" as const,
-      statusLabel: t("status.inDev"),
-      chips: ["Fastify", "Next.js 16", "Prisma", "Turborepo", "RBAC", "Multi-tenancy"],
-      href: "https://github.com/luisoneves",
-      highlight: true,
-    },
-    {
-      title: t("capelas.title"),
-      description: t("capelas.description"),
-      version: "v2",
-      statusKey: "production" as const,
-      statusLabel: t("status.production"),
-      chips: ["Next.js 15", "Strapi v4", "PostgreSQL", "Docker", "RLS"],
-      href: "https://gestao-capelas.vercel.app",
-    },
-    {
-      title: t("waas.title"),
-      description: t("waas.description"),
-      version: "WaaS",
-      statusKey: "inDev" as const,
-      statusLabel: t("status.inDev"),
-      chips: ["Next.js 15", "Tailwind 4", "Zod", "Registry Pattern", "Config-driven"],
-      href: "https://github.com/luisoneves",
-    },
-    {
-      title: t("market.title"),
-      description: t("market.description"),
-      version: "beta",
-      statusKey: "beta" as const,
-      statusLabel: t("status.beta"),
-      chips: ["Next.js 16", "TypeScript", "Git Flow"],
-      href: "https://c4ts-project-market-research.vercel.app",
-    },
-  ]
+  const projects = projectsData.map((project) => ({
+    title: t(`${project.id}.title`),
+    description: t(`${project.id}.description`),
+    version: project.version,
+    statusKey: project.status,
+    statusLabel: t(`status.${project.status}`),
+    chips: project.chips,
+    href: project.href,
+    highlight: project.highlight,
+  }))
 
   return (
     <section id="projetos" className="py-16">

@@ -1,6 +1,7 @@
 "use client"
 import { motion } from "framer-motion"
 import { useTranslations } from "next-intl"
+import { stackGroups } from "@/lib/data"
 
 interface ChipData {
   name: string
@@ -24,68 +25,11 @@ const item = {
 
 export function StackSection() {
   const t = useTranslations("stack")
-  const groups: GroupData[] = [
-    {
-      label: t("groups.frontend"),
-      chips: [
-        { name: "Next.js 16",      highlight: true  },
-        { name: "React 19",        highlight: true  },
-        { name: "TypeScript Strict", highlight: false },
-        { name: "Tailwind CSS",    highlight: false },
-        { name: "Shadcn/ui",       highlight: false },
-        { name: "Framer Motion",   highlight: false },
-        { name: "Astro",           highlight: false },
-      ],
-    },
-    {
-      label: t("groups.backend"),
-      chips: [
-        { name: "Fastify",   highlight: true  },
-        { name: "Node.js",   highlight: true  },
-        { name: "NestJS",    highlight: false },
-        { name: "Prisma ORM",highlight: false },
-        { name: "PostgreSQL",highlight: false },
-        { name: "Redis",     highlight: false },
-        { name: "Zod",       highlight: false },
-      ],
-    },
-    {
-      label: t("groups.infra"),
-      chips: [
-        { name: "Docker",       highlight: true  },
-        { name: "Turborepo",    highlight: true  },
-        { name: "Git Flow",     highlight: false },
-        { name: "Vercel",       highlight: false },
-        { name: "Railway",      highlight: false },
-        { name: "nvm / Volta",  highlight: false },
-      ],
-    },
-    {
-      label: t("groups.architecture"),
-      chips: [
-        { name: "Monorepo",          highlight: true  },
-        { name: "Multi-tenancy",     highlight: true  },
-        { name: "Clean Architecture",highlight: true  },
-        { name: "RBAC",              highlight: false },
-        { name: "RLS",               highlight: false },
-        { name: "Feature Flags",     highlight: false },
-        { name: "Registry Pattern",  highlight: false },
-        { name: "Config-driven",     highlight: false },
-        { name: "SOLID",             highlight: false },
-      ],
-      wide: true,
-    },
-    {
-      label: t("groups.ai"),
-      chips: [
-        { name: "AGENTS.md",        highlight: false },
-        { name: "knowledge base",   highlight: false },
-        { name: "Cursor / Windsurf",highlight: false },
-        { name: "Ollama",           highlight: false },
-        { name: "structured prompts",highlight: false },
-      ],
-    },
-  ]
+  const groups: GroupData[] = stackGroups.map((group) => ({
+    label: t(`groups.${group.id}`),
+    chips: group.chips,
+    wide: group.wide,
+  }))
 
   return (
     <section id="stack" className="py-16">
