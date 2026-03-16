@@ -59,6 +59,12 @@ export default function RootLayout({
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
         <ThemeProvider>
+        {/* i18n: quando ativar, instalar next-intl e descomentar abaixo
+            import { NextIntlClientProvider } from 'next-intl'
+            <NextIntlClientProvider locale="pt" messages={messages}>
+              {children}
+            </NextIntlClientProvider>
+        */}
         <SmoothScrollProvider>
           <ClarityProvider />
           <Navbar />

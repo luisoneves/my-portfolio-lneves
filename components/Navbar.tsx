@@ -47,6 +47,9 @@ export function Navbar() {
         </nav>
 
         <div className="flex items-center gap-3">
+          {/* i18n: descomentar quando next-intl estiver instalado
+              <LangToggle />
+          */}
           <ThemeToggle />
           <CommandPaletteHint />
           <a
