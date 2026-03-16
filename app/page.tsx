@@ -37,14 +37,14 @@ export default function Home() {
         >
           Não escrevo features.
         </motion.h1>
-        <motion.h1
+        <motion.p
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.25, duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
           className="text-4xl md:text-5xl font-medium leading-tight mb-6"
         >
           <TypingCycle />
-        </motion.h1>
+        </motion.p>
 
         {/* Manifesto de uma linha */}
         <motion.p
