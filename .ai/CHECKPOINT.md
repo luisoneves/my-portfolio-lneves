@@ -9,11 +9,11 @@
 [x] Produção: dev-luisneves.me no ar
 [x] Refactor M0–M10 completo
 [x] Audit SEO/A11Y/Dark Mode executado (.ai/milestones/AUDIT_REPORT.md)
-[ ] Implementar fixes aprovados do audit
+[x] Fixes do audit implementados (FIX 1–7, branch audit/seo-a11y-darkmode)
 [ ] Analytics A1–A3 pendente (~45 min)
 [ ] lib/data/ — separar dados dos componentes
-[ ] Aplicar logo novo no Navbar
-[ ] Configurar favicon corretamente no App Router
+[x] Logo novo aplicado no Navbar (logo-LN_darkmode-new.png)
+[x] Favicon configurado no App Router (app/favicon.ico + metadata.icons)
 ```
 
 ---
@@ -35,6 +35,13 @@
 - Audit tecnico executado (SEO, Meta/OG, A11Y, Dark/Light, i18n, Performance)
 - Relatorio gerado em .ai/milestones/AUDIT_REPORT.md com classificacao por item (OK/ATENCAO/PROBLEMA)
 - Registro de decisao ADR-006 (i18n em backlog, sem implementacao agora)
+- FIX 1: dark mode com next-themes — ThemeProvider + ThemeToggle no Navbar; removido className="dark" hardcoded
+- FIX 2: i18n placeholder comentado (LangToggle.tsx + comentários em layout e Navbar)
+- FIX 3: dois h1 corrigidos — segundo motion.h1 na hero virou motion.p
+- FIX 4: a11y — aria-label no CommandPaletteHint; ProjectCard virou article com tabIndex + onKeyDown
+- FIX 5: canonical URL adicionado por rota (/ e /curriculo)
+- FIX 6: favicon configurado no App Router (app/favicon.ico + metadata.icons)
+- FIX 7: logo novo dark mode aplicado no Navbar (logo-LN_darkmode-new.png)
 - README.md atualizado para Next.js
 - Vercel Framework Preset corrigido para Next.js (estava em Other)
 - Pasta .ai populada com project-context, decisions, backlog, milestones
