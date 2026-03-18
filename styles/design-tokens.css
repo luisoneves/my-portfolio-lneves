@@ -1,0 +1,67 @@
+/* ============================================================
+   DESIGN TOKENS — dev-luisneves.me
+   Alterar aqui atualiza o site inteiro.
+   Não duplicar valores: se existe em globals.css, referenciar.
+   ============================================================ */
+
+:root {
+  /* --- Tipografia --- */
+  --text-h1: 2.5rem;       /* 40px — hero principal */
+  --text-h2: 1.75rem;      /* 28px — títulos de seção */
+  --text-h3: 1.25rem;      /* 20px — subtítulos de card */
+  --text-h4: 1rem;         /* 16px — labels de grupo */
+  --text-h5: 0.875rem;     /* 14px — labels secundários */
+  --text-p1: 1rem;         /* 16px — corpo principal */
+  --text-p2: 0.875rem;     /* 14px — corpo secundário */
+  --text-p3: 0.75rem;      /* 12px — captions, meta, font-mono labels */
+
+  --weight-normal: 400;
+  --weight-medium: 500;
+
+  --leading-tight:   1.2;
+  --leading-normal:  1.5;
+  --leading-relaxed: 1.65;
+
+  /* --- Espaçamento --- */
+  --space-1: 0.25rem;   /* 4px  */
+  --space-2: 0.5rem;    /* 8px  */
+  --space-3: 0.75rem;   /* 12px */
+  --space-4: 1rem;      /* 16px */
+  --space-5: 1.25rem;   /* 20px */
+  --space-6: 1.5rem;    /* 24px */
+  --space-8: 2rem;      /* 32px */
+  --space-10: 2.5rem;   /* 40px */
+  --space-12: 3rem;     /* 48px */
+  --space-16: 4rem;     /* 64px */
+
+  /* --- Border radius --- */
+  --radius-sm:   4px;      /* chips, tags inline */
+  --radius-md:   8px;      /* botões, inputs */
+  --radius-lg:   12px;     /* cards padrão */
+  --radius-xl:   16px;     /* cards grandes */
+  --radius-full: 9999px;   /* pills, badges */
+
+  /* --- Estilos de borda (nomeados por intenção) ---
+     Alterar aqui muda TODAS as bordas do tipo no site.     */
+  --border-style-1:      0.5px solid var(--border);           /* card padrão */
+  --border-style-2:      1px solid var(--border);             /* hover / foco */
+  --border-style-3:      1.5px solid rgba(245,158,11,0.6);    /* card destaque (Diocese) */
+  --border-style-4:      0.5px solid rgba(59,130,246,0.4);    /* informação */
+  --border-style-5:      0.5px solid rgba(34,197,94,0.4);     /* sucesso */
+  --border-divider:      0.5px solid var(--border);           /* separador hr */
+  --border-accent-left:  2px solid var(--amber-brand);        /* manifesto, blockquotes */
+
+  /* --- Transições --- */
+  --transition-fast: all 0.15s ease;
+  --transition-base: all 0.2s ease;
+  --transition-slow: all 0.35s ease;
+
+  /* --- Layout --- */
+  --container-max:    1100px;
+  --container-prose:  720px;   /* largura ideal para leitura */
+
+  /* --- Z-index --- */
+  --z-sticky:  20;
+  --z-overlay: 40;
+  --z-modal:   50;
+}

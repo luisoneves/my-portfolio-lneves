@@ -4,6 +4,7 @@
     "architecture": "architecture",
     "stack": "stack",
     "notes": "notes",
+    "blog": "blog",
     "resume": "resume",
     "contact": "contact"
   },
@@ -156,13 +157,16 @@
     "empty": "No results.",
     "groups": {
       "navigation": "Navigation",
+      "pages": "Pages",
       "links": "Links"
     },
     "items": {
       "goProjects": "Go to Projects",
       "goStack": "Go to Stack",
       "goNotes": "Go to Notes",
-      "goArchitecture": "Go to Architecture",
+      "goBlog": "Go to Blog",
+      "goContact": "Go to Contact",
+      "openResume": "View Resume",
       "openGithub": "Open GitHub",
       "openDiocese": "View Diocese SaaS",
       "openCapelas": "View Chapel Management",
