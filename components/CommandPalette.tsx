@@ -1,10 +1,14 @@
 "use client"
 import { useState, useEffect, useCallback } from "react"
+import { useRouter } from "next/navigation"
+import { useLocale } from "next-intl"
 import { Command } from "cmdk"
 import { useTranslations } from "next-intl"
 
 export function CommandPalette() {
   const t = useTranslations("commandPalette")
+  const locale = useLocale()
+  const router = useRouter()
   const [open, setOpen] = useState(false)
   const [search, setSearch] = useState("")
 
@@ -14,6 +18,8 @@ export function CommandPalette() {
       { label: t("items.goStack"),       action: () => document.getElementById("stack")?.scrollIntoView({ behavior: "smooth" }) },
       { label: t("items.goNotes"),       action: () => document.getElementById("notas")?.scrollIntoView({ behavior: "smooth" }) },
       { label: t("items.goArchitecture"), action: () => document.getElementById("arquitetura")?.scrollIntoView({ behavior: "smooth" }) },
+      { label: t("items.goBlog"),        action: () => router.push(`/${locale}/blog`) },
+      { label: t("items.goContact"),     action: () => router.push(`/${locale}/contato`) },
     ]},
     { group: t("groups.links"), items: [
       { label: t("items.openGithub"),    action: () => window.open("https://github.com/luisoneves", "_blank") },
@@ -21,6 +27,7 @@ export function CommandPalette() {
       { label: t("items.openCapelas"), action: () => window.open("https://gestao-capelas.vercel.app", "_blank") },
       { label: t("items.sendEmail"),    action: () => window.open("mailto:contato@luisneves.dev.br") },
       { label: t("items.openLinkedIn"),        action: () => window.open("https://linkedin.com/in/luisneves-dev", "_blank") },
+      { label: t("items.openResume"),    action: () => router.push(`/${locale}/curriculo`) },
     ]},
   ]
 

@@ -3,6 +3,7 @@ import { NextIntlClientProvider } from "next-intl"
 import { getMessages } from "next-intl/server"
 import { notFound } from "next/navigation"
 import { routing } from "@/i18n/routing"
+import { Toaster } from "sonner"
 import "../globals.css"
 import { SmoothScrollProvider } from "@/components/providers/SmoothScrollProvider"
 import { PageTransition } from "@/components/providers/PageTransition"
@@ -118,6 +119,7 @@ export default async function LocaleLayout({
                 {children}
               </PageTransition>
               <Footer />
+              <Toaster position="bottom-right" />
             </SmoothScrollProvider>
           </ThemeProvider>
         </NextIntlClientProvider>
