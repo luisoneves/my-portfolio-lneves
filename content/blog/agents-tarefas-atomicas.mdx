@@ -1,0 +1,59 @@
+---
+title: "AGENTS.md e tarefas atômicas — IA como ferramenta, não atalho"
+titleEn: "AGENTS.md and atomic tasks — AI as a tool, not a shortcut"
+date: "2025-02-15"
+tags: ["ia + eng", "workflow", "arquitetura"]
+summary: "Como estruturo contexto (knowledge base versionada, PRD, AGENTS.md) para que o agente produza arquitetura consistente em vez de código aleatório."
+summaryEn: "How I structure context (versioned knowledge base, PRD, AGENTS.md) so the agent produces consistent architecture instead of random code."
+published: true
+---
+
+## O problema com IA sem contexto
+
+Quando você abre o Cursor e digita "cria um sistema de autenticação", o agente não sabe:
+
+- Qual framework você está usando
+- Qual padrão de erro você adotou
+- Se você quer JWT ou sessions
+- Se há um padrão de pastas estabelecido
+
+O resultado é código que funciona mas não conversa com o resto do projeto.
+
+## A solução: AGENTS.md
+
+O arquivo `.ai/workflow/agents.md` define as regras antes de qualquer sessão. Ele não é um prompt — é uma **constituição do projeto**.
+
+Estrutura que uso:
+
+```markdown
+# AGENTS.md
+
+## Contexto do projeto
+[arquitetura, stack, decisões já tomadas]
+
+## Regras de código
+[padrões de importação, nomenclatura, tratamento de erros]
+
+## O que NÃO fazer
+[lista explícita de decisões já rejeitadas e por quê]
+```
+
+## Tarefas atômicas
+
+Uma tarefa atômica tem:
+
+1. **Contexto mínimo** — só o que o agente precisa para essa tarefa
+2. **Um único objetivo** — sem "e também faça X"
+3. **Critério de done explícito** — como validar que está pronto
+
+Exemplo ruim: *"Implementa autenticação com JWT e também cria o reset de senha e adiciona rate limiting"*
+
+Exemplo bom: *"Implementa o middleware de auth JWT em `transport/auth.middleware.ts`. Siga o padrão de erro em `core/errors.ts`. Done quando `GET /api/me` retornar 401 sem token e 200 com token válido."*
+
+## Por que isso importa
+
+Com tarefas atômicas + AGENTS.md, o agente produz código que:
+- Segue os padrões do projeto
+- É revisável em 1 PR pequeno
+- Tem critério de done verificável
+- Não inventa soluções que vão contra decisões já tomadas

@@ -1,0 +1,51 @@
+---
+title: "Por que abandonei o Strapi e construí minha própria stack"
+titleEn: "Why I abandoned Strapi and built my own stack"
+date: "2025-03-01"
+tags: ["arquitetura", "saas", "multi-tenancy"]
+summary: "Multi-tenancy com RLS, feature flags e a decisão que transformou um sistema headless num SaaS real. O que o Strapi não consegue fazer quando você escala para 200 filiais."
+summaryEn: "Multi-tenancy with RLS, feature flags and the decision that turned a headless system into a real SaaS. What Strapi can't do when you scale to 200 branches."
+published: true
+---
+
+## O contexto
+
+Comecei o projeto de gestão de capelas com Strapi porque parecia a escolha óbvia: CMS headless maduro, API REST automática, painel admin pronto.
+
+Funcionou bem para 1 filial. Começou a mostrar fricção com 5. Com 50, ficou claro que eu estava usando a ferramenta errada.
+
+## O problema com o Strapi ao escalar
+
+O Strapi v4 é excelente para o que foi feito: gerenciar conteúdo de **um** site. Quando você tenta forçar multi-tenancy real — onde cada filial tem seu próprio conteúdo, roles e permissões — você está lutando contra a arquitetura da ferramenta.
+
+Três limitações específicas que encontrei:
+
+1. **RBAC limitado**: as permissões são globais no Strapi, não por tenant
+2. **RLS impossível**: o ORM interno não expõe Row-Level Security do PostgreSQL
+3. **Feature Flags por tenant**: sem suporte nativo, qualquer solução é um hack
+
+## A decisão arquitetural
+
+Em vez de continuar remendando o Strapi, decidi construir a stack do zero no Diocese SaaS v3:
+
+- **Fastify** como servidor de API (Transport layer)
+- **Prisma + PostgreSQL** com RLS habilitado por row
+- **Turborepo** organizando monorepo em camadas
+- **RBAC hierárquico** próprio: Diocese → Chapel → Editor
+
+## O que construí no lugar
+
+A arquitetura ficou em 4 camadas explícitas:
+
+```
+Transport   → HTTP handlers, auth middleware
+Application → Use cases, regras de negócio
+Domain      → Entities, invariants
+Infra       → Prisma, Redis, external services
+```
+
+Feature Flags por tenant: cada tenant tem uma coluna `features JSONB` no banco. O middleware valida na borda antes de qualquer processamento.
+
+## O que faria diferente
+
+Hoje, começaria com um protótipo de 1 tenant para validar o modelo antes de construir toda a infraestrutura multi-tenant. O Strapi foi um passo necessário — me mostrou exatamente o que eu precisava construir do zero.
