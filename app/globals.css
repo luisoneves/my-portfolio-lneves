@@ -17,8 +17,34 @@
   --font-mono: var(--font-geist-mono), "JetBrains Mono", monospace;
 }
 
+/*
+ * BUG-01 FIX — Dark mode para next-themes (attribute="class")
+ *
+ * O next-themes injeta a classe .dark no <html> quando o usuário clica no toggle.
+ * Ele NÃO usa @media (prefers-color-scheme: dark) para o toggle manual.
+ * Sem este seletor .dark, clicar no toggle adiciona a classe mas nada muda visualmente.
+ *
+ * A @media abaixo é mantida para SSR/hidratação inicial (antes do JS rodar).
+ * O seletor .dark é o que o toggle de fato usa em runtime.
+ *
+ * O high-contrast.css já usa :root[data-high-contrast].dark — funciona automaticamente
+ * após este fix, sem necessidade de alterar o HighContrastToggle.
+ */
+
+/* Runtime: next-themes adiciona .dark no <html> ao clicar no toggle */
+.dark {
+  --background: #0c0a09;
+  --foreground: #fafaf9;
+  --card: #1c1917;
+  --card-foreground: #fafaf9;
+  --muted: #292524;
+  --muted-foreground: #a8a29e;
+  --border: #292524;
+}
+
+/* SSR fallback: aplica dark antes do JS hidratar (evita flash no carregamento inicial) */
 @media (prefers-color-scheme: dark) {
-  :root {
+  :root:not(.light) {
     --background: #0c0a09;
     --foreground: #fafaf9;
     --card: #1c1917;
