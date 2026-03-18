@@ -1,1079 +1,843 @@
-# PHASE2_MILESTONES.md
-> Portfolio dev-luisneves.me — Fase 2: Tema, i18n, A11Y e Analytics
-> Branch: `feature/i18n-a11y-analytics`
-> Stack: Next.js 15 App Router · TypeScript Strict · Tailwind CSS · next-themes · next-intl
-> Autor: Luis Otavio Neves Faustino | Gerado: março 2026
+# PHASE2_3_MILESTONES.md — Arquivo Definitivo
+> Portfolio dev-luisneves.me | Branch: `feature/design-system-blog-contact`
+> Stack: Next.js 16 · TypeScript Strict · Tailwind CSS v4 · next-intl · Framer Motion
+> Gerado após leitura real de todos os arquivos do projeto | março 2026
+
+---
+
+## ESTADO REAL DO PROJETO (auditado em março 2026)
+
+### ✅ Já implementado e correto — NÃO MEXER
+- `ThemeProvider` com `defaultTheme="system"` + `enableSystem` ✓
+- `LangToggle` com abordagem de segmentos (pathname.split) ✓
+- `HighContrastToggle` com localStorage + data-high-contrast ✓
+- `styles/high-contrast.css` ✓
+- `i18n/routing.ts` e `i18n/request.ts` ✓
+- `app/[locale]/layout.tsx` com `generateMetadata` dinâmico por locale ✓
+- `app/[locale]/page.tsx` com useTranslations, h1 único, aria-live ✓
+- `messages/pt.json` e `messages/en.json` com traduções completas ✓
+- `lib/data/` com projects.ts, stack.ts, notes.ts, index.ts ✓
+- `ClarityProvider` com Project ID real (`vw2ovtzbwy`) ✓
+- Metadata OG + Search Console verification no layout ✓
+
+### ⚠️ Arquivos legados — PRECISAM SER CORRIGIDOS (FIX-01 e FIX-02)
+| Arquivo | Problema | Ação |
+|---------|----------|------|
+| `app/layout.tsx` | `className="dark"` hardcoded + Navbar/Footer duplicados sem providers | Substituir por versão mínima |
+| `app/page.tsx` | Versão antiga sem i18n, strings hardcoded | Substituir por redirect |
+| `app/curriculo/page.tsx` | Duplicata da versão em `[locale]` | Deletar |
+| `lib/notes.ts` | Duplicata de `lib/data/notes.ts` | Deletar |
+
+### ❌ Ainda faltando (o que este arquivo resolve)
+- `nav.blog` ausente em `messages/pt.json` e `messages/en.json`
+- CommandPalette sem itens de blog e contato nas mensagens
+- Design system modular (tokens separados, classes reutilizáveis)
+- Página `/blog` (lista + filtro)
+- Página `/blog/[slug]` (post individual MDX)
+- Página `/contato` (formulário + Resend)
+- Integração na home (últimos posts + CTA contato)
+- Sitemap atualizado com blog e contato
 
 ---
 
 ## COMANDOS PARA CRIAR A BRANCH
 
 ```bash
-# Na main, ja com o merge anterior feito:
 git checkout main
 git pull origin main
-
-# Criar a branch desta fase
-git checkout -b feature/i18n-a11y-analytics
-```
-
-## CONTEXTO
-
-M0–M10 e Audit FIX 1–7 estão completos na main.
-Esta fase cobre 4 frentes independentes que podem ser executadas em paralelo:
-
-| Frente | Milestones | Estimativa |
-|--------|-----------|-----------|
-| Tema (dark/light fix) | P1 | 20 min |
-| i18n PT-BR / EN-US | P2–P4 | 90 min |
-| Acessibilidade | P5–P6 | 45 min |
-| Analytics | P7–P9 | 45 min |
-| Dados (lib/data) | P10 | 30 min |
-
-**Ordem de execução recomendada:**
-```
-P1 → P2 → P3 → P4 → P5 → P6 → P7 → P8 → P9 → P10
+git checkout -b feature/design-system-blog-contact
 ```
 
 ---
 
+## ORDEM DE EXECUÇÃO
+
+```
+FIX-01 → FIX-02 → P0 → pnpm build ← CHECKPOINT
+P1 → P2 → P3 → pnpm build ← CHECKPOINT
+P4 → P5 → P6 → P7 → P8 → P9 → pnpm build final
+```
+
 ---
 
-## MILESTONE P1 — Fix: dark/light toggle ignorando preferência do usuário
-**Estimativa:** 20 min | **Arquivos modificados:** 2
+## FIX-01 — Limpeza de arquivos legados
+**Estimativa:** 10 min | **Crítico — fazer antes de tudo**
 
-### Problema
-O `className="dark"` hardcoded foi removido no FIX 1, mas o ThemeProvider pode estar com `defaultTheme="dark"` ou sem `enableSystem: true`, o que faz o sistema ignorar o toggle e fixar o tema.
+### Problema central: root layout duplicado
 
-### Diagnóstico — verificar antes de alterar
+`app/layout.tsx` tem `className="dark"` hardcoded + Navbar/Footer/CommandPalette sem ThemeProvider/NextIntlClientProvider.
+`app/[locale]/layout.tsx` (correto) já tem tudo configurado.
+Resultado: Navbar e Footer potencialmente duplicados, dark mode fixo na raiz.
 
-Abrir `components/providers/ThemeProvider.tsx`. Verificar se está assim (ERRADO):
+### Passo 1 — Substituir `app/layout.tsx` por versão mínima:
+
 ```tsx
-// ERRADO — defaultTheme fixo, sem enableSystem
-<NextThemesProvider attribute="class" defaultTheme="dark">
-```
+import type { Metadata } from "next"
 
-Deve estar assim (CORRETO):
-```tsx
-// CORRETO — respeita sistema E permite override pelo toggle
-<NextThemesProvider
-  attribute="class"
-  defaultTheme="system"
-  enableSystem
-  disableTransitionOnChange
->
-```
+export const metadata: Metadata = {
+  title: "Luis Neves",
+  description: "Engineering Lead · Software Architect",
+}
 
-### Arquivos a modificar
-
-**`components/providers/ThemeProvider.tsx`** — corrigir props:
-```tsx
-"use client"
-import { ThemeProvider as NextThemesProvider } from "next-themes"
-import { type ThemeProviderProps } from "next-themes"
-
-export function ThemeProvider({ children, ...props }: ThemeProviderProps) {
-  return (
-    <NextThemesProvider
-      attribute="class"
-      defaultTheme="system"
-      enableSystem
-      disableTransitionOnChange
-      {...props}
-    >
-      {children}
-    </NextThemesProvider>
-  )
+export default function RootLayout({
+  children,
+}: {
+  children: React.ReactNode
+}) {
+  return children
 }
 ```
 
-**`components/ThemeToggle.tsx`** — garantir que o toggle lê e escreve o tema corretamente:
+> Por quê: o `app/[locale]/layout.tsx` já fornece `<html>`, `<body>`, providers, Navbar e Footer
+> para TODAS as rotas (o middleware redireciona tudo para `/[locale]/...`).
+> O root layout existe apenas para satisfazer o App Router — sem html/body próprios.
+
+### Passo 2 — Substituir `app/page.tsx` por redirect para locale padrão:
+
 ```tsx
-"use client"
-import { useTheme } from "next-themes"
-import { useEffect, useState } from "react"
+import { redirect } from "next/navigation"
 
-export function ThemeToggle() {
-  const { theme, setTheme, resolvedTheme } = useTheme()
-  const [mounted, setMounted] = useState(false)
-
-  // Evita hydration mismatch — renderiza apenas no cliente
-  useEffect(() => setMounted(true), [])
-  if (!mounted) return <div className="w-9 h-9" /> // placeholder do mesmo tamanho
-
-  const isDark = resolvedTheme === "dark"
-
-  return (
-    <button
-      onClick={() => setTheme(isDark ? "light" : "dark")}
-      className="w-9 h-9 flex items-center justify-center rounded-md
-        border border-border hover:bg-muted transition-colors"
-      aria-label={isDark ? "Ativar modo claro" : "Ativar modo escuro"}
-      title={isDark ? "Modo claro" : "Modo escuro"}
-    >
-      {/* Ícone sol (light mode) */}
-      {isDark ? (
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="none"
-          stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-          <circle cx="12" cy="12" r="5"/>
-          <line x1="12" y1="1" x2="12" y2="3"/>
-          <line x1="12" y1="21" x2="12" y2="23"/>
-          <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/>
-          <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/>
-          <line x1="1" y1="12" x2="3" y2="12"/>
-          <line x1="21" y1="12" x2="23" y2="12"/>
-          <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/>
-          <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/>
-        </svg>
-      ) : (
-        /* Ícone lua (dark mode) */
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="none"
-          stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-          <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
-        </svg>
-      )}
-    </button>
-  )
+export default function RootPage() {
+  redirect("/pt")
 }
+```
+
+### Passo 3 — Deletar arquivos obsoletos:
+
+```bash
+# Deletar curriculo antigo (a versão em [locale] é a correta)
+rm app/curriculo/page.tsx
+rmdir app/curriculo  # só se estiver vazio
+
+# Deletar lib/notes.ts antigo (lib/data/notes.ts é o canônico)
+rm lib/notes.ts
 ```
 
 ### Critério de done
-- [ ] Clicar no toggle muda o tema visualmente em tempo real
-- [ ] Tema persiste ao recarregar a página (localStorage via next-themes)
-- [ ] Se preferência do sistema for dark, abre em dark; se light, abre em light
-- [ ] Sem flash de tema errado no carregamento (hydration ok)
+- [ ] `pnpm build` sem erros após as 3 mudanças
+- [ ] Acessar `dev:3000/` redireciona para `/pt`
+- [ ] Navbar aparece UMA vez, não duplicada
+- [ ] Dark mode responde ao toggle (não fica fixo)
 
 ---
 
-## MILESTONE P2 — i18n: Setup base (next-intl)
-**Estimativa:** 25 min | **Arquivos novos:** 6 | **Arquivos modificados:** 3
+## FIX-02 — Chaves i18n faltando (nav.blog + commandPalette)
+**Estimativa:** 5 min | **Fazer antes de P0**
 
-**Checkpoint git (obrigatorio, antes do P2):**
-```bash
-# Depois de instalar next-intl, mas antes de mover app/page.tsx para [locale]
-git add . && git commit -m "checkpoint: next-intl instalado, antes de mover rotas"
+### `messages/pt.json` — adicionar APENAS as chaves ausentes:
+
+> ATENÇÃO AGENTE: NÃO recriar o arquivo. Adicionar dentro dos objetos existentes.
+
+```json
+// Dentro de "nav" (já existe), adicionar:
+"blog": "blog",
+"contact": "contato"
 ```
 
-### Decisão de arquitetura
-Usar `next-intl` com App Router (middleware + `[locale]` route group).
-Locales suportados: `pt` (padrão) e `en`.
-Estratégia: URLs com prefixo de locale (`/en/`, `/pt/`) — padrão de mercado, melhor para SEO.
+> Nota: "contact" já existe em pt.json (`"contact": "contato"`). Verificar antes de adicionar.
+> O que está faltando é apenas `"blog": "blog"`.
+
+```json
+// Dentro de "commandPalette" > "groups" (já existe), adicionar:
+"pages": "Páginas"
+
+// Dentro de "commandPalette" > "items" (já existe), adicionar:
+"goBlog": "Ir para Blog",
+"goContact": "Ir para Contato",
+"openResume": "Ver Currículo"
+```
+
+### `messages/en.json` — mesmas adições:
+
+```json
+// nav:
+"blog": "blog"
+// (contact já existe como "contact": "contact")
+
+// commandPalette > groups:
+"pages": "Pages"
+
+// commandPalette > items:
+"goBlog": "Go to Blog",
+"goContact": "Go to Contact",
+"openResume": "View Resume"
+```
+
+### Critério de done
+- [ ] `pnpm build` sem erros de chave i18n faltando
+- [ ] `useTranslations("nav")("blog")` retorna "blog"
+
+---
+
+## MILESTONE P0 — Design System modular
+**Estimativa:** 35 min | **Fazer após FIX-01 e FIX-02 | Checkpoint após este milestone**
+
+### Objetivo
+O `globals.css` atual já tem CSS custom properties (`--background`, `--foreground`, etc.) e botões (`.btn-primary`, `.btn-secondary`).
+O P0 **complementa** sem substituir: adiciona tokens de tipografia/espaçamento/borda + classes de componente reutilizáveis.
+**Não deletar nem renomear variáveis existentes.**
+
+### Arquivo a criar: `styles/design-tokens.css`
+
+```css
+/* ============================================================
+   DESIGN TOKENS — dev-luisneves.me
+   Alterar aqui atualiza o site inteiro.
+   Não duplicar valores: se existe em globals.css, referenciar.
+   ============================================================ */
+
+:root {
+  /* --- Tipografia --- */
+  --text-h1: 2.5rem;       /* 40px — hero principal */
+  --text-h2: 1.75rem;      /* 28px — títulos de seção */
+  --text-h3: 1.25rem;      /* 20px — subtítulos de card */
+  --text-h4: 1rem;         /* 16px — labels de grupo */
+  --text-h5: 0.875rem;     /* 14px — labels secundários */
+  --text-p1: 1rem;         /* 16px — corpo principal */
+  --text-p2: 0.875rem;     /* 14px — corpo secundário */
+  --text-p3: 0.75rem;      /* 12px — captions, meta, font-mono labels */
+
+  --weight-normal: 400;
+  --weight-medium: 500;
+
+  --leading-tight:   1.2;
+  --leading-normal:  1.5;
+  --leading-relaxed: 1.65;
+
+  /* --- Espaçamento --- */
+  --space-1: 0.25rem;   /* 4px  */
+  --space-2: 0.5rem;    /* 8px  */
+  --space-3: 0.75rem;   /* 12px */
+  --space-4: 1rem;      /* 16px */
+  --space-5: 1.25rem;   /* 20px */
+  --space-6: 1.5rem;    /* 24px */
+  --space-8: 2rem;      /* 32px */
+  --space-10: 2.5rem;   /* 40px */
+  --space-12: 3rem;     /* 48px */
+  --space-16: 4rem;     /* 64px */
+
+  /* --- Border radius --- */
+  --radius-sm:   4px;      /* chips, tags inline */
+  --radius-md:   8px;      /* botões, inputs */
+  --radius-lg:   12px;     /* cards padrão */
+  --radius-xl:   16px;     /* cards grandes */
+  --radius-full: 9999px;   /* pills, badges */
+
+  /* --- Estilos de borda (nomeados por intenção) ---
+     Alterar aqui muda TODAS as bordas do tipo no site.     */
+  --border-style-1:      0.5px solid var(--border);           /* card padrão */
+  --border-style-2:      1px solid var(--border);             /* hover / foco */
+  --border-style-3:      1.5px solid rgba(245,158,11,0.6);    /* card destaque (Diocese) */
+  --border-style-4:      0.5px solid rgba(59,130,246,0.4);    /* informação */
+  --border-style-5:      0.5px solid rgba(34,197,94,0.4);     /* sucesso */
+  --border-divider:      0.5px solid var(--border);           /* separador hr */
+  --border-accent-left:  2px solid var(--amber-brand);        /* manifesto, blockquotes */
+
+  /* --- Transições --- */
+  --transition-fast: all 0.15s ease;
+  --transition-base: all 0.2s ease;
+  --transition-slow: all 0.35s ease;
+
+  /* --- Layout --- */
+  --container-max:    1100px;
+  --container-prose:  720px;   /* largura ideal para leitura */
+
+  /* --- Z-index --- */
+  --z-sticky:  20;
+  --z-overlay: 40;
+  --z-modal:   50;
+}
+```
+
+### Arquivo a modificar: `app/globals.css`
+
+Adicionar no **TOPO** do arquivo (antes de `@import "tailwindcss"`):
+
+```css
+@import "../styles/design-tokens.css";
+```
+
+Em seguida, adicionar as seguintes layers **ao final do arquivo** (depois de tudo que já existe):
+
+```css
+/* ============================================================
+   TIPOGRAFIA — usar estas classes, nunca font-size hardcoded
+   ============================================================ */
+
+.h1 {
+  font-size: var(--text-h1);
+  font-weight: var(--weight-medium);
+  line-height: var(--leading-tight);
+  color: var(--foreground);
+}
+.h2 {
+  font-size: var(--text-h2);
+  font-weight: var(--weight-medium);
+  line-height: var(--leading-tight);
+  color: var(--foreground);
+}
+.h3 {
+  font-size: var(--text-h3);
+  font-weight: var(--weight-medium);
+  line-height: var(--leading-normal);
+  color: var(--foreground);
+}
+.h4 {
+  font-size: var(--text-h4);
+  font-weight: var(--weight-medium);
+  line-height: var(--leading-normal);
+  color: var(--foreground);
+}
+.h5 {
+  font-size: var(--text-h5);
+  font-weight: var(--weight-medium);
+  line-height: var(--leading-normal);
+  color: var(--muted-foreground);
+}
+.p1 {
+  font-size: var(--text-p1);
+  font-weight: var(--weight-normal);
+  line-height: var(--leading-relaxed);
+  color: var(--foreground);
+}
+.p2 {
+  font-size: var(--text-p2);
+  font-weight: var(--weight-normal);
+  line-height: var(--leading-relaxed);
+  color: var(--muted-foreground);
+}
+.p3 {
+  font-size: var(--text-p3);
+  font-weight: var(--weight-normal);
+  line-height: var(--leading-normal);
+  color: var(--muted-foreground);
+  font-family: var(--font-mono);
+}
+
+/* Label de seção — "// trilha de projetos..." */
+.section-label {
+  font-size: var(--text-p3);
+  font-family: var(--font-mono);
+  color: var(--muted-foreground);
+  letter-spacing: 0.04em;
+  display: block;
+  margin-bottom: var(--space-2);
+}
+
+/* Prosa de post — aplica em article.prose */
+.prose h2 { font-size: var(--text-h2); font-weight: var(--weight-medium); margin: var(--space-8) 0 var(--space-3); }
+.prose h3 { font-size: var(--text-h3); font-weight: var(--weight-medium); margin: var(--space-6) 0 var(--space-2); }
+.prose p  { font-size: var(--text-p1); line-height: var(--leading-relaxed); margin-bottom: var(--space-4); }
+.prose pre {
+  border: var(--border-style-1);
+  border-radius: var(--radius-md);
+  padding: var(--space-4);
+  margin: var(--space-4) 0;
+  overflow-x: auto;
+  background: var(--muted);
+}
+.prose code { font-family: var(--font-mono); font-size: var(--text-p2); }
+.prose blockquote {
+  border-left: var(--border-accent-left);
+  padding-left: var(--space-4);
+  color: var(--muted-foreground);
+  margin: var(--space-6) 0;
+}
+.prose a { color: var(--amber-brand); text-decoration: underline; text-underline-offset: 3px; }
+.prose ul, .prose ol { padding-left: var(--space-5); margin-bottom: var(--space-4); }
+.prose li { font-size: var(--text-p1); line-height: var(--leading-relaxed); margin-bottom: var(--space-1); }
+.prose hr { border: none; border-top: var(--border-divider); margin: var(--space-8) 0; }
+.prose strong { font-weight: var(--weight-medium); color: var(--foreground); }
+
+/* ============================================================
+   CARDS — classes reutilizáveis entre todas as páginas
+   ============================================================ */
+
+/* card: padrão — todas as páginas */
+.card {
+  background: var(--card);
+  border: var(--border-style-1);
+  border-radius: var(--radius-lg);
+  padding: var(--space-4) var(--space-5);
+  transition: var(--transition-base);
+}
+
+/* card-interactive: com hover, clicável */
+.card-interactive {
+  background: var(--card);
+  border: var(--border-style-1);
+  border-radius: var(--radius-lg);
+  padding: var(--space-4) var(--space-5);
+  cursor: pointer;
+  transition: var(--transition-base);
+  text-decoration: none;
+  display: block;
+  color: inherit;
+}
+.card-interactive:hover {
+  border: var(--border-style-2);
+  transform: translateY(-2px);
+}
+
+/* card-highlight: destaque (Diocese SaaS, card ativo) */
+.card-highlight {
+  background: var(--card);
+  border: var(--border-style-3);
+  border-radius: var(--radius-lg);
+  padding: var(--space-4) var(--space-5);
+}
+
+/* card-muted: fundo suave, métricas/stats */
+.card-muted {
+  background: var(--muted);
+  border-radius: var(--radius-md);
+  padding: var(--space-4);
+}
+
+/* card-info: informação/azul */
+.card-info {
+  background: rgba(59,130,246,0.06);
+  border: var(--border-style-4);
+  border-radius: var(--radius-lg);
+  padding: var(--space-4) var(--space-5);
+}
+
+/* card-success: sucesso/verde */
+.card-success {
+  background: rgba(34,197,94,0.06);
+  border: var(--border-style-5);
+  border-radius: var(--radius-lg);
+  padding: var(--space-4) var(--space-5);
+}
+
+/* ============================================================
+   GRIDS
+   ============================================================ */
+.grid-1 { display: grid; grid-template-columns: 1fr; gap: var(--space-4); }
+.grid-2 { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--space-4); }
+.grid-3 { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: var(--space-4); }
+.grid-4 { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: var(--space-4); }
+.grid-main-sidebar { display: grid; grid-template-columns: 2fr 1fr; gap: var(--space-8); }
+.grid-auto { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: var(--space-4); }
+
+@media (max-width: 768px) {
+  .grid-2,
+  .grid-3,
+  .grid-4,
+  .grid-main-sidebar { grid-template-columns: 1fr; }
+}
+
+/* ============================================================
+   BADGES, CHIPS, TAGS
+   ============================================================ */
+
+/* badge: rótulo pill de status */
+.badge {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-1);
+  font-size: var(--text-p3);
+  font-family: var(--font-mono);
+  padding: 3px var(--space-3);
+  border-radius: var(--radius-full);
+  line-height: 1;
+}
+.badge-amber   { background: rgba(245,158,11,0.12); color: var(--amber-brand); }
+.badge-info    { background: rgba(59,130,246,0.10); color: #3b82f6; }
+.badge-success { background: rgba(34,197,94,0.10);  color: #22c55e; }
+.badge-neutral {
+  background: var(--muted);
+  color: var(--muted-foreground);
+  border: var(--border-style-1);
+}
+
+/* chip: tecnologia/stack (menor que badge) */
+.chip {
+  display: inline-block;
+  font-size: var(--text-p3);
+  font-family: var(--font-mono);
+  padding: 2px var(--space-2);
+  border: var(--border-style-1);
+  border-radius: var(--radius-sm);
+  color: var(--muted-foreground);
+  background: var(--muted);
+  transition: var(--transition-fast);
+}
+.chip-primary {
+  border: 1px solid rgba(245,158,11,0.4);
+  color: var(--amber-brand);
+  background: rgba(245,158,11,0.08);
+}
+.chip:hover {
+  border: 1px solid rgba(245,158,11,0.4);
+  color: var(--amber-brand);
+}
+
+/* tag: filtro de categoria (blog) */
+.tag {
+  display: inline-block;
+  font-size: var(--text-p3);
+  font-family: var(--font-mono);
+  padding: 3px 9px;
+  border: var(--border-style-1);
+  border-radius: var(--radius-sm);
+  color: var(--muted-foreground);
+  cursor: pointer;
+  transition: var(--transition-fast);
+}
+.tag:hover,
+.tag.active {
+  border: 1px solid rgba(245,158,11,0.5);
+  color: var(--amber-brand);
+  background: rgba(245,158,11,0.08);
+}
+
+/* ============================================================
+   LAYOUT CONTAINERS
+   ============================================================ */
+.container {
+  max-width: var(--container-max);
+  margin: 0 auto;
+  padding: 0 var(--space-6);
+}
+.container-prose {
+  max-width: var(--container-prose);
+  margin: 0 auto;
+  padding: 0 var(--space-6);
+}
+
+/* Divider */
+.divider {
+  border: none;
+  border-top: var(--border-divider);
+  margin: var(--space-8) 0;
+}
+
+/* ============================================================
+   FORMULÁRIO
+   ============================================================ */
+.form-group { margin-bottom: var(--space-4); }
+.form-label {
+  display: block;
+  font-size: var(--text-p3);
+  font-family: var(--font-mono);
+  color: var(--muted-foreground);
+  margin-bottom: var(--space-1);
+}
+.form-input {
+  width: 100%;
+  padding: var(--space-3) var(--space-4);
+  border: var(--border-style-1);
+  border-radius: var(--radius-md);
+  background: var(--card);
+  color: var(--foreground);
+  font-size: var(--text-p2);
+  font-family: var(--font-sans);
+  transition: var(--transition-fast);
+  box-sizing: border-box;
+}
+.form-input:focus {
+  outline: none;
+  border: 1px solid rgba(245,158,11,0.5);
+  box-shadow: 0 0 0 3px rgba(245,158,11,0.1);
+}
+.form-input::placeholder { color: var(--muted-foreground); }
+```
+
+> Nota: `.btn-primary` e `.btn-secondary` já existem no globals.css — NÃO recriar.
+
+### Critério de done
+- [ ] `styles/design-tokens.css` criado
+- [ ] `globals.css` importa design-tokens no topo
+- [ ] Classes `.card`, `.h1`, `.p2`, `.badge-amber`, `.tag` etc. funcionando
+- [ ] `pnpm build` sem erros — **FAZER CHECKPOINT AQUI**
+
+```bash
+git add . && git commit -m "checkpoint: design system implementado (P0 + FIX)"
+```
+
+### Como usar nos componentes (referência rápida)
+```tsx
+// Tipografia
+<h1 className="h1">Não escrevo features.</h1>
+<p className="p2">Subtítulo muted</p>
+<span className="section-label">// trilha de projetos</span>
+
+// Cards
+<div className="card">card padrão</div>
+<div className="card-interactive">card clicável com hover</div>
+<div className="card-highlight">card ativo / destaque</div>
+<div className="card-muted">stat / métrica</div>
+
+// Grid
+<div className="grid-3">três colunas</div>
+<div className="grid-main-sidebar">conteúdo + sidebar</div>
+
+// Badges e chips
+<span className="badge badge-amber">em dev</span>
+<span className="badge badge-success">produção</span>
+<span className="chip chip-primary">Next.js 16</span>
+<span className="tag active">arquitetura</span>
+
+// Formulário
+<div className="form-group">
+  <label className="form-label">nome *</label>
+  <input className="form-input" type="text" />
+</div>
+```
+
+---
+
+## MILESTONE P1 — Blog: infraestrutura MDX
+**Estimativa:** 20 min | **Arquivos novos:** 3 | **Arquivos modificados:** 1
 
 ### Instalação
+
 ```bash
-npm install next-intl
+npm install next-mdx-remote gray-matter reading-time
+npm install @types/mdx
 ```
+
+> `@next/mdx` e loaders pesados NÃO são necessários com `next-mdx-remote`.
+> `next-mdx-remote/rsc` processa MDX em Server Components do App Router.
 
 ### Arquivos a criar
 
-**`messages/pt.json`** — conteúdo em português (todas as strings do site):
-```json
-{
-  "nav": {
-    "projects": "projetos",
-    "architecture": "arquitetura",
-    "stack": "stack",
-    "notes": "notas",
-    "resume": "currículo",
-    "contact": "contato"
-  },
-  "hero": {
-    "badge": "Engineering Lead · Software Architect · FATEC ADS",
-    "available": "disponível",
-    "title1": "Não escrevo features.",
-    "phrases": ["Estruturo sistemas.", "Dirijo a IA.", "Entrego produção.", "Penso em arquitetura."],
-    "description": "15+ anos de TI e infraestrutura. Fullstack moderno com arquitetura-primeiro.",
-    "highlight": "Quem entende o sistema dirige a IA.",
-    "subtitle": "Quem só sabe sintaxe concorre com ela.",
-    "stats": {
-      "yearsLabel": "anos em TI",
-      "projectsLabel": "projetos em produção",
-      "iterationsLabel": "iterações / sistema",
-      "readingLabel": "lendo agora"
-    },
-    "cta": {
-      "projects": "ver projetos ↓",
-      "github": "github ↗",
-      "contact": "contato ↗"
-    }
-  },
-  "manifesto": {
-    "quote": "Não serei o dev que pega a maior feature. Serei quem garante que as features de todos funcionam juntas — dentro do padrão, com qualidade, prontas para produção.",
-    "author": "Plano de Contribuição · março 2025"
-  },
-  "projects": {
-    "sectionLabel": "// trilha de projetos — problema → solução → refatoração",
-    "title": "Projetos",
-    "timeline": {
-      "v1": "mockup front-only",
-      "v2": "headless Strapi CMS",
-      "v3": "Diocese SaaS",
-      "v3current": "← agora",
-      "v4": "WaaS em dev"
-    },
-    "status": {
-      "production": "produção",
-      "inDev": "em dev",
-      "beta": "beta",
-      "done": "concluído"
-    },
-    "diocese": {
-      "title": "Diocese SaaS Platform",
-      "description": "Monorepo Turborepo. RBAC Diocese→Chapel→Editor. Multi-tenancy com RLS e Feature Flags por tenant. Stack própria sem dependência de CMS externo."
-    },
-    "capelas": {
-      "title": "Gestão de Capelas",
-      "description": "1 admin + 200 filiais com layouts editáveis. Arquitetura headless Strapi. O limite ao escalar motivou a refatoração completa para stack própria."
-    },
-    "waas": {
-      "title": "Website as a Service",
-      "description": "1 deploy + N clientes. Engine config-driven com Registry Pattern, renderer dinâmico e theme engine via CSS variables. Multi-tenant por host."
-    },
-    "market": {
-      "title": "C4ts Market Research",
-      "description": "Plataforma para captação de clientes freela e posicionamento local. Forms e blob para receber pedidos de orçamento."
-    }
-  },
-  "architecture": {
-    "sectionLabel": "// arquitetura — decisões que permitem trocar tecnologia sem reescrever o sistema",
-    "title": "Arquitetura",
-    "monorepoTitle": "estrutura monorepo",
-    "layersTitle": "camadas (clean architecture)",
-    "layers": {
-      "transport": "HTTP / WebSocket",
-      "application": "use cases",
-      "domain": "entities / rules",
-      "infrastructure": "Prisma / Redis"
-    }
-  },
-  "cicd": {
-    "sectionLabel": "// pipeline ci/cd — \"funciona na minha máquina\" não é critério de done",
-    "steps": {
-      "pr": "git push",
-      "lint": "ESLint · TS",
-      "test": "Vitest",
-      "build": "Turbo cache",
-      "deploy": "Vercel · Railway"
-    }
-  },
-  "stack": {
-    "sectionLabel": "// stack em contexto — não uma lista, uma decisão",
-    "title": "Stack",
-    "groups": {
-      "frontend": "frontend",
-      "backend": "backend & dados",
-      "infra": "infra & devops",
-      "architecture": "arquitetura & padrões",
-      "ai": "engenharia de ia"
-    }
-  },
-  "notes": {
-    "sectionLabel": "// notas de engenharia — thinking in public",
-    "title": "Notas de Engenharia",
-    "note1": {
-      "date": "2025-03",
-      "category": "arquitetura",
-      "title": "Por que abandonei o Strapi e construí minha própria stack",
-      "summary": "Multi-tenancy com RLS, feature flags e a decisão que transformou um sistema headless num SaaS real. O que o Strapi não consegue fazer quando você escala para 200 filiais."
-    },
-    "note2": {
-      "date": "2025-02",
-      "category": "ia + engenharia",
-      "title": "AGENTS.md e tarefas atômicas — IA como ferramenta, não atalho",
-      "summary": "Como estruturo contexto (knowledge base versionada, PRD, AGENTS.md) para que o agente produza arquitetura consistente em vez de código aleatório."
-    },
-    "note3": {
-      "date": "2025-01",
-      "category": "clean architecture",
-      "title": "Transport → Application → Domain → Infra na prática",
-      "summary": "Separação real de camadas num projeto Fastify com exemplos concretos do Diocese SaaS. O que muda no dia a dia quando você respeita as fronteiras."
-    }
-  },
-  "footer": {
-    "available": "disponível",
-    "contact": "entrar em contato ↗",
-    "emailCopied": "email copiado!"
-  },
-  "resume": {
-    "title": "Currículo",
-    "download": "download PDF ↓",
-    "role": "Desenvolvedor Fullstack · Product Engineer · Arquitetura de Sistemas",
-    "about": "Sobre mim",
-    "skills": "Competências técnicas",
-    "experience": "Experiência",
-    "projects": "Projetos em destaque",
-    "aiUsage": "Uso de IA no desenvolvimento",
-    "education": "Formação",
-    "languages": "Idiomas"
-  },
-  "a11y": {
-    "highContrastToggle": "Alto contraste",
-    "themeToggleDark": "Ativar modo escuro",
-    "themeToggleLight": "Ativar modo claro",
-    "langToggle": "Mudar idioma",
-    "openMenu": "Abrir menu",
-    "closeMenu": "Fechar menu",
-    "commandPalette": "Abrir paleta de comandos",
-    "externalLink": "Abre em nova aba"
-  }
-}
-```
+**`lib/blog.ts`**
 
-**`messages/en.json`** — conteúdo em inglês:
-```json
-{
-  "nav": {
-    "projects": "projects",
-    "architecture": "architecture",
-    "stack": "stack",
-    "notes": "notes",
-    "resume": "resume",
-    "contact": "contact"
-  },
-  "hero": {
-    "badge": "Engineering Lead · Software Architect · FATEC ADS",
-    "available": "available",
-    "title1": "I don't write features.",
-    "phrases": ["I architect systems.", "I drive the AI.", "I ship to production.", "I think in architecture."],
-    "description": "15+ years in IT and infrastructure. Modern fullstack with architecture-first approach.",
-    "highlight": "Those who understand the system drive the AI.",
-    "subtitle": "Those who only know syntax compete with it.",
-    "stats": {
-      "yearsLabel": "years in IT",
-      "projectsLabel": "projects in production",
-      "iterationsLabel": "iterations / system",
-      "readingLabel": "currently reading"
-    },
-    "cta": {
-      "projects": "view projects ↓",
-      "github": "github ↗",
-      "contact": "contact ↗"
-    }
-  },
-  "manifesto": {
-    "quote": "I won't be the dev who grabs the biggest feature. I'll be the one who ensures everyone's features work together — on standard, with quality, production-ready.",
-    "author": "Contribution Plan · March 2025"
-  },
-  "projects": {
-    "sectionLabel": "// project trail — problem → solution → refactoring",
-    "title": "Projects",
-    "timeline": {
-      "v1": "frontend mockup only",
-      "v2": "headless Strapi CMS",
-      "v3": "Diocese SaaS",
-      "v3current": "← now",
-      "v4": "WaaS in dev"
-    },
-    "status": {
-      "production": "production",
-      "inDev": "in dev",
-      "beta": "beta",
-      "done": "done"
-    },
-    "diocese": {
-      "title": "Diocese SaaS Platform",
-      "description": "Turborepo monorepo. RBAC Diocese→Chapel→Editor. Multi-tenancy with RLS and per-tenant Feature Flags. Own stack without external CMS dependency."
-    },
-    "capelas": {
-      "title": "Chapel Management",
-      "description": "1 admin + 200 branches with editable layouts. Headless Strapi architecture. Scaling limits motivated a complete refactor to own stack."
-    },
-    "waas": {
-      "title": "Website as a Service",
-      "description": "1 deploy + N clients. Config-driven engine with Registry Pattern, dynamic renderer and theme engine via CSS variables. Multi-tenant by host."
-    },
-    "market": {
-      "title": "C4ts Market Research",
-      "description": "Platform for freelance client acquisition and local positioning. Forms and blob for quote requests and product briefs."
-    }
-  },
-  "architecture": {
-    "sectionLabel": "// architecture — decisions that allow swapping technology without rewriting the system",
-    "title": "Architecture",
-    "monorepoTitle": "monorepo structure",
-    "layersTitle": "layers (clean architecture)",
-    "layers": {
-      "transport": "HTTP / WebSocket",
-      "application": "use cases",
-      "domain": "entities / rules",
-      "infrastructure": "Prisma / Redis"
-    }
-  },
-  "cicd": {
-    "sectionLabel": "// ci/cd pipeline — \"works on my machine\" is not a done criterion",
-    "steps": {
-      "pr": "git push",
-      "lint": "ESLint · TS",
-      "test": "Vitest",
-      "build": "Turbo cache",
-      "deploy": "Vercel · Railway"
-    }
-  },
-  "stack": {
-    "sectionLabel": "// stack in context — not a list, a decision",
-    "title": "Stack",
-    "groups": {
-      "frontend": "frontend",
-      "backend": "backend & data",
-      "infra": "infra & devops",
-      "architecture": "architecture & patterns",
-      "ai": "ai engineering"
-    }
-  },
-  "notes": {
-    "sectionLabel": "// engineering notes — thinking in public",
-    "title": "Engineering Notes",
-    "note1": {
-      "date": "2025-03",
-      "category": "architecture",
-      "title": "Why I abandoned Strapi and built my own stack",
-      "summary": "Multi-tenancy with RLS, feature flags and the decision that transformed a headless system into a real SaaS. What Strapi can't do when you scale to 200 branches."
-    },
-    "note2": {
-      "date": "2025-02",
-      "category": "ai + engineering",
-      "title": "AGENTS.md and atomic tasks — AI as a tool, not a shortcut",
-      "summary": "How I structure context (versioned knowledge base, PRD, AGENTS.md) so the agent produces consistent architecture instead of random code."
-    },
-    "note3": {
-      "date": "2025-01",
-      "category": "clean architecture",
-      "title": "Transport → Application → Domain → Infra in practice",
-      "summary": "Real layer separation in a Fastify project with concrete examples from Diocese SaaS. What changes day-to-day when you respect boundaries."
-    }
-  },
-  "footer": {
-    "available": "available",
-    "contact": "get in touch ↗",
-    "emailCopied": "email copied!"
-  },
-  "resume": {
-    "title": "Resume",
-    "download": "download PDF ↓",
-    "role": "Fullstack Developer · Product Engineer · Systems Architecture",
-    "about": "About me",
-    "skills": "Technical skills",
-    "experience": "Experience",
-    "projects": "Featured projects",
-    "aiUsage": "AI usage in development",
-    "education": "Education",
-    "languages": "Languages"
-  },
-  "a11y": {
-    "highContrastToggle": "High contrast",
-    "themeToggleDark": "Enable dark mode",
-    "themeToggleLight": "Enable light mode",
-    "langToggle": "Change language",
-    "openMenu": "Open menu",
-    "closeMenu": "Close menu",
-    "commandPalette": "Open command palette",
-    "externalLink": "Opens in new tab"
-  }
-}
-```
-
-**`i18n/routing.ts`**
 ```ts
-import { defineRouting } from "next-intl/routing"
+import fs from "fs"
+import path from "path"
+import matter from "gray-matter"
+import readingTime from "reading-time"
 
-export const routing = defineRouting({
-  locales: ["pt", "en"],
-  defaultLocale: "pt",
-  localePrefix: "always",
-})
-```
+const BLOG_DIR = path.join(process.cwd(), "content/blog")
 
-**`i18n/request.ts`**
-```ts
-import { getRequestConfig } from "next-intl/server"
-import { routing } from "./routing"
+export interface PostMeta {
+  slug:           string
+  title:          string
+  titleEn?:       string
+  date:           string        // YYYY-MM-DD
+  tags:           string[]
+  summary:        string
+  summaryEn?:     string
+  readingTime:    string
+  readingTimeEn?: string
+  published:      boolean
+  coverImage?:    string
+}
 
-export default getRequestConfig(async ({ requestLocale }) => {
-  let locale = await requestLocale
-  if (!locale || !routing.locales.includes(locale as "pt" | "en")) {
-    locale = routing.defaultLocale
-  }
+export interface Post extends PostMeta {
+  content: string
+}
+
+export function getAllPostSlugs(): string[] {
+  if (!fs.existsSync(BLOG_DIR)) return []
+  return fs
+    .readdirSync(BLOG_DIR)
+    .filter((f) => f.endsWith(".mdx"))
+    .map((f) => f.replace(".mdx", ""))
+}
+
+export function getPostBySlug(slug: string): Post | null {
+  const filePath = path.join(BLOG_DIR, `${slug}.mdx`)
+  if (!fs.existsSync(filePath)) return null
+  const raw = fs.readFileSync(filePath, "utf-8")
+  const { data, content } = matter(raw)
+  const rt = readingTime(content)
   return {
-    locale,
-    messages: (await import(`../messages/${locale}.json`)).default,
+    slug,
+    title:          data.title ?? "",
+    titleEn:        data.titleEn,
+    date:           data.date ?? "",
+    tags:           data.tags ?? [],
+    summary:        data.summary ?? "",
+    summaryEn:      data.summaryEn,
+    readingTime:    `${Math.ceil(rt.minutes)} min`,
+    readingTimeEn:  `${Math.ceil(rt.minutes)} min read`,
+    published:      data.published !== false,
+    coverImage:     data.coverImage,
+    content,
   }
-})
-```
+}
 
-**`middleware.ts`** — criar na raiz do projeto (ao lado de package.json):
-```ts
-import createMiddleware from "next-intl/middleware"
-import { routing } from "./i18n/routing"
+export function getAllPosts(locale: "pt" | "en" = "pt"): PostMeta[] {
+  return getAllPostSlugs()
+    .map((slug) => getPostBySlug(slug))
+    .filter((post): post is Post => post !== null && post.published)
+    .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime())
+}
 
-export default createMiddleware(routing)
-
-export const config = {
-  matcher: [
-    // Rotas sem underscore ou dot
-    "/((?!_next|_vercel|.*\\..*).*)",
-  ],
+export function getAllTags(): string[] {
+  const tags = getAllPosts().flatMap((post) => post.tags)
+  return [...new Set(tags)].sort()
 }
 ```
 
-### Arquivos a modificar
+**`content/blog/strapi-para-saas.mdx`**
 
-**`next.config.ts`** — adicionar next-intl plugin:
+```mdx
+---
+title: "Por que abandonei o Strapi e construí minha própria stack"
+titleEn: "Why I abandoned Strapi and built my own stack"
+date: "2025-03-01"
+tags: ["arquitetura", "saas", "multi-tenancy"]
+summary: "Multi-tenancy com RLS, feature flags e a decisão que transformou um sistema headless num SaaS real. O que o Strapi não consegue fazer quando você escala para 200 filiais."
+summaryEn: "Multi-tenancy with RLS, feature flags and the decision that turned a headless system into a real SaaS. What Strapi can't do when you scale to 200 branches."
+published: true
+---
+
+## O contexto
+
+Comecei o projeto de gestão de capelas com Strapi porque parecia a escolha óbvia: CMS headless maduro, API REST automática, painel admin pronto.
+
+Funcionou bem para 1 filial. Começou a mostrar fricção com 5. Com 50, ficou claro que eu estava usando a ferramenta errada.
+
+## O problema com o Strapi ao escalar
+
+O Strapi v4 é excelente para o que foi feito: gerenciar conteúdo de **um** site. Quando você tenta forçar multi-tenancy real — onde cada filial tem seu próprio conteúdo, roles e permissões — você está lutando contra a arquitetura da ferramenta.
+
+Três limitações específicas que encontrei:
+
+1. **RBAC limitado**: as permissões são globais no Strapi, não por tenant
+2. **RLS impossível**: o ORM interno não expõe Row-Level Security do PostgreSQL
+3. **Feature Flags por tenant**: sem suporte nativo, qualquer solução é um hack
+
+## A decisão arquitetural
+
+Em vez de continuar remendando o Strapi, decidi construir a stack do zero no Diocese SaaS v3:
+
+- **Fastify** como servidor de API (Transport layer)
+- **Prisma + PostgreSQL** com RLS habilitado por row
+- **Turborepo** organizando monorepo em camadas
+- **RBAC hierárquico** próprio: Diocese → Chapel → Editor
+
+## O que construí no lugar
+
+A arquitetura ficou em 4 camadas explícitas:
+
+```
+Transport   → HTTP handlers, auth middleware
+Application → Use cases, regras de negócio
+Domain      → Entities, invariants
+Infra       → Prisma, Redis, external services
+```
+
+Feature Flags por tenant: cada tenant tem uma coluna `features JSONB` no banco. O middleware valida na borda antes de qualquer processamento.
+
+## O que faria diferente
+
+Hoje, começaria com um protótipo de 1 tenant para validar o modelo antes de construir toda a infraestrutura multi-tenant. O Strapi foi um passo necessário — me mostrou exatamente o que eu precisava construir do zero.
+```
+
+**`content/blog/agents-tarefas-atomicas.mdx`**
+
+```mdx
+---
+title: "AGENTS.md e tarefas atômicas — IA como ferramenta, não atalho"
+titleEn: "AGENTS.md and atomic tasks — AI as a tool, not a shortcut"
+date: "2025-02-15"
+tags: ["ia + eng", "workflow", "arquitetura"]
+summary: "Como estruturo contexto (knowledge base versionada, PRD, AGENTS.md) para que o agente produza arquitetura consistente em vez de código aleatório."
+summaryEn: "How I structure context (versioned knowledge base, PRD, AGENTS.md) so the agent produces consistent architecture instead of random code."
+published: true
+---
+
+## O problema com IA sem contexto
+
+Quando você abre o Cursor e digita "cria um sistema de autenticação", o agente não sabe:
+
+- Qual framework você está usando
+- Qual padrão de erro você adotou
+- Se você quer JWT ou sessions
+- Se há um padrão de pastas estabelecido
+
+O resultado é código que funciona mas não conversa com o resto do projeto.
+
+## A solução: AGENTS.md
+
+O arquivo `.ai/workflow/agents.md` define as regras antes de qualquer sessão. Ele não é um prompt — é uma **constituição do projeto**.
+
+Estrutura que uso:
+
+```markdown
+# AGENTS.md
+
+## Contexto do projeto
+[arquitetura, stack, decisões já tomadas]
+
+## Regras de código
+[padrões de importação, nomenclatura, tratamento de erros]
+
+## O que NÃO fazer
+[lista explícita de decisões já rejeitadas e por quê]
+```
+
+## Tarefas atômicas
+
+Uma tarefa atômica tem:
+
+1. **Contexto mínimo** — só o que o agente precisa para essa tarefa
+2. **Um único objetivo** — sem "e também faça X"
+3. **Critério de done explícito** — como validar que está pronto
+
+Exemplo ruim: *"Implementa autenticação com JWT e também cria o reset de senha e adiciona rate limiting"*
+
+Exemplo bom: *"Implementa o middleware de auth JWT em `transport/auth.middleware.ts`. Siga o padrão de erro em `core/errors.ts`. Done quando `GET /api/me` retornar 401 sem token e 200 com token válido."*
+
+## Por que isso importa
+
+Com tarefas atômicas + AGENTS.md, o agente produz código que:
+- Segue os padrões do projeto
+- É revisável em 1 PR pequeno
+- Tem critério de done verificável
+- Não inventa soluções que vão contra decisões já tomadas
+```
+
+### Arquivo a modificar: `next.config.ts`
+
+> ⚠️ ATENÇÃO: O `withNextIntl` JÁ EXISTE. Adicionar withMDX composto POR CIMA, não substituir.
+
 ```ts
 import type { NextConfig } from "next"
 import createNextIntlPlugin from "next-intl/plugin"
+import createMDX from "@next/mdx"
+
+// ATENÇÃO AGENTE: next-mdx-remote NÃO precisa de createMDX no next.config.
+// Este bloco só é necessário se usar @next/mdx diretamente.
+// Como usamos next-mdx-remote/rsc, o next.config NÃO precisa de alteração.
+// Manter exatamente como está:
 
 const withNextIntl = createNextIntlPlugin("./i18n/request.ts")
 
 const nextConfig: NextConfig = {
-  // suas configurações existentes aqui
+  /* config options here */
 }
 
 export default withNextIntl(nextConfig)
 ```
 
-### Estrutura de rotas — IMPORTANTE
-Após instalar next-intl com `localePrefix: "always"`, o App Router precisa de um route group `[locale]`.
-
-**Mover as rotas para dentro de `app/[locale]/`:**
-```
-app/
-├── [locale]/
-│   ├── layout.tsx    ← mover o layout atual para cá (com ajustes)
-│   ├── page.tsx      ← mover app/page.tsx para cá
-│   └── curriculo/
-│       └── page.tsx  ← mover app/curriculo/page.tsx para cá
-├── globals.css       ← permanece na raiz
-└── favicon.ico       ← permanece na raiz
-```
-
-**`app/[locale]/layout.tsx`** — layout adaptado:
-```tsx
-import { NextIntlClientProvider } from "next-intl"
-import { getMessages } from "next-intl/server"
-import { notFound } from "next/navigation"
-import { routing } from "@/i18n/routing"
-// ... seus outros imports (ThemeProvider, providers, etc.)
-
-export default async function LocaleLayout({
-  children,
-  params,
-}: {
-  children: React.ReactNode
-  params: Promise<{ locale: string }>
-}) {
-  const { locale } = await params
-
-  // Valida locale
-  if (!routing.locales.includes(locale as "pt" | "en")) {
-    notFound()
-  }
-
-  const messages = await getMessages()
-
-  return (
-    <html lang={locale} suppressHydrationWarning>
-      <body>
-        <NextIntlClientProvider messages={messages}>
-          <ThemeProvider>
-            {/* seus outros providers */}
-            {children}
-          </ThemeProvider>
-        </NextIntlClientProvider>
-      </body>
-    </html>
-  )
-}
-```
+> `next-mdx-remote` processa MDX em runtime no servidor — não precisa de plugin no next.config.
+> O `next.config.ts` NÃO precisa ser alterado neste milestone.
 
 ### Critério de done
-- [ ] `pnpm build` sem erros após instalar next-intl e mover rotas
-- [ ] `/pt` redireciona para home em português
-- [ ] `/en` redireciona para home em inglês
-- [ ] Sem 404 em nenhuma rota existente
+- [ ] `lib/blog.ts` criado sem erros de TypeScript
+- [ ] `content/blog/` com 2 posts `.mdx`
+- [ ] `getAllPosts()` retorna os posts (testar: `npx tsx -e "import('./lib/blog').then(m => console.log(m.getAllPosts()))"`)
+- [ ] `pnpm build` sem erros
 
 ---
 
-## MILESTONE P3 — i18n: Conectar strings nos componentes
-**Estimativa:** 35 min | **Arquivos modificados:** 8–10
+## MILESTONE P2 — Blog: página de listagem (`/[locale]/blog`)
+**Estimativa:** 30 min | **Arquivos novos:** 3
 
-### Objetivo
-Substituir strings hardcoded nos componentes por chamadas `useTranslations()`.
+### Arquivos a criar
 
-### Padrão de uso — aplicar em TODOS os componentes afetados:
-```tsx
-"use client" // ou Server Component, ambos funcionam
-import { useTranslations } from "next-intl" // Client Component
-// OU
-import { getTranslations } from "next-intl/server" // Server Component
-
-// Client Component:
-export function HeroSection() {
-  const t = useTranslations("hero")
-  return (
-    <h1>{t("title1")}</h1>  // "Não escrevo features." / "I don't write features."
-  )
-}
-
-// Server Component:
-export default async function Page() {
-  const t = await getTranslations("projects")
-  return <h2>{t("title")}</h2>
-}
-```
-
-### Componentes a atualizar (em ordem de prioridade):
-
-1. **`components/Navbar.tsx`** — `t("nav.projects")`, `t("nav.resume")` etc.
-2. **`components/hero/TypingCycle.tsx`** — frases do array via `t.raw("hero.phrases")` (retorna array)
-3. **`components/hero/HeroSection.tsx`** (ou `app/[locale]/page.tsx`) — badge, título, parágrafo, CTAs
-4. **`components/sections/ManifestoBlock.tsx`** — quote e autor
-5. **`components/sections/ProjectsSection.tsx`** — label, título, status, descrições
-6. **`components/projects/EvolutionTimeline.tsx`** — labels v1–v4
-7. **`components/sections/ArchitectureSection.tsx`** — labels e títulos
-8. **`components/sections/CICDSection.tsx`** — label e steps
-9. **`components/sections/StackSection.tsx`** — label, título, grupos
-10. **`components/sections/NotesSection.tsx`** — label, título, cards
-11. **`components/CommandPalette.tsx`** — labels dos itens de navegação
-12. **`app/[locale]/curriculo/page.tsx`** — títulos e rótulos
-
-### Critério de done
-- [ ] Mudar URL de `/pt` para `/en` troca todas as strings do site
-- [ ] Sem strings hardcoded visíveis nos componentes listados
-
----
-
-## MILESTONE P4 — i18n: LangToggle funcional na Navbar
-**Estimativa:** 20 min | **Arquivos novos:** 1 | **Arquivos modificados:** 1
-
-### Objetivo
-Implementar o toggle PT-BR 🇧🇷 / EN 🇺🇸 já previsto no `LangToggle.tsx` (que estava comentado no FIX 2).
-
-### Arquivo a criar/substituir
-
-**`components/LangToggle.tsx`** — substituir o placeholder existente:
-```tsx
-"use client"
-import { useLocale } from "next-intl"
-import { useRouter, usePathname } from "next/navigation"
-import { useTransition } from "react"
-
-export function LangToggle() {
-  const locale = useLocale()
-  const router = useRouter()
-  const pathname = usePathname()
-  const [isPending, startTransition] = useTransition()
-
-  function switchLocale() {
-    const nextLocale = locale === "pt" ? "en" : "pt"
-    // Segmenta o pathname e substitui apenas o índice 1 (locale prefix)
-    // pathname.replace() quebraria em URLs onde o locale aparece em outro segmento
-    // ex: /pt/artigo-sobre-pt → replace errado, segments → sempre correto
-    const segments = pathname.split("/")
-    segments[1] = nextLocale
-    const newPath = segments.join("/") || "/"
-    startTransition(() => {
-      router.push(newPath)
-    })
-  }
-
-  return (
-    <button
-      onClick={switchLocale}
-      disabled={isPending}
-      className="flex items-center gap-1.5 text-xs font-mono
-        px-2.5 py-1.5 rounded-md border border-border
-        hover:bg-muted transition-colors disabled:opacity-50"
-      aria-label={locale === "pt" ? "Switch to English" : "Mudar para Português"}
-      title={locale === "pt" ? "Switch to English" : "Mudar para Português"}
-    >
-      {/* Bandeira + código */}
-      <span className="text-sm leading-none" aria-hidden="true">
-        {locale === "pt" ? "🇧🇷" : "🇺🇸"}
-      </span>
-      <span className="hidden sm:inline text-muted-foreground">
-        {locale === "pt" ? "PT" : "EN"}
-      </span>
-    </button>
-  )
-}
-```
-
-### Arquivo a modificar
-
-**`components/Navbar.tsx`** — descomentar/adicionar `<LangToggle />` ao lado do `<ThemeToggle />`:
-```tsx
-import { LangToggle } from "@/components/LangToggle"
-import { ThemeToggle } from "@/components/ThemeToggle"
-
-// Na navbar, ao lado direito:
-<div className="flex items-center gap-2">
-  <LangToggle />
-  <ThemeToggle />
-  {/* CommandPaletteHint já existente */}
-</div>
-```
-
-### Critério de done
-- [ ] Toggle PT/EN visível na navbar ao lado do toggle de tema
-- [ ] Clicar muda o idioma de toda a página instantaneamente
-- [ ] URL muda de `/pt/...` para `/en/...` (e vice-versa)
-- [ ] Sem reload de página — transição suave via router.push
-- [ ] Bandeira correta exibida para cada idioma
-
----
-
-## MILESTONE P5 — Acessibilidade: Alto contraste
-**Estimativa:** 25 min | **Arquivos novos:** 2 | **Arquivos modificados:** 2
-
-### Objetivo
-Adicionar modo de alto contraste acessível via toggle na navbar. Segue WCAG 2.1 AA — razão de contraste mínima de 4.5:1 para texto normal, 3:1 para texto grande.
-
-### Estratégia
-Usar `data-high-contrast` no `<html>` + overrides CSS via `:root[data-high-contrast]`.
-
-### Arquivo a criar
-
-**`components/HighContrastToggle.tsx`**
-```tsx
-"use client"
-import { useEffect, useState } from "react"
-
-const STORAGE_KEY = "high-contrast"
-
-export function HighContrastToggle() {
-  const [active, setActive] = useState(false)
-  const [mounted, setMounted] = useState(false)
-
-  useEffect(() => {
-    setMounted(true)
-    const stored = localStorage.getItem(STORAGE_KEY) === "true"
-    setActive(stored)
-    if (stored) document.documentElement.setAttribute("data-high-contrast", "true")
-  }, [])
-
-  function toggle() {
-    const next = !active
-    setActive(next)
-    if (next) {
-      document.documentElement.setAttribute("data-high-contrast", "true")
-      localStorage.setItem(STORAGE_KEY, "true")
-    } else {
-      document.documentElement.removeAttribute("data-high-contrast")
-      localStorage.removeItem(STORAGE_KEY)
-    }
-  }
-
-  if (!mounted) return <div className="w-9 h-9" />
-
-  return (
-    <button
-      onClick={toggle}
-      className={`w-9 h-9 flex items-center justify-center rounded-md border transition-colors
-        ${active
-          ? "border-foreground bg-foreground text-background"
-          : "border-border hover:bg-muted"}
-      `}
-      aria-label={active ? "Desativar alto contraste" : "Ativar alto contraste"}
-      aria-pressed={active}
-      title="Alto contraste"
-    >
-      {/* Ícone de círculo meio cheio */}
-      <svg width="16" height="16" viewBox="0 0 24 24" fill="none"
-        stroke="currentColor" strokeWidth="2">
-        <circle cx="12" cy="12" r="9"/>
-        <path d="M12 3v18" strokeWidth="1.5"/>
-        <path d="M12 3a9 9 0 0 1 0 18" fill="currentColor" strokeWidth="0"/>
-      </svg>
-    </button>
-  )
-}
-```
-
-**`styles/high-contrast.css`** — criar e importar em `globals.css`:
-```css
-/* Alto contraste — overrides quando data-high-contrast="true" */
-:root[data-high-contrast] {
-  /* Texto */
-  --foreground: 0 0% 0%;
-  --background: 0 0% 100%;
-  --muted-foreground: 0 0% 20%;
-
-  /* Bordas mais visíveis */
-  --border: 0 0% 0%;
-
-  /* Amber mais escuro para contraste */
-  --amber-primary: 35 100% 30%;
-}
-
-:root[data-high-contrast].dark {
-  --foreground: 0 0% 100%;
-  --background: 0 0% 0%;
-  --muted-foreground: 0 0% 80%;
-  --border: 0 0% 100%;
-  --amber-primary: 45 100% 65%;
-}
-
-/* Links sublineados em alto contraste */
-:root[data-high-contrast] a:not(.no-underline) {
-  text-decoration: underline;
-  text-underline-offset: 3px;
-}
-
-/* Bordas dos cards mais visíveis */
-:root[data-high-contrast] .border {
-  border-width: 2px;
-}
-
-/* Focus ring mais visível */
-:root[data-high-contrast] *:focus-visible {
-  outline: 3px solid currentColor;
-  outline-offset: 3px;
-}
-
-/* Chips com contraste garantido */
-:root[data-high-contrast] [class*="chip"],
-:root[data-high-contrast] [class*="badge"] {
-  border-width: 2px;
-  font-weight: 600;
-}
-```
-
-### Arquivos a modificar
-
-**`app/globals.css`** — importar o arquivo de alto contraste:
-```css
-@import "./high-contrast.css"; /* ou @import "../styles/high-contrast.css" dependendo da localização */
-```
-
-**`components/Navbar.tsx`** — adicionar `<HighContrastToggle />`:
-```tsx
-import { HighContrastToggle } from "@/components/HighContrastToggle"
-
-// Na área de controles da navbar:
-<div className="flex items-center gap-2">
-  <LangToggle />
-  <HighContrastToggle />
-  <ThemeToggle />
-</div>
-```
-
-### Critério de done
-- [ ] Toggle de alto contraste visível na navbar
-- [ ] Ativar aumenta contraste de texto, bordas e foco visivelmente
-- [ ] Estado persiste ao recarregar (localStorage)
-- [ ] Funciona em dark mode E light mode
-- [ ] `aria-pressed` correto para screen readers
-
----
-
-## MILESTONE P6 — Acessibilidade: Fixes do audit (FIX A1–A4)
-**Estimativa:** 20 min | **Arquivos modificados:** 4
-
-### FIX A1 — Semântica do Hero (h1 único)
-O audit apontou dois `<h1>` consecutivos. O segundo deve ser `<p>` ou `<div>`, não `<h1>`.
-
-**`app/[locale]/page.tsx`** ou componente Hero:
-```tsx
-// ERRADO (dois h1):
-<motion.h1>Não escrevo features.</motion.h1>
-<motion.h1><TypingCycle /></motion.h1>
-
-// CORRETO (um h1, o segundo vira p com mesma estilização):
-<h1 className="text-4xl md:text-5xl font-medium leading-tight mb-2">
-  Não escrevo features.
-</h1>
-<p className="text-4xl md:text-5xl font-medium leading-tight mb-6"
-   aria-live="polite" aria-atomic="true">
-  <TypingCycle />
-</p>
-```
-
-> `aria-live="polite"` + `aria-atomic="true"` anuncia as trocas de frase para screen readers.
-
-### FIX A2 — ProjectCard acessível por teclado
-O `ProjectCard` usa `motion.div` com `onClick` sem suporte a teclado.
-
-**`components/projects/ProjectCard.tsx`**:
-```tsx
-// Substituir motion.div externo por motion.article:
-<motion.article
-  role="article"
-  tabIndex={0}
-  onKeyDown={(e) => {
-    if ((e.key === "Enter" || e.key === " ") && project.href) {
-      e.preventDefault()
-      window.open(project.href, "_blank")
-    }
-  }}
-  aria-label={`${project.title} — ${project.status}`}
-  // ... resto das props
->
-```
-
-### FIX A3 — CommandPaletteHint com aria-label
-**`components/CommandPaletteHint.tsx`**:
-```tsx
-<button
-  aria-label="Abrir paleta de comandos (Ctrl+K)"
-  aria-keyshortcuts="Control+k Meta+k"
-  // ... resto
->
-```
-
-### FIX A4 — Links externos com aria-label
-Em todos os componentes com links externos (`target="_blank"`):
-```tsx
-// Adicionar rel e aria-label em TODOS os <a target="_blank">:
-<a
-  href="https://github.com/luisoneves"
-  target="_blank"
-  rel="noopener noreferrer"
-  aria-label="GitHub (abre em nova aba)"
->
-  github ↗
-</a>
-```
-
-Criar um componente helper para reusar:
-```tsx
-// components/ui/ExternalLink.tsx
-export function ExternalLink({ href, children, label }: {
-  href: string
-  children: React.ReactNode
-  label?: string
-}) {
-  return (
-    <a
-      href={href}
-      target="_blank"
-      rel="noopener noreferrer"
-      aria-label={label ? `${label} (abre em nova aba)` : undefined}
-    >
-      {children}
-    </a>
-  )
-}
-```
-
-### Critério de done
-- [ ] Apenas um `<h1>` por página
-- [ ] TypingCycle anuncia trocas via `aria-live`
-- [ ] ProjectCard ativável por Enter/Space
-- [ ] CommandPaletteHint com `aria-label` e `aria-keyshortcuts`
-- [ ] Links externos com `rel="noopener noreferrer"`
-
----
-
-## MILESTONE P7 — Analytics: Sitemap e Search Console
-**Estimativa:** 15 min | **Arquivos modificados:** 1
-
-### Verificar sitemap após next-intl
-Após adicionar `[locale]`, o sitemap precisa incluir as variantes de idioma.
-
-**`app/sitemap.ts`** — atualizar para incluir ambos os locales:
-```ts
-import { MetadataRoute } from "next"
-
-const BASE_URL = "https://dev-luisneves.me"
-
-export default function sitemap(): MetadataRoute.Sitemap {
-  const routes = ["/", "/curriculo"]
-  const locales = ["pt", "en"]
-
-  return locales.flatMap((locale) =>
-    routes.map((route) => ({
-      url: `${BASE_URL}/${locale}${route === "/" ? "" : route}`,
-      lastModified: new Date(),
-      changeFrequency: "monthly" as const,
-      priority: route === "/" ? 1 : 0.8,
-      alternates: {
-        languages: Object.fromEntries(
-          locales.map((l) => [l, `${BASE_URL}/${l}${route === "/" ? "" : route}`])
-        ),
-      },
-    }))
-  )
-}
-```
-
-### Google Search Console
-1. Acessa: `search.google.com/search-console`
-2. Adiciona propriedade: `dev-luisneves.me` → verificação por **meta tag**
-3. Pega o código e adiciona em `app/[locale]/layout.tsx`:
-```tsx
-export const metadata = {
-  // ... metadata existente
-  verification: {
-    google: "SEU_CODIGO_AQUI",
-  },
-}
-```
-4. Após verificar → submete: `https://dev-luisneves.me/sitemap.xml`
-
-### Critério de done
-- [ ] `/sitemap.xml` acessível com 4 URLs (pt/, en/, pt/curriculo, en/curriculo)
-- [ ] Domínio verificado no Search Console
-- [ ] Sitemap submetido
-
----
-
-## MILESTONE P8 — Analytics: Microsoft Clarity
-**Estimativa:** 15 min | **Arquivos modificados:** 1
-
-### Verificar ClarityProvider
-O `ClarityProvider.tsx` já existe no projeto. Verificar se está funcionando após a migração de rotas.
-
-**`components/providers/ClarityProvider.tsx`** — garantir que está assim:
-```tsx
-"use client"
-import { useEffect } from "react"
-
-export function ClarityProvider() {
-  useEffect(() => {
-    if (typeof window === "undefined") return
-    const s = document.createElement("script")
-    s.type = "text/javascript"
-    s.async = true
-    s.src = `https://www.clarity.ms/tag/SEU_PROJECT_ID`
-    document.head.appendChild(s)
-  }, [])
-  return null
-}
-```
-
-Adicionar no `app/[locale]/layout.tsx` dentro do `<body>`:
-```tsx
-import { ClarityProvider } from "@/components/providers/ClarityProvider"
-// ...
-<body>
-  <ClarityProvider />
-  {/* resto do layout */}
-</body>
-```
-
-### Critério de done
-- [ ] Script do Clarity sendo carregado (verificar no DevTools → Network → clarity.ms)
-- [ ] Sessões aparecendo no painel Clarity em ~1h após deploy
-
----
-
-## MILESTONE P9 — Analytics: Open Graph image
-**Estimativa:** 15 min | **Arquivos modificados:** 1
-
-### Verificar og-image.png existente
-O arquivo `public/og-image.png` já existe. Verificar se está correto via `opengraph.xyz`.
-
-**`app/[locale]/layout.tsx`** — metadata OG com canonical DINÂMICO por locale.
-
-> ⚠️ CORREÇÃO CRÍTICA: canonical fixo em `/pt` faz o Google ignorar `/en` para indexação em inglês.
-> A solução é usar `generateMetadata` (função assíncrona) em vez de `export const metadata` (objeto estático).
-> `export const metadata` não tem acesso ao `locale` da URL — por isso não serve aqui.
+**`app/[locale]/blog/page.tsx`**
 
 ```tsx
-// REMOVER o export const metadata estático se existir no layout
-// SUBSTITUIR por generateMetadata dinâmico:
-
-const BASE_URL = "https://dev-luisneves.me"
+import { getAllPosts, getAllTags } from "@/lib/blog"
+import { BlogList } from "@/components/blog/BlogList"
 
 export async function generateMetadata({
   params,
@@ -1082,246 +846,1158 @@ export async function generateMetadata({
 }) {
   const { locale } = await params
   const isEn = locale === "en"
-
   return {
-    metadataBase: new URL(BASE_URL),
-    title: {
-      default: "Luis Neves — Engineering Lead · Software Architect",
-      template: "%s | Luis Neves",
-    },
+    title: isEn ? "Blog — Luis Neves" : "Blog — Luis Neves",
     description: isEn
-      ? "Architecture-first fullstack. 15+ years in IT. Diocese SaaS, multi-tenancy, monorepo. FATEC ADS."
-      : "Fullstack com arquitetura-primeiro. 15+ anos de TI. Diocese SaaS, multi-tenancy, monorepo. FATEC ADS.",
-    // Canonical aponta para o locale atual — não para pt fixo
-    alternates: {
-      canonical: `${BASE_URL}/${locale}`,
-      languages: {
-        "pt-BR": `${BASE_URL}/pt`,
-        "en-US": `${BASE_URL}/en`,
-      },
-    },
-    openGraph: {
-      title: "Luis Neves — Engineering Lead · Software Architect",
-      description: isEn
-        ? "I don't write features. I architect systems."
-        : "Não escrevo features. Estruturo sistemas.",
-      url: `${BASE_URL}/${locale}`,
-      siteName: "Luis Neves",
-      images: [
-        {
-          url: "/og-image.png",
-          width: 1200,
-          height: 630,
-          alt: "Luis Neves — Engineering Lead",
-        },
-      ],
-      locale: isEn ? "en_US" : "pt_BR",
-      alternateLocale: isEn ? "pt_BR" : "en_US",
-      type: "website",
-    },
-    twitter: {
-      card: "summary_large_image",
-      title: "Luis Neves — Engineering Lead",
-      description: isEn
-        ? "I don't write features. I architect systems."
-        : "Não escrevo features. Estruturo sistemas.",
-      images: ["/og-image.png"],
-    },
+      ? "Engineering notes, architecture decisions and reading reflections."
+      : "Notas de engenharia, decisões arquiteturais e reflexões de leitura.",
+  }
+}
+
+export default async function BlogPage({
+  params,
+}: {
+  params: Promise<{ locale: string }>
+}) {
+  const { locale } = await params
+  const posts = getAllPosts(locale as "pt" | "en")
+  const tags = getAllTags()
+
+  return (
+    <main className="max-w-5xl mx-auto px-4 py-16">
+      <BlogList posts={posts} tags={tags} locale={locale} />
+    </main>
+  )
+}
+```
+
+**`components/blog/BlogList.tsx`**
+
+```tsx
+"use client"
+import { useState } from "react"
+import { motion } from "framer-motion"
+import type { PostMeta } from "@/lib/blog"
+import { PostCard } from "./PostCard"
+
+interface BlogListProps {
+  posts: PostMeta[]
+  tags: string[]
+  locale: string
+}
+
+const container = {
+  hidden: {},
+  show: { transition: { staggerChildren: 0.06 } },
+}
+const item = {
+  hidden: { opacity: 0, y: 12 },
+  show: {
+    opacity: 1,
+    y: 0,
+    transition: { duration: 0.4, ease: [0.22, 1, 0.36, 1] as [number, number, number, number] },
+  },
+}
+
+export function BlogList({ posts, tags, locale }: BlogListProps) {
+  const [activeTag, setActiveTag] = useState<string | null>(null)
+  const filtered = activeTag ? posts.filter((p) => p.tags.includes(activeTag)) : posts
+  const isEn = locale === "en"
+
+  return (
+    <div>
+      <span className="section-label">
+        {isEn
+          ? "// thinking in public"
+          : "// thinking in public — desafios, leituras e descobertas"}
+      </span>
+      <h1 className="h1 mt-1 mb-8">Blog</h1>
+
+      <div className="flex gap-2 flex-wrap mb-8">
+        <button
+          className={`tag ${activeTag === null ? "active" : ""}`}
+          onClick={() => setActiveTag(null)}
+        >
+          {isEn ? "all" : "todos"}
+        </button>
+        {tags.map((tag) => (
+          <button
+            key={tag}
+            className={`tag ${activeTag === tag ? "active" : ""}`}
+            onClick={() => setActiveTag(activeTag === tag ? null : tag)}
+          >
+            {tag}
+          </button>
+        ))}
+      </div>
+
+      <motion.div
+        className="grid-1"
+        variants={container}
+        initial="hidden"
+        animate="show"
+        key={activeTag ?? "all"}
+      >
+        {filtered.length === 0 ? (
+          <p className="p2">
+            {isEn ? "No posts with this tag yet." : "Nenhum post com essa tag ainda."}
+          </p>
+        ) : (
+          filtered.map((post) => (
+            <motion.div key={post.slug} variants={item}>
+              <PostCard post={post} locale={locale} />
+            </motion.div>
+          ))
+        )}
+      </motion.div>
+    </div>
+  )
+}
+```
+
+**`components/blog/PostCard.tsx`**
+
+```tsx
+"use client"
+import { motion } from "framer-motion"
+import Link from "next/link"
+import type { PostMeta } from "@/lib/blog"
+
+interface PostCardProps {
+  post: PostMeta
+  locale: string
+}
+
+export function PostCard({ post, locale }: PostCardProps) {
+  const isEn = locale === "en"
+  const title   = isEn && post.titleEn   ? post.titleEn   : post.title
+  const summary = isEn && post.summaryEn ? post.summaryEn : post.summary
+  const rt      = isEn && post.readingTimeEn ? post.readingTimeEn : post.readingTime
+
+  return (
+    <motion.div
+      whileHover={{ y: -3, transition: { type: "spring", stiffness: 400, damping: 20 } }}
+    >
+      <Link href={`/${locale}/blog/${post.slug}`} className="card-interactive group">
+        <div className="flex justify-between items-start mb-3">
+          <div className="flex flex-wrap gap-1.5">
+            {post.tags.map((tag) => (
+              <span key={tag} className="badge badge-neutral">{tag}</span>
+            ))}
+          </div>
+          <span className="p3 shrink-0 ml-3">
+            {post.date.slice(0, 7)} · {rt}
+          </span>
+        </div>
+        <h3 className="h4 mb-2 group-hover:text-amber-500 transition-colors">{title}</h3>
+        <p className="p2 line-clamp-2">{summary}</p>
+      </Link>
+    </motion.div>
+  )
+}
+```
+
+### Critério de done
+- [ ] `/pt/blog` acessível, mostrando lista de posts
+- [ ] `/en/blog` mostrando títulos em inglês
+- [ ] Filtro por tag funcionando sem reload
+- [ ] Animação stagger ao carregar
+
+---
+
+## MILESTONE P3 — Blog: post individual (`/[locale]/blog/[slug]`)
+**Estimativa:** 35 min | **Arquivos novos:** 2
+
+### Arquivos a criar
+
+**`app/[locale]/blog/[slug]/page.tsx`**
+
+```tsx
+import { notFound } from "next/navigation"
+import { getPostBySlug, getAllPostSlugs, getAllPosts } from "@/lib/blog"
+import { MDXRemote } from "next-mdx-remote/rsc"
+import { PostLayout } from "@/components/blog/PostLayout"
+
+export async function generateStaticParams() {
+  const slugs = getAllPostSlugs()
+  const locales = ["pt", "en"]
+  return locales.flatMap((locale) =>
+    slugs.map((slug) => ({ locale, slug }))
+  )
+}
+
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ locale: string; slug: string }>
+}) {
+  const { locale, slug } = await params
+  const post = getPostBySlug(slug)
+  if (!post) return {}
+  const isEn = locale === "en"
+  return {
+    title: `${isEn && post.titleEn ? post.titleEn : post.title} | Luis Neves`,
+    description: isEn && post.summaryEn ? post.summaryEn : post.summary,
+  }
+}
+
+export default async function PostPage({
+  params,
+}: {
+  params: Promise<{ locale: string; slug: string }>
+}) {
+  const { locale, slug } = await params
+  const post = getPostBySlug(slug)
+  if (!post || !post.published) notFound()
+
+  const allPosts   = getAllPosts(locale as "pt" | "en")
+  const idx        = allPosts.findIndex((p) => p.slug === slug)
+  const prevPost   = idx < allPosts.length - 1 ? allPosts[idx + 1] : null
+  const nextPost   = idx > 0 ? allPosts[idx - 1] : null
+
+  return (
+    <PostLayout post={post} locale={locale} prevPost={prevPost} nextPost={nextPost}>
+      <article className="prose">
+        <MDXRemote source={post.content} />
+      </article>
+    </PostLayout>
+  )
+}
+```
+
+**`components/blog/PostLayout.tsx`**
+
+```tsx
+import Link from "next/link"
+import type { PostMeta } from "@/lib/blog"
+
+interface PostLayoutProps {
+  post: PostMeta
+  locale: string
+  prevPost: PostMeta | null
+  nextPost: PostMeta | null
+  children: React.ReactNode
+}
+
+export function PostLayout({
+  post,
+  locale,
+  prevPost,
+  nextPost,
+  children,
+}: PostLayoutProps) {
+  const isEn  = locale === "en"
+  const title = isEn && post.titleEn ? post.titleEn : post.title
+  const rt    = isEn && post.readingTimeEn ? post.readingTimeEn : post.readingTime
+
+  return (
+    <main className="max-w-5xl mx-auto px-4 py-16">
+      <div className="flex items-center gap-2 mb-8">
+        <Link href={`/${locale}/blog`} className="p3 hover:text-amber-500 transition-colors">
+          ← blog
+        </Link>
+        {post.tags[0] && <><span className="p3">·</span><span className="p3">{post.tags[0]}</span></>}
+        <span className="p3">·</span>
+        <span className="p3">{post.date.slice(0, 7)}</span>
+        <span className="p3">·</span>
+        <span className="p3">{rt}</span>
+      </div>
+
+      <div className="grid-main-sidebar items-start">
+        <div>
+          <h1 className="h1 mb-4">{title}</h1>
+          <div className="flex flex-wrap gap-1.5 mb-8">
+            {post.tags.map((tag) => (
+              <span key={tag} className="badge badge-neutral">{tag}</span>
+            ))}
+          </div>
+
+          {children}
+
+          <hr className="divider" />
+          <div className="flex justify-between items-center gap-4">
+            {prevPost ? (
+              <Link
+                href={`/${locale}/blog/${prevPost.slug}`}
+                className="btn-secondary text-left max-w-[45%] truncate"
+              >
+                ← {isEn && prevPost.titleEn ? prevPost.titleEn : prevPost.title}
+              </Link>
+            ) : <div />}
+            {nextPost ? (
+              <Link
+                href={`/${locale}/blog/${nextPost.slug}`}
+                className="btn-secondary text-right max-w-[45%] truncate"
+              >
+                {isEn && nextPost.titleEn ? nextPost.titleEn : nextPost.title} →
+              </Link>
+            ) : <div />}
+          </div>
+        </div>
+
+        <aside className="flex flex-col gap-4" style={{ position: "sticky", top: "6rem" }}>
+          <div className="card">
+            <p className="section-label mb-3">
+              {isEn ? "about the author" : "sobre o autor"}
+            </p>
+            <p className="p2 font-medium text-foreground mb-1">
+              Luis Otavio Neves Faustino
+            </p>
+            <p className="p3 mb-4">Engineering Lead · FATEC ADS</p>
+            <Link
+              href={`/${locale}/contato`}
+              className="btn-primary w-full justify-center text-center block"
+            >
+              {isEn ? "get in touch ↗" : "entrar em contato ↗"}
+            </Link>
+          </div>
+          <div className="card">
+            <p className="section-label mb-2">{isEn ? "more posts" : "mais posts"}</p>
+            <Link
+              href={`/${locale}/blog`}
+              className="p2 hover:text-amber-500 transition-colors block"
+            >
+              ← {isEn ? "all posts" : "todos os posts"}
+            </Link>
+          </div>
+        </aside>
+      </div>
+    </main>
+  )
+}
+```
+
+### Critério de done
+- [ ] `/pt/blog/strapi-para-saas` renderiza o post com MDX
+- [ ] Headings, parágrafos, code blocks com estilos `.prose`
+- [ ] Sidebar com "sobre o autor" + link para contato
+- [ ] Navegação prev/next funcionando
+- [ ] `generateStaticParams` gerando rotas estáticas (verificar no `pnpm build`)
+
+---
+
+## MILESTONE P4 — Contato: página e formulário
+**Estimativa:** 25 min | **Arquivos novos:** 2
+
+### Arquivos a criar
+
+**`app/[locale]/contato/page.tsx`**
+
+```tsx
+import { ContactForm } from "@/components/contact/ContactForm"
+import Link from "next/link"
+
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ locale: string }>
+}) {
+  const { locale } = await params
+  const isEn = locale === "en"
+  return {
+    title: isEn ? "Contact — Luis Neves" : "Contato — Luis Neves",
+    description: isEn
+      ? "Open to internships, freelance projects or just an engineering conversation."
+      : "Aberto a estágios, projetos freelance ou uma conversa sobre engenharia.",
+  }
+}
+
+export default async function ContactPage({
+  params,
+}: {
+  params: Promise<{ locale: string }>
+}) {
+  const { locale } = await params
+  const isEn = locale === "en"
+
+  return (
+    <main className="max-w-5xl mx-auto px-4 py-16">
+      <span className="section-label">
+        {isEn ? "// get in touch" : "// fale comigo"}
+      </span>
+      <h1 className="h1 mt-1 mb-2">
+        {isEn ? "Contact" : "Contato"}
+      </h1>
+      <p className="p2 mb-10 max-w-lg">
+        {isEn
+          ? "Open to internship opportunities, freelance projects or a conversation about engineering and architecture."
+          : "Aberto a oportunidades de estágio, projetos freelance ou uma conversa sobre engenharia e arquitetura."}
+      </p>
+
+      <div className="grid-main-sidebar items-start">
+        <ContactForm locale={locale} />
+
+        <aside className="flex flex-col gap-4">
+          <div className="card">
+            <p className="section-label mb-3">
+              {isEn ? "direct links" : "links diretos"}
+            </p>
+            <div className="flex flex-col gap-2">
+              <a
+                href="mailto:contato@luisneves.dev.br"
+                className="p2 hover:text-amber-500 transition-colors"
+              >
+                contato@luisneves.dev.br
+              </a>
+              <a
+                href="https://github.com/luisoneves"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="p2 hover:text-amber-500 transition-colors"
+              >
+                github ↗
+              </a>
+              <a
+                href="https://linkedin.com/in/luisneves-dev"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="p2 hover:text-amber-500 transition-colors"
+              >
+                linkedin ↗
+              </a>
+            </div>
+          </div>
+
+          <div className="card-success">
+            <p className="section-label mb-2" style={{ color: "#22c55e" }}>
+              {isEn ? "availability" : "disponibilidade"}
+            </p>
+            <p className="p2">
+              <span style={{ color: "#22c55e" }}>● </span>
+              {isEn ? "available" : "disponível"}
+            </p>
+            <p className="p3 mt-1">
+              {isEn
+                ? "Mon–Thu: afternoons · Fri–Sat: open"
+                : "Seg–Qui: tarde · Sex–Sáb: ampla"}
+            </p>
+          </div>
+
+          <div className="card">
+            <p className="section-label mb-2">
+              {isEn ? "recruiting?" : "está recrutando?"}
+            </p>
+            <p className="p2 mb-3">
+              {isEn ? "Download the full resume" : "Baixe o currículo completo"}
+            </p>
+            <Link href={`/${locale}/curriculo`} className="btn-secondary">
+              {isEn ? "resume ↓" : "currículo ↓"}
+            </Link>
+          </div>
+        </aside>
+      </div>
+    </main>
+  )
+}
+```
+
+**`components/contact/ContactForm.tsx`**
+
+```tsx
+"use client"
+import { useState } from "react"
+import { toast } from "sonner"
+import { sendContactEmail } from "@/app/actions/sendContact"
+
+interface ContactFormProps {
+  locale: string
+}
+
+type FormState = {
+  name: string
+  email: string
+  subject: string
+  message: string
+}
+
+export function ContactForm({ locale }: ContactFormProps) {
+  const isEn = locale === "en"
+  const [loading, setLoading] = useState(false)
+  const [form, setForm] = useState<FormState>({
+    name: "",
+    email: "",
+    subject: "work",
+    message: "",
+  })
+
+  const subjects = isEn
+    ? [
+        { value: "work",      label: "Work opportunity" },
+        { value: "freelance", label: "Freelance project" },
+        { value: "tech",      label: "Tech conversation" },
+        { value: "other",     label: "Other" },
+      ]
+    : [
+        { value: "work",      label: "Oportunidade de trabalho" },
+        { value: "freelance", label: "Projeto freelance" },
+        { value: "tech",      label: "Conversa técnica" },
+        { value: "other",     label: "Outro" },
+      ]
+
+  async function handleSubmit(e: React.FormEvent) {
+    e.preventDefault()
+    if (!form.name || !form.email || !form.message) {
+      toast.error(
+        isEn
+          ? "Please fill all required fields."
+          : "Preencha todos os campos obrigatórios."
+      )
+      return
+    }
+    setLoading(true)
+    const result = await sendContactEmail(form)
+    setLoading(false)
+    if (result.success) {
+      toast.success(
+        isEn
+          ? "Message sent! I'll reply within 48h."
+          : "Mensagem enviada! Respondo em até 48h."
+      )
+      setForm({ name: "", email: "", subject: "work", message: "" })
+    } else {
+      toast.error(
+        isEn
+          ? "Something went wrong. Try again."
+          : "Algo deu errado. Tente novamente."
+      )
+    }
+  }
+
+  return (
+    <form onSubmit={handleSubmit} className="card-highlight">
+      <p className="section-label mb-4" style={{ color: "var(--amber-brand)" }}>
+        {isEn
+          ? "// send a message"
+          : "// envie uma mensagem — respondo por email"}
+      </p>
+
+      <div className="grid-2">
+        <div className="form-group">
+          <label className="form-label">{isEn ? "name *" : "nome *"}</label>
+          <input
+            type="text"
+            className="form-input"
+            value={form.name}
+            onChange={(e) => setForm({ ...form, name: e.target.value })}
+            placeholder={isEn ? "Your name" : "Seu nome"}
+            required
+          />
+        </div>
+        <div className="form-group">
+          <label className="form-label">email *</label>
+          <input
+            type="email"
+            className="form-input"
+            value={form.email}
+            onChange={(e) => setForm({ ...form, email: e.target.value })}
+            placeholder="seu@email.com"
+            required
+          />
+        </div>
+      </div>
+
+      <div className="form-group">
+        <label className="form-label">{isEn ? "subject" : "assunto"}</label>
+        <select
+          className="form-input"
+          value={form.subject}
+          onChange={(e) => setForm({ ...form, subject: e.target.value })}
+        >
+          {subjects.map((s) => (
+            <option key={s.value} value={s.value}>
+              {s.label}
+            </option>
+          ))}
+        </select>
+      </div>
+
+      <div className="form-group">
+        <label className="form-label">{isEn ? "message *" : "mensagem *"}</label>
+        <textarea
+          className="form-input"
+          rows={5}
+          value={form.message}
+          onChange={(e) => setForm({ ...form, message: e.target.value })}
+          placeholder={
+            isEn
+              ? "Tell me about your project or opportunity..."
+              : "Me conta sobre o projeto ou oportunidade..."
+          }
+          required
+          style={{ resize: "vertical" }}
+        />
+      </div>
+
+      {/* Honeypot anti-spam */}
+      <input
+        type="text"
+        name="_honey"
+        style={{ display: "none" }}
+        tabIndex={-1}
+        aria-hidden="true"
+      />
+
+      <div className="flex justify-between items-center mt-2 flex-wrap gap-3">
+        <span className="p3">
+          {isEn ? "No spam · Reply within 48h" : "Sem spam · Respondo em até 48h"}
+        </span>
+        <button
+          type="submit"
+          className="btn-primary"
+          disabled={loading}
+        >
+          {loading
+            ? isEn ? "Sending..." : "Enviando..."
+            : isEn ? "Send message ↗" : "Enviar mensagem ↗"}
+        </button>
+      </div>
+    </form>
+  )
+}
+```
+
+### Critério de done
+- [ ] `/pt/contato` e `/en/contato` acessíveis sem 404
+- [ ] Formulário renderizando com todos os campos
+- [ ] Honeypot presente (oculto)
+- [ ] Validação de campos obrigatórios com toast de erro
+
+---
+
+## MILESTONE P5 — Contato: Server Action + Resend
+**Estimativa:** 20 min | **Arquivo novo:** 1 | **Instalação:** 1 pacote
+
+### Instalação
+
+```bash
+npm install resend
+```
+
+### Variáveis de ambiente — adicionar em `.env.local`:
+
+```bash
+RESEND_API_KEY=re_XXXXXXXXXXXXXXXXXXXX
+CONTACT_TO_EMAIL=contato@luisneves.dev.br
+```
+
+> Verificar que `.env.local` está no `.gitignore`. Adicionar `RESEND_API_KEY=` (sem valor) ao `.env.example`.
+
+### Arquivo a criar: `app/actions/sendContact.ts`
+
+```ts
+"use server"
+import { Resend } from "resend"
+import { z } from "zod"
+
+const resend = new Resend(process.env.RESEND_API_KEY)
+
+const ContactSchema = z.object({
+  name:    z.string().min(2).max(100),
+  email:   z.string().email(),
+  subject: z.enum(["work", "freelance", "tech", "other"]),
+  message: z.string().min(10).max(2000),
+})
+
+const subjectLabels: Record<string, string> = {
+  work:      "Oportunidade de trabalho",
+  freelance: "Projeto freelance",
+  tech:      "Conversa técnica",
+  other:     "Outro",
+}
+
+export async function sendContactEmail(data: unknown) {
+  const parsed = ContactSchema.safeParse(data)
+  if (!parsed.success) {
+    return { success: false, error: "Dados inválidos." }
+  }
+
+  const { name, email, subject, message } = parsed.data
+  const subjectLabel = subjectLabels[subject] ?? subject
+  const toEmail = process.env.CONTACT_TO_EMAIL ?? "contato@luisneves.dev.br"
+
+  try {
+    // Notificação para Luis
+    await resend.emails.send({
+      from:    "Portfolio <onboarding@resend.dev>",
+      to:      [toEmail],
+      replyTo: email,
+      subject: `[Portfolio] ${subjectLabel} — ${name}`,
+      html: `
+        <div style="font-family:monospace;max-width:600px;margin:0 auto;padding:24px">
+          <h2 style="color:#1a1a1a;margin-bottom:16px">Nova mensagem via portfolio</h2>
+          <table style="width:100%;border-collapse:collapse;margin-bottom:16px">
+            <tr><td style="padding:6px 0;color:#666;width:100px">Nome</td><td style="padding:6px 0">${name}</td></tr>
+            <tr><td style="padding:6px 0;color:#666">Email</td><td style="padding:6px 0"><a href="mailto:${email}">${email}</a></td></tr>
+            <tr><td style="padding:6px 0;color:#666">Assunto</td><td style="padding:6px 0">${subjectLabel}</td></tr>
+          </table>
+          <div style="background:#faeeda;border-radius:8px;padding:16px;border-left:3px solid #d97706">
+            <p style="margin:0;white-space:pre-wrap;color:#333">${message}</p>
+          </div>
+          <p style="color:#999;font-size:12px;margin-top:16px">Enviado via dev-luisneves.me</p>
+        </div>
+      `,
+    })
+
+    // Confirmação para o remetente
+    await resend.emails.send({
+      from:    "Luis Neves <onboarding@resend.dev>",
+      to:      [email],
+      subject: "Recebi sua mensagem!",
+      html: `
+        <div style="font-family:monospace;max-width:600px;margin:0 auto;padding:24px">
+          <h2 style="color:#1a1a1a">Olá, ${name}!</h2>
+          <p style="color:#444;line-height:1.6">Recebi sua mensagem e responderei em até 48 horas.</p>
+          <div style="background:#faeeda;border-radius:8px;padding:16px;margin:16px 0;border-left:3px solid #d97706">
+            <p style="margin:0;color:#854f0b;font-size:14px;font-style:italic">"${message.slice(0, 150)}${message.length > 150 ? "..." : ""}"</p>
+          </div>
+          <p style="color:#444">Até logo,<br><strong>Luis Neves</strong></p>
+          <p style="color:#999;font-size:12px">dev-luisneves.me</p>
+        </div>
+      `,
+    })
+
+    return { success: true }
+  } catch (error) {
+    console.error("[sendContactEmail]", error)
+    return { success: false, error: "Erro ao enviar email." }
   }
 }
 ```
 
+> **Nota produção:** O `from: "onboarding@resend.dev"` só funciona para testes no free tier.
+> Para produção: verificar domínio `luisneves.dev.br` no painel Resend e trocar para `contato@luisneves.dev.br`.
+
 ### Critério de done
-- [ ] Preview correto no `opengraph.xyz`
-- [ ] Testar compartilhando no WhatsApp/LinkedIn
-- [ ] Imagem e título corretos nos dois testes
+- [ ] `RESEND_API_KEY` no `.env.local`
+- [ ] Preencher formulário e receber email em `contato@luisneves.dev.br`
+- [ ] Remetente recebe email de confirmação
+- [ ] Erro de validação Zod retorna `{ success: false }` sem quebrar
 
 ---
 
-## MILESTONE P10 — Separação de dados (lib/data/)
-**Estimativa:** 30 min | **Arquivos novos:** 4 | **Arquivos modificados:** 4
+## MILESTONE P6 — Integração na Home
+**Estimativa:** 20 min | **Arquivos novos:** 2 | **Arquivos modificados:** 1
 
 ### Objetivo
-Mover dados hardcoded dos componentes para `lib/data/` — facilita manutenção, prepara para CMS futuro e elimina duplicação entre PT e EN (os dados estruturais como chips de stack não precisam de tradução).
+Adicionar os 3 últimos posts do blog e um banner CTA de contato na home.
+`getAllPosts()` usa `fs` — funciona em Server Components. A home é Client Component (`"use client"`).
+**Solução:** converter apenas o que precisa de dados do blog para Server Component, ou buscar os posts no nível da página.
 
-### Arquivos a criar
+> O `app/[locale]/page.tsx` atual é `"use client"` por causa do `useTranslations`.
+> Para buscar posts no servidor, criar um Server Component wrapper.
 
-**`lib/data/projects.ts`** — dados estruturais dos projetos (versão, chips, URLs):
-```ts
-export interface ProjectData {
-  id: string
-  version: string
-  status: "production" | "inDev" | "beta" | "done"
-  chips: string[]
-  href?: string
-  highlight?: boolean
+### Arquivo a modificar: `app/[locale]/page.tsx`
+
+Transformar para Server Component que passa dados para Client Components:
+
+```tsx
+// REMOVER "use client" do topo
+// Adicionar import de getAllPosts
+import { getAllPosts } from "@/lib/blog"
+import { HomeClient } from "@/components/home/HomeClient"
+
+export default async function Home({
+  params,
+}: {
+  params: Promise<{ locale: string }>
+}) {
+  const { locale } = await params
+  const latestPosts = getAllPosts(locale as "pt" | "en").slice(0, 3)
+
+  return <HomeClient locale={locale} latestPosts={latestPosts} />
+}
+```
+
+### Arquivo a criar: `components/home/HomeClient.tsx`
+
+Mover TODO o conteúdo atual de `app/[locale]/page.tsx` para este Client Component,
+acrescentando `LatestPosts` e `ContactCTA` ao final:
+
+```tsx
+"use client"
+import { motion } from "framer-motion"
+import { useTranslations } from "next-intl"
+import { TypingCycle } from "@/components/hero/TypingCycle"
+import { ManifestoBlock } from "@/components/sections/ManifestoBlock"
+import { ProjectsSection } from "@/components/sections/ProjectsSection"
+import { ArchitectureSection } from "@/components/sections/ArchitectureSection"
+import { CICDSection } from "@/components/sections/CICDSection"
+import { StackSection } from "@/components/sections/StackSection"
+import { NotesSection } from "@/components/sections/NotesSection"
+import { LatestPosts } from "@/components/sections/LatestPosts"
+import { ContactCTA } from "@/components/sections/ContactCTA"
+import type { PostMeta } from "@/lib/blog"
+
+interface HomeClientProps {
+  locale: string
+  latestPosts: PostMeta[]
 }
 
-export const projectsData: ProjectData[] = [
-  {
-    id: "diocese",
-    version: "v3",
-    status: "inDev",
-    chips: ["Fastify", "Next.js 16", "Prisma", "Turborepo", "RBAC", "Multi-tenancy"],
-    href: "https://github.com/luisoneves",
-    highlight: true,
-  },
-  {
-    id: "capelas",
-    version: "v2",
-    status: "production",
-    chips: ["Next.js 15", "Strapi v4", "PostgreSQL", "Docker", "RLS"],
-    href: "https://gestao-capelas.vercel.app",
-  },
-  {
-    id: "waas",
-    version: "WaaS",
-    status: "inDev",
-    chips: ["Next.js 15", "Tailwind 4", "Zod", "Registry Pattern", "Config-driven"],
-    href: "https://github.com/luisoneves",
-  },
-  {
-    id: "market",
-    version: "beta",
-    status: "beta",
-    chips: ["Next.js 16", "TypeScript", "Git Flow"],
-    href: "https://c4ts-project-market-research.vercel.app",
-  },
-]
+export function HomeClient({ locale, latestPosts }: HomeClientProps) {
+  const t    = useTranslations("hero")
+  const a11y = useTranslations("a11y")
+
+  return (
+    <main className="max-w-5xl mx-auto px-4">
+      {/* ── HERO ── */}
+      <section className="pt-12 pb-20">
+        <motion.div
+          initial={{ opacity: 0, y: 10 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.05 }}
+          className="mb-5"
+        >
+          <span className="inline-flex items-center gap-2 text-xs font-mono
+            px-3 py-1.5 rounded-full border border-amber-500/30
+            bg-amber-500/8 text-amber-600 dark:text-amber-400">
+            <span className="w-1.5 h-1.5 rounded-full bg-amber-500 animate-pulse" />
+            {t("badge")}
+          </span>
+        </motion.div>
+
+        <motion.h1
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.15, duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
+          className="text-4xl md:text-5xl font-medium leading-tight mb-2"
+        >
+          {t("title1")}
+        </motion.h1>
+        <motion.p
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.25, duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
+          className="text-4xl md:text-5xl font-medium leading-tight mb-6"
+          aria-live="polite"
+          aria-atomic="true"
+        >
+          <TypingCycle />
+        </motion.p>
+
+        <motion.p
+          initial={{ opacity: 0, y: 10 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.4, duration: 0.5 }}
+          className="text-base text-muted-foreground max-w-xl leading-relaxed mb-8"
+        >
+          {t("description")}{" "}
+          <strong className="text-foreground font-medium">{t("highlight")}</strong>{" "}
+          {t("subtitle")}
+        </motion.p>
+
+        <motion.div
+          initial={{ opacity: 0, y: 10 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.55, duration: 0.5 }}
+          className="flex gap-8 mb-8 text-sm"
+        >
+          <div>
+            <span className="font-mono text-2xl font-medium text-foreground">15+</span>
+            <p className="text-muted-foreground text-xs mt-0.5">{t("stats.yearsLabel")}</p>
+          </div>
+          <div>
+            <span className="font-mono text-2xl font-medium text-foreground">4</span>
+            <p className="text-muted-foreground text-xs mt-0.5">{t("stats.projectsLabel")}</p>
+          </div>
+          <div>
+            <span className="font-mono text-lg font-medium text-amber-500">v1→v3</span>
+            <p className="text-muted-foreground text-xs mt-0.5">{t("stats.iterationsLabel")}</p>
+          </div>
+          <div>
+            <span className="font-mono text-sm font-medium text-foreground leading-tight">
+              Pragmatic<br />Programmer
+            </span>
+            <p className="text-muted-foreground text-xs mt-0.5">{t("stats.readingLabel")}</p>
+          </div>
+        </motion.div>
+
+        <motion.div
+          initial={{ opacity: 0, y: 10 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.7, duration: 0.5 }}
+          className="flex gap-3 flex-wrap"
+        >
+          <a href="#projetos" className="btn-primary">{t("cta.projects")}</a>
+          <a
+            href="https://github.com/luisoneves"
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label={`GitHub (${a11y("externalLink")})`}
+            className="btn-secondary"
+          >
+            {t("cta.github")}
+          </a>
+          <a href={`/${locale}/contato`} className="btn-secondary">
+            {t("cta.contact")}
+          </a>
+        </motion.div>
+      </section>
+
+      <ManifestoBlock />
+      <ProjectsSection />
+      <ArchitectureSection />
+      <CICDSection />
+      <StackSection />
+      <NotesSection />
+
+      {/* ── ÚLTIMOS POSTS ── */}
+      {latestPosts.length > 0 && (
+        <LatestPosts posts={latestPosts} locale={locale} />
+      )}
+
+      {/* ── CTA CONTATO ── */}
+      <ContactCTA locale={locale} />
+    </main>
+  )
+}
 ```
 
-**`lib/data/stack.ts`** — stack groups com chips (sem tradução — nomes de tecnologia são universais):
-```ts
-export interface StackGroup {
-  id: string
-  chips: Array<{ name: string; highlight: boolean }>
-  wide?: boolean
+### Arquivo a criar: `components/sections/LatestPosts.tsx`
+
+```tsx
+import Link from "next/link"
+import { PostCard } from "@/components/blog/PostCard"
+import type { PostMeta } from "@/lib/blog"
+
+interface LatestPostsProps {
+  posts: PostMeta[]
+  locale: string
 }
 
-export const stackGroups: StackGroup[] = [
-  {
-    id: "frontend",
-    chips: [
-      { name: "Next.js 16", highlight: true },
-      { name: "React 19", highlight: true },
-      { name: "TypeScript Strict", highlight: false },
-      { name: "Tailwind CSS", highlight: false },
-      { name: "Shadcn/ui", highlight: false },
-      { name: "Framer Motion", highlight: false },
-      { name: "Astro", highlight: false },
-    ],
-  },
-  {
-    id: "backend",
-    chips: [
-      { name: "Fastify", highlight: true },
-      { name: "Node.js", highlight: true },
-      { name: "NestJS", highlight: false },
-      { name: "Prisma ORM", highlight: false },
-      { name: "PostgreSQL", highlight: false },
-      { name: "Redis", highlight: false },
-      { name: "Zod", highlight: false },
-    ],
-  },
-  {
-    id: "infra",
-    chips: [
-      { name: "Docker", highlight: true },
-      { name: "Turborepo", highlight: true },
-      { name: "Git Flow", highlight: false },
-      { name: "Vercel", highlight: false },
-      { name: "Railway", highlight: false },
-      { name: "nvm / Volta", highlight: false },
-    ],
-  },
-  {
-    id: "architecture",
-    wide: true,
-    chips: [
-      { name: "Monorepo", highlight: true },
-      { name: "Multi-tenancy", highlight: true },
-      { name: "Clean Architecture", highlight: true },
-      { name: "RBAC", highlight: false },
-      { name: "RLS", highlight: false },
-      { name: "Feature Flags", highlight: false },
-      { name: "Registry Pattern", highlight: false },
-      { name: "Config-driven", highlight: false },
-      { name: "SOLID", highlight: false },
-    ],
-  },
-  {
-    id: "ai",
-    chips: [
-      { name: "AGENTS.md", highlight: false },
-      { name: "knowledge base", highlight: false },
-      { name: "Cursor / Windsurf", highlight: false },
-      { name: "Ollama", highlight: false },
-      { name: "structured prompts", highlight: false },
-    ],
-  },
-]
+export function LatestPosts({ posts, locale }: LatestPostsProps) {
+  const isEn = locale === "en"
+  return (
+    <section className="py-16">
+      <div className="flex justify-between items-center mb-2">
+        <span className="section-label">
+          {isEn ? "// latest posts" : "// últimas notas de engenharia"}
+        </span>
+        <Link
+          href={`/${locale}/blog`}
+          className="p3 hover:text-amber-500 transition-colors"
+        >
+          {isEn ? "all posts →" : "ver todos →"}
+        </Link>
+      </div>
+      <div className="grid-3 mt-4">
+        {posts.map((post) => (
+          <PostCard key={post.slug} post={post} locale={locale} />
+        ))}
+      </div>
+    </section>
+  )
+}
 ```
 
-**`lib/data/notes.ts`** — mover de `lib/notes.ts` existente (atualizar imports depois):
-```ts
-// NOTA: os textos em PT e EN estão nos arquivos messages/pt.json e messages/en.json
-// Este arquivo contém apenas os dados estruturais (slug, hrefs futuros)
-export interface NoteData {
-  slug: string
-  href?: string
+### Arquivo a criar: `components/sections/ContactCTA.tsx`
+
+```tsx
+import Link from "next/link"
+
+interface ContactCTAProps {
+  locale: string
 }
 
-export const notesData: NoteData[] = [
-  { slug: "strapi-para-saas", href: "#" },
-  { slug: "agents-tarefas-atomicas", href: "#" },
-  { slug: "clean-arch-fastify", href: "#" },
-]
+export function ContactCTA({ locale }: ContactCTAProps) {
+  const isEn = locale === "en"
+  return (
+    <section className="py-12">
+      <div className="card-highlight flex flex-col md:flex-row items-center justify-between gap-6">
+        <div>
+          <h3 className="h3 mb-1">
+            {isEn ? "Open to opportunities" : "Aberto a oportunidades"}
+          </h3>
+          <p className="p2">
+            {isEn
+              ? "Internship, freelance or just a technical conversation."
+              : "Estágio, freelance ou só uma conversa técnica."}
+          </p>
+        </div>
+        <div className="flex gap-3 shrink-0 flex-wrap">
+          <Link href={`/${locale}/contato`} className="btn-primary">
+            {isEn ? "get in touch ↗" : "entrar em contato ↗"}
+          </Link>
+          <Link href={`/${locale}/curriculo`} className="btn-secondary">
+            {isEn ? "resume ↓" : "currículo ↓"}
+          </Link>
+        </div>
+      </div>
+    </section>
+  )
+}
 ```
-
-**`lib/data/index.ts`** — barrel export:
-```ts
-export { projectsData } from "./projects"
-export { stackGroups } from "./stack"
-export { notesData } from "./notes"
-```
-
-### Arquivos a modificar
-Atualizar os componentes que tinham dados inline para importar de `lib/data/`:
-- `components/sections/ProjectsSection.tsx` → `import { projectsData } from "@/lib/data"`
-- `components/sections/StackSection.tsx` → `import { stackGroups } from "@/lib/data"`
-- `components/sections/NotesSection.tsx` → `import { notesData } from "@/lib/data"`
 
 ### Critério de done
-- [ ] Nenhum dado hardcoded em componentes de seção
-- [ ] `lib/data/` com 3 arquivos + barrel export
-- [ ] `pnpm build` sem erros após refactor
+- [ ] Home mostrando os 3 últimos posts
+- [ ] Banner "Aberto a oportunidades" visível antes do footer
+- [ ] Link "ver todos →" vai para `/[locale]/blog`
+- [ ] CTA "entrar em contato" vai para `/[locale]/contato`
+
+---
+
+## MILESTONE P7 — Navbar e CommandPalette com novas rotas
+**Estimativa:** 15 min | **Arquivos modificados:** 2
+
+### Arquivo a modificar: `components/Navbar.tsx`
+
+Adicionar `blog` e `contact` ao array `navItems`:
+
+```tsx
+const navItems = [
+  { key: "projects",     href: "#projetos" },
+  { key: "architecture", href: "#arquitetura" },
+  { key: "stack",        href: "#stack" },
+  { key: "notes",        href: "#notas" },
+  { key: "blog",         href: "/blog" },     // ← novo (usar locale prefix via Link)
+  { key: "resume",       href: "/curriculo" },
+]
+```
+
+> ATENÇÃO: `href: "/blog"` funcionará se usar `<Link href={`/${locale}${item.href}`}>`.
+> Verificar como o Navbar resolve o locale para os hrefs relativos. Se necessário, usar
+> `useLocale()` do next-intl para construir o href completo: `/${locale}/blog`.
+
+Adaptar o `<Link>` do Navbar para itens com paths:
+
+```tsx
+// Lógica para href: se começa com # é âncora local, se começa com / é rota com locale
+const resolvedHref = item.href.startsWith("#")
+  ? item.href
+  : `/${locale}${item.href}`
+
+<Link key={item.key} href={resolvedHref} ...>
+  {t(item.key)}
+</Link>
+```
+
+### Arquivo a modificar: `components/CommandPalette.tsx`
+
+Dentro de `commands`, no grupo de navegação, adicionar os novos items.
+O CommandPalette usa `useTranslations("commandPalette")` e as chaves já foram adicionadas no FIX-02:
+
+```tsx
+// No array items do grupo "Navegação", adicionar:
+{
+  label: t("items.goBlog"),
+  action: () => router.push(`/${locale}/blog`)
+},
+{
+  label: t("items.goContact"),
+  action: () => router.push(`/${locale}/contato`)
+},
+```
+
+> O CommandPalette precisa de `useLocale()` e `useRouter()` do next-intl para navegar com locale.
+> Verificar se já importa esses hooks. Se não, adicionar:
+> ```tsx
+> import { useLocale } from "next-intl"
+> import { useRouter } from "next/navigation"
+> const locale = useLocale()
+> const router = useRouter()
+> ```
+
+### Critério de done
+- [ ] Link "blog" e "contato" visíveis na navbar
+- [ ] `⌘K` → buscar "blog" → navega para `/pt/blog`
+- [ ] Active state correto no link da página atual
+
+---
+
+## MILESTONE P8 — Sitemap e Toaster global
+**Estimativa:** 10 min | **Arquivos modificados:** 2**
+
+### Arquivo a modificar: `app/sitemap.ts`
+
+> Substituição total segura — esta versão é superset da anterior.
+
+```ts
+import type { MetadataRoute } from "next"
+import { getAllPostSlugs } from "@/lib/blog"
+
+const BASE_URL = "https://dev-luisneves.me"
+
+export default function sitemap(): MetadataRoute.Sitemap {
+  const locales      = ["pt", "en"]
+  const staticRoutes = ["/", "/curriculo", "/blog", "/contato"]
+  const slugs        = getAllPostSlugs()
+
+  const staticEntries = locales.flatMap((locale) =>
+    staticRoutes.map((route) => ({
+      url:              `${BASE_URL}/${locale}${route === "/" ? "" : route}`,
+      lastModified:     new Date(),
+      changeFrequency:  "monthly" as const,
+      priority:         route === "/" ? 1 : route === "/blog" ? 0.9 : 0.8,
+      alternates: {
+        languages: Object.fromEntries(
+          locales.map((l) => [
+            l === "pt" ? "pt-BR" : "en-US",
+            `${BASE_URL}/${l}${route === "/" ? "" : route}`,
+          ])
+        ),
+      },
+    }))
+  )
+
+  const postEntries = locales.flatMap((locale) =>
+    slugs.map((slug) => ({
+      url:             `${BASE_URL}/${locale}/blog/${slug}`,
+      lastModified:    new Date(),
+      changeFrequency: "yearly" as const,
+      priority:        0.7,
+    }))
+  )
+
+  return [...staticEntries, ...postEntries]
+}
+```
+
+### Arquivo a modificar: `app/[locale]/layout.tsx`
+
+O `<Toaster />` do sonner precisa estar no layout para funcionar em todas as páginas
+(formulário de contato usa `toast.success`):
+
+```tsx
+// Adicionar import no topo:
+import { Toaster } from "sonner"
+
+// Adicionar dentro do <body>, após </PageTransition> e antes de </SmoothScrollProvider>:
+<Toaster position="bottom-right" />
+```
+
+### Critério de done
+- [ ] `/sitemap.xml` listando todas as rotas incluindo blog e contato
+- [ ] Posts de blog aparecendo no sitemap
+- [ ] Toast de sucesso aparece ao enviar o formulário de contato
 
 ---
 
 ## CHECKLIST DE FECHAMENTO DA BRANCH
 
 ```bash
-# Após todos os milestones:
+# Build final
 pnpm build
 
-# Se build OK:
+# Se OK:
 git add .
-git commit -m "feat: tema, i18n PT-BR/EN, a11y alto contraste e analytics
+git commit -m "feat: design system + blog MDX + contato Resend
 
-- P1: fix ThemeToggle — defaultTheme=system + enableSystem
-- P2-P4: next-intl com route [locale], messages pt/en, LangToggle
-- P5: HighContrastToggle com data-high-contrast + CSS overrides
-- P6: a11y — h1 único, ProjectCard teclado, aria-labels
-- P7: sitemap com locales, Search Console
-- P8: ClarityProvider verificado
-- P9: metadata OG com alternates de locale
-- P10: lib/data separação de dados dos componentes"
+FIX-01: root layout mínimo + redirect root page + deletar arquivos legados
+FIX-02: nav.blog + commandPalette items em pt.json e en.json
+P0:  styles/design-tokens.css + layers typography/components em globals.css
+P1:  lib/blog.ts + content/blog/ com 2 posts MDX
+P2:  /blog listagem com filtro por tag + stagger animations
+P3:  /blog/[slug] post individual + sidebar + navegação prev/next
+P4:  /contato página + ContactForm com honeypot
+P5:  app/actions/sendContact.ts + Resend API
+P6:  Home refatorada (Server + Client split) + LatestPosts + ContactCTA
+P7:  Navbar + CommandPalette com blog e contato
+P8:  sitemap com blog + Toaster no layout"
 
-git push origin feature/i18n-a11y-analytics
+git push origin feature/design-system-blog-contact
 
 git checkout main
-git merge feature/i18n-a11y-analytics --no-ff \
-  -m "merge: i18n-a11y-analytics → main"
+git merge feature/design-system-blog-contact --no-ff \
+  -m "merge: design-system-blog-contact → main"
 
 git push origin main
 ```
@@ -1330,20 +2006,26 @@ git push origin main
 
 ## NOTAS PARA O AGENTE
 
-1. **P1 DEVE rodar antes de P2** — o ThemeToggle precisa estar funcionando antes de testar a troca de locale (que re-renderiza o layout).
+1. **FIX-01 PRIMEIRO, sempre.** O root layout com `className="dark"` e Navbar/Footer duplicados é o problema mais crítico. Não começar P0 sem FIX-01 feito.
 
-2. **Migração de rotas para `[locale]` é a operação mais arriscada** — fazer backup de `app/page.tsx` e `app/curriculo/page.tsx` antes de mover.
+2. **NÃO recriar mensagens/pt.json ou en.json.** Esses arquivos existem com todas as traduções. No FIX-02, usar merge de JSON ou editar diretamente — nunca substituir o arquivo inteiro.
 
-3. **Verificar `pnpm build` após P2** antes de continuar — se a estrutura de rotas estiver errada, os outros milestones vão falhar em cascata.
+3. **`next.config.ts` NÃO precisa ser alterado** neste milestone. `next-mdx-remote` processa MDX em runtime sem plugin.
 
-4. **O `LangToggle.tsx` já existe no projeto** (estava comentado no FIX 2). Substituir o conteúdo, não criar um novo arquivo.
+4. **`lib/blog.ts` usa `fs`** (Node.js). Só pode ser importado em Server Components ou em funções `generate*`. Nunca importar diretamente em Client Components.
 
-5. **`lib/notes.ts` já existe** — o P10 deve mover/refatorar esse arquivo, não duplicar.
+5. **`app/[locale]/page.tsx` vira Server Component** no P6. O conteúdo atual (hero, sections) vai para `components/home/HomeClient.tsx` como Client Component. Não esquecer de mover o `"use client"` e todos os imports.
 
-6. **Emojis de bandeira** (🇧🇷 🇺🇸) são renderizados nativamente em todos os browsers modernos. Não substituir por imagens.
+6. **Checkpoint após P0** é obrigatório antes de P1. Se o design system quebrar o build, melhor descobrir antes de criar 8 novos arquivos.
 
-7. **Alto contraste não substitui dark/light mode** — são controles independentes. O toggle de alto contraste deve funcionar em ambos os temas.
+7. **`app/curriculo/page.tsx`** (sem locale) deve ser deletado no FIX-01. A versão correta está em `app/[locale]/curriculo/page.tsx`.
+
+8. **`lib/notes.ts`** (raiz) deve ser deletado no FIX-01. A versão canônica está em `lib/data/notes.ts`.
+
+9. **Resend free tier:** `from` deve ser `onboarding@resend.dev` para testes. Para produção, verificar o domínio `luisneves.dev.br` em `resend.com/domains`.
+
+10. **Variáveis de ambiente:** `RESEND_API_KEY` e `CONTACT_TO_EMAIL` só existem em `.env.local`. Adicionar ao `.env.example` sem o valor real, para documentar as variáveis necessárias.
 
 ---
 
-*Luis Otavio Neves Faustino · dev-luisneves.me · feature/i18n-a11y-analytics · março 2026*
+*Luis Otavio Neves Faustino · dev-luisneves.me · feature/design-system-blog-contact · março 2026*

@@ -1,4 +1,5 @@
 @import "tailwindcss";
+@import "../styles/design-tokens.css";
 @import "../styles/high-contrast.css";
 
 /* ── Design Tokens ── */
@@ -109,3 +110,286 @@ body {
   outline: 2px solid rgb(245 158 11 / 0.6);
   outline-offset: 2px;
 }
+
+/* ============================================================
+   TIPOGRAFIA — usar estas classes, nunca font-size hardcoded
+   ============================================================ */
+
+.h1 {
+  font-size: var(--text-h1);
+  font-weight: var(--weight-medium);
+  line-height: var(--leading-tight);
+  color: var(--foreground);
+}
+.h2 {
+  font-size: var(--text-h2);
+  font-weight: var(--weight-medium);
+  line-height: var(--leading-tight);
+  color: var(--foreground);
+}
+.h3 {
+  font-size: var(--text-h3);
+  font-weight: var(--weight-medium);
+  line-height: var(--leading-normal);
+  color: var(--foreground);
+}
+.h4 {
+  font-size: var(--text-h4);
+  font-weight: var(--weight-medium);
+  line-height: var(--leading-normal);
+  color: var(--foreground);
+}
+.h5 {
+  font-size: var(--text-h5);
+  font-weight: var(--weight-medium);
+  line-height: var(--leading-normal);
+  color: var(--muted-foreground);
+}
+.p1 {
+  font-size: var(--text-p1);
+  font-weight: var(--weight-normal);
+  line-height: var(--leading-relaxed);
+  color: var(--foreground);
+}
+.p2 {
+  font-size: var(--text-p2);
+  font-weight: var(--weight-normal);
+  line-height: var(--leading-relaxed);
+  color: var(--muted-foreground);
+}
+.p3 {
+  font-size: var(--text-p3);
+  font-weight: var(--weight-normal);
+  line-height: var(--leading-normal);
+  color: var(--muted-foreground);
+  font-family: var(--font-mono);
+}
+
+/* Label de seção — "// trilha de projetos..." */
+.section-label {
+  font-size: var(--text-p3);
+  font-family: var(--font-mono);
+  color: var(--muted-foreground);
+  letter-spacing: 0.04em;
+  display: block;
+  margin-bottom: var(--space-2);
+}
+
+/* Prosa de post — aplica em article.prose */
+.prose h2 { font-size: var(--text-h2); font-weight: var(--weight-medium); margin: var(--space-8) 0 var(--space-3); }
+.prose h3 { font-size: var(--text-h3); font-weight: var(--weight-medium); margin: var(--space-6) 0 var(--space-2); }
+.prose p  { font-size: var(--text-p1); line-height: var(--leading-relaxed); margin-bottom: var(--space-4); }
+.prose pre {
+  border: var(--border-style-1);
+  border-radius: var(--radius-md);
+  padding: var(--space-4);
+  margin: var(--space-4) 0;
+  overflow-x: auto;
+  background: var(--muted);
+}
+.prose code { font-family: var(--font-mono); font-size: var(--text-p2); }
+.prose blockquote {
+  border-left: var(--border-accent-left);
+  padding-left: var(--space-4);
+  color: var(--muted-foreground);
+  margin: var(--space-6) 0;
+}
+.prose a { color: var(--amber-brand); text-decoration: underline; text-underline-offset: 3px; }
+.prose ul, .prose ol { padding-left: var(--space-5); margin-bottom: var(--space-4); }
+.prose li { font-size: var(--text-p1); line-height: var(--leading-relaxed); margin-bottom: var(--space-1); }
+.prose hr { border: none; border-top: var(--border-divider); margin: var(--space-8) 0; }
+.prose strong { font-weight: var(--weight-medium); color: var(--foreground); }
+
+/* ============================================================
+   CARDS — classes reutilizáveis entre todas as páginas
+   ============================================================ */
+
+/* card: padrão — todas as páginas */
+.card {
+  background: var(--card);
+  border: var(--border-style-1);
+  border-radius: var(--radius-lg);
+  padding: var(--space-4) var(--space-5);
+  transition: var(--transition-base);
+}
+
+/* card-interactive: com hover, clicável */
+.card-interactive {
+  background: var(--card);
+  border: var(--border-style-1);
+  border-radius: var(--radius-lg);
+  padding: var(--space-4) var(--space-5);
+  cursor: pointer;
+  transition: var(--transition-base);
+  text-decoration: none;
+  display: block;
+  color: inherit;
+}
+.card-interactive:hover {
+  border: var(--border-style-2);
+  transform: translateY(-2px);
+}
+
+/* card-highlight: destaque (Diocese SaaS, card ativo) */
+.card-highlight {
+  background: var(--card);
+  border: var(--border-style-3);
+  border-radius: var(--radius-lg);
+  padding: var(--space-4) var(--space-5);
+}
+
+/* card-muted: fundo suave, métricas/stats */
+.card-muted {
+  background: var(--muted);
+  border-radius: var(--radius-md);
+  padding: var(--space-4);
+}
+
+/* card-info: informação/azul */
+.card-info {
+  background: rgba(59,130,246,0.06);
+  border: var(--border-style-4);
+  border-radius: var(--radius-lg);
+  padding: var(--space-4) var(--space-5);
+}
+
+/* card-success: sucesso/verde */
+.card-success {
+  background: rgba(34,197,94,0.06);
+  border: var(--border-style-5);
+  border-radius: var(--radius-lg);
+  padding: var(--space-4) var(--space-5);
+}
+
+/* ============================================================
+   GRIDS
+   ============================================================ */
+.grid-1 { display: grid; grid-template-columns: 1fr; gap: var(--space-4); }
+.grid-2 { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--space-4); }
+.grid-3 { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: var(--space-4); }
+.grid-4 { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: var(--space-4); }
+.grid-main-sidebar { display: grid; grid-template-columns: 2fr 1fr; gap: var(--space-8); }
+.grid-auto { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: var(--space-4); }
+
+@media (max-width: 768px) {
+  .grid-2,
+  .grid-3,
+  .grid-4,
+  .grid-main-sidebar { grid-template-columns: 1fr; }
+}
+
+/* ============================================================
+   BADGES, CHIPS, TAGS
+   ============================================================ */
+
+/* badge: rótulo pill de status */
+.badge {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-1);
+  font-size: var(--text-p3);
+  font-family: var(--font-mono);
+  padding: 3px var(--space-3);
+  border-radius: var(--radius-full);
+  line-height: 1;
+}
+.badge-amber   { background: rgba(245,158,11,0.12); color: var(--amber-brand); }
+.badge-info    { background: rgba(59,130,246,0.10); color: #3b82f6; }
+.badge-success { background: rgba(34,197,94,0.10);  color: #22c55e; }
+.badge-neutral {
+  background: var(--muted);
+  color: var(--muted-foreground);
+  border: var(--border-style-1);
+}
+
+/* chip: tecnologia/stack (menor que badge) */
+.chip {
+  display: inline-block;
+  font-size: var(--text-p3);
+  font-family: var(--font-mono);
+  padding: 2px var(--space-2);
+  border: var(--border-style-1);
+  border-radius: var(--radius-sm);
+  color: var(--muted-foreground);
+  background: var(--muted);
+  transition: var(--transition-fast);
+}
+.chip-primary {
+  border: 1px solid rgba(245,158,11,0.4);
+  color: var(--amber-brand);
+  background: rgba(245,158,11,0.08);
+}
+.chip:hover {
+  border: 1px solid rgba(245,158,11,0.4);
+  color: var(--amber-brand);
+}
+
+/* tag: filtro de categoria (blog) */
+.tag {
+  display: inline-block;
+  font-size: var(--text-p3);
+  font-family: var(--font-mono);
+  padding: 3px 9px;
+  border: var(--border-style-1);
+  border-radius: var(--radius-sm);
+  color: var(--muted-foreground);
+  cursor: pointer;
+  transition: var(--transition-fast);
+}
+.tag:hover,
+.tag.active {
+  border: 1px solid rgba(245,158,11,0.5);
+  color: var(--amber-brand);
+  background: rgba(245,158,11,0.08);
+}
+
+/* ============================================================
+   LAYOUT CONTAINERS
+   ============================================================ */
+.container {
+  max-width: var(--container-max);
+  margin: 0 auto;
+  padding: 0 var(--space-6);
+}
+.container-prose {
+  max-width: var(--container-prose);
+  margin: 0 auto;
+  padding: 0 var(--space-6);
+}
+
+/* Divider */
+.divider {
+  border: none;
+  border-top: var(--border-divider);
+  margin: var(--space-8) 0;
+}
+
+/* ============================================================
+   FORMULÁRIO
+   ============================================================ */
+.form-group { margin-bottom: var(--space-4); }
+.form-label {
+  display: block;
+  font-size: var(--text-p3);
+  font-family: var(--font-mono);
+  color: var(--muted-foreground);
+  margin-bottom: var(--space-1);
+}
+.form-input {
+  width: 100%;
+  padding: var(--space-3) var(--space-4);
+  border: var(--border-style-1);
+  border-radius: var(--radius-md);
+  background: var(--card);
+  color: var(--foreground);
+  font-size: var(--text-p2);
+  font-family: var(--font-sans);
+  transition: var(--transition-fast);
+  box-sizing: border-box;
+}
+.form-input:focus {
+  outline: none;
+  border: 1px solid rgba(245,158,11,0.5);
+  box-shadow: 0 0 0 3px rgba(245,158,11,0.1);
+}
+.form-input::placeholder { color: var(--muted-foreground); }
