@@ -3,11 +3,36 @@
 
 ---
 
-## Estado em 18/03/2026
+## Estado em 18/03/2026 - ATUALIZADO
 
 ```
 [x] PHASE2 completo — design system + blog MDX + contato com Resend
+[x] PHASE3 completo — dark mode fix + email env vars + Clarity env var
 [x] Deploy production validado
+```
+
+### PHASE3 executado em 18/03/2026:
+
+#### BUG-01: Dark mode toggle fix
+- `app/globals.css` — seletor `.dark` adicionado para next-themes runtime
+- `@media (prefers-color-scheme: dark)` mantido como SSR fallback
+- Alto contraste agora independente do tema
+
+#### EMAIL-FIX: Variáveis de ambiente
+- `.env.example` criado com template de variáveis
+- `.gitignore` atualizado para ignorar `.env.local` mas permitir `.env.example`
+- `RESEND_API_KEY` e `CONTACT_TO_EMAIL` configuráveis via env
+
+#### A3: Clarity em variável de ambiente
+- `ClarityProvider.tsx` agora usa `process.env.NEXT_PUBLIC_CLARITY_PROJECT_ID`
+- Project ID `vw2ovtzbwy` movido para .env.local
+
+#### Commits:
+```
+aa6a6a4 - chore: update globals.css with dark mode fix
+c7e9e3a - feat: add .env.example for documentation + update .gitignore
+c70710f - chore: Clarity Project ID moved to NEXT_PUBLIC_CLARITY_PROJECT_ID env var
+36a5a6e - merge: analytics-email-fix → main
 ```
 
 ### O que foi feito em 18/03/2026:
