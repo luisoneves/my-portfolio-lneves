@@ -8,7 +8,7 @@
 ## Projeto
 
 Portfolio pessoal — dev-luisneves.me
-Next.js 16 App Router · TypeScript Strict · Tailwind 4 · Framer Motion
+Next.js 16 App Router · TypeScript Strict · Tailwind 4 · Framer Motion · next-intl
 
 ---
 
@@ -40,27 +40,42 @@ npm run lint     # lint
 
 ```
 app/
-  layout.tsx        ← providers globais + meta tags (crítico)
-  page.tsx          ← composição das seções da home
+  [locale]/
+    layout.tsx      ← providers globais + meta tags (crítico)
+    page.tsx        ← Server Component → HomeClient
+    blog/           ← blog list + [slug] post
+    contato/        ← contact page + form
+    curriculo/      ← resume page
   globals.css       ← design tokens + @layer base/components
-  sitemap.ts        ← sitemap automático
-  curriculo/        ← rota /curriculo
+  sitemap.ts        ← sitemap com blog
+  actions/         ← server actions (sendContact)
 
 components/
   providers/        ← ThemeProvider, PageTransition, SmoothScrollProvider, ClarityProvider
   hero/             ← AnimatedHeading, TypingCycle
   projects/         ← EvolutionTimeline, ProjectCard (tilt 3D)
-  sections/         ← todas as seções da home
+  sections/         ← Manifesto, Projects, Architecture, CICD, Stack, Notes, LatestPosts, ContactCTA
+  blog/             ← BlogList, PostCard, PostLayout
+  contact/          ← ContactForm
+  home/             ← HomeClient
   CommandPalette    ← ⌘K palette
   ThemeToggle       ← dark/light toggle
-  LangToggle        ← i18n placeholder (comentado — não descomentar sem next-intl)
+  LangToggle        ← i18n toggle (ativo)
 
 lib/
-  notes.ts          ← dados estáticos (padrão para todos os dados)
+  blog.ts           ← blog data fetching (MDX)
+  data/             ← projects, stack, notes
 
-public/
-  og-image.png      ← 1200×630px
-  favicon/          ← assets de favicon
+i18n/
+  routing.ts        ← next-intl routing config
+  request.ts        ← next-intl request config
+
+messages/
+  pt.json           ← traduções português
+  en.json           ← traduções inglês
+
+styles/
+  design-tokens.css ← CSS custom properties (tipografia, espaçamento)
 ```
 
 ---
@@ -70,7 +85,6 @@ public/
 ```
 ✗ Não instalar pacotes sem aprovação explícita
 ✗ Não modificar .ai/ (contexto pessoal do dev)
-✗ Não descomentar LangToggle sem next-intl instalado
 ✗ Não hardcodar dados em componentes — usar lib/
 ✗ Não commitar com build quebrado
 ✗ Não fazer merge na main sem PR revisado
@@ -84,18 +98,26 @@ public/
 - Dados: estáticos em lib/ (não banco, não Strapi)
 - Deploy: Vercel (não Netlify — Netlify é do WaaS)
 - Dark mode: next-themes com defaultTheme="system"
-- i18n: backlog — estrutura comentada, aguarda next-intl
+- i18n: next-intl ativo com locale prefix (pt/en)
 
 > ADRs completos em .ai/context/decisions.md
-```
 
 ---
 
-**Onde estamos e próximos passos:**
+## Onde estamos — 18/03/2026
 
 ```
-✅ Refactor M0–M10 completo
-✅ Audit SEO/a11y/darkmode executado
-✅ FIX 1–7 do audit (dark mode, a11y, canonical, favicon, logo)
+✅ PHASE1: M0–M10 completo (refactor vanilla → Next.js)
+✅ PHASE2: design system + blog MDX + contato com Resend
 ✅ Analytics: Search Console + Clarity + OG image
-✅ Branch: audit/seo-a11y-darkmode pronta
+✅ Deploy: dev-luisneves.me em produção
+```
+
+### Próximos passos (ver CHECKPOINT.md):
+- Analytics A1–A3 pendente
+- Conteúdo adicional para blog
+- Considerar: testes E2E
+
+---
+
+*Última atualização: 18/03/2026*
