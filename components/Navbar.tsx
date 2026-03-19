@@ -1,6 +1,5 @@
 "use client"
 import Link from "next/link"
-import Image from "next/image"
 import { useTranslations, useLocale } from "next-intl"
 import { CommandPaletteHint } from "@/components/CommandPaletteHint"
 import { HighContrastToggle } from "@/components/HighContrastToggle"
@@ -26,21 +25,9 @@ export function Navbar() {
     <header className="sticky top-0 z-40 border-b border-border/50 bg-background/80 backdrop-blur-md">
       <div className="max-w-5xl mx-auto flex items-center justify-between px-4 py-3">
         <Link href="/" className="flex items-center gap-2">
-          <Image
-            src="/logo-LN_darkmode-new.png"
-            alt="LN"
-            width={32}
-            height={32}
-            className="hidden dark:block"
-          />
-          <Image
-            src="/logo-LN_ligthmode.png"
-            alt="LN"
-            width={32}
-            height={32}
-            className="dark:hidden"
-          />
-          <span className="font-medium text-sm text-foreground">luis neves</span>
+          <span className="font-mono text-lg font-bold text-foreground hover:text-amber-500 transition-colors select-none">
+            ~LN_
+          </span>
         </Link>
 
         <nav className="hidden md:flex items-center gap-6">

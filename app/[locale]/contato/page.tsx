@@ -48,10 +48,10 @@ export default async function ContactPage({
             </p>
             <div className="flex flex-col gap-2">
               <a
-                href="mailto:contato@luisneves.dev.br"
+                href="mailto:1991lotavion@gmail.com"
                 className="p2 hover:text-amber-500 transition-colors"
               >
-                contato@luisneves.dev.br
+                1991lotavion@gmail.com
               </a>
               <a
                 href="https://github.com/luisoneves"

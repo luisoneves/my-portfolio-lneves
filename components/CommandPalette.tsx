@@ -25,7 +25,7 @@ export function CommandPalette() {
       { label: t("items.openGithub"),    action: () => window.open("https://github.com/luisoneves", "_blank") },
       { label: t("items.openDiocese"), action: () => window.open("https://github.com/luisoneves", "_blank") },
       { label: t("items.openCapelas"), action: () => window.open("https://gestao-capelas.vercel.app", "_blank") },
-      { label: t("items.sendEmail"),    action: () => window.open("mailto:contato@luisneves.dev.br") },
+      { label: t("items.sendEmail"),    action: () => window.open("mailto:1991lotavion@gmail.com") },
       { label: t("items.openLinkedIn"),        action: () => window.open("https://linkedin.com/in/luisneves-dev", "_blank") },
       { label: t("items.openResume"),    action: () => router.push(`/${locale}/curriculo`) },
     ]},

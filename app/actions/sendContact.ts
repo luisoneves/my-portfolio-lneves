@@ -26,7 +26,7 @@ export async function sendContactEmail(data: unknown) {
 
   const { name, email, subject, message } = parsed.data
   const subjectLabel = subjectLabels[subject] ?? subject
-  const toEmails = process.env.CONTACT_TO_EMAIL?.split(",").map(e => e.trim()) ?? ["contato@luisneves.dev.br"]
+  const toEmails = process.env.CONTACT_TO_EMAIL?.split(",").map(e => e.trim()) ?? ["1991lotavion@gmail.com"]
 
   try {
     await resend.emails.send({

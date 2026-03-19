@@ -14,6 +14,8 @@ import { ClarityProvider } from "@/components/providers/ClarityProvider"
 import { ThemeProvider } from "@/components/providers/ThemeProvider"
 import { Analytics } from "@vercel/analytics/next"
 import { SpeedInsights } from "@vercel/speed-insights/next"
+// [BG-EFFECTS] Import - remove this line to disable
+import BackgroundEffects from "@/components/BackgroundEffects"
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -111,6 +113,8 @@ export default async function LocaleLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
+        {/* [BG-EFFECTS] Component - remove this line to disable background effects */}
+        <BackgroundEffects />
         <NextIntlClientProvider messages={messages}>
           <ThemeProvider>
             <SmoothScrollProvider>

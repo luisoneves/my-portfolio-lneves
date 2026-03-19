@@ -60,7 +60,7 @@ export default async function CurriculoPage() {
             {t("role")}
           </p>
           <p className="font-mono text-xs text-muted-foreground mt-0.5">
-            Cachoeira Paulista, SP · contato@luisneves.dev.br
+            Cachoeira Paulista, SP · 1991lotavion@gmail.com
           </p>
         </div>
         <ResumeDownloadButton />

@@ -36,7 +36,7 @@ export function Footer() {
             linkedin
           </a>
           <a
-            href="mailto:contato@luisneves.dev.br"
+            href="mailto:1991lotavion@gmail.com"
             className="text-xs text-muted-foreground hover:text-foreground transition-colors font-mono"
           >
             contato
