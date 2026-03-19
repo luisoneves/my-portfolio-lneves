@@ -23,13 +23,14 @@ export function CICDSection() {
 
   return (
     <section className="py-12">
-      <div className="mb-2">
-        <span className="font-mono text-xs text-muted-foreground tracking-wider">
-          {t("sectionLabel")}
-        </span>
-      </div>
+      <div className="max-w-5xl mx-auto px-4">
+        <div className="mb-2">
+          <span className="font-mono text-xs text-muted-foreground tracking-wider">
+            {t("sectionLabel")}
+          </span>
+        </div>
 
-      <div className="rounded-xl border border-border bg-card p-5 mt-4">
+        <div className="rounded-xl border border-border bg-card p-5 mt-4">
         <motion.div
           className="flex items-center gap-0 overflow-x-auto"
           variants={container}
@@ -51,6 +52,7 @@ export function CICDSection() {
             </div>
           ))}
         </motion.div>
+      </div>
       </div>
     </section>
   )

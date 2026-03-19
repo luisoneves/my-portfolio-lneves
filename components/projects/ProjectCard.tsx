@@ -2,14 +2,14 @@
 import { motion, useMotionValue, useSpring, useTransform, MotionValue } from "framer-motion"
 import { useRef } from "react"
 
-type ProjectStatus = "production" | "inDev" | "beta" | "done"
+type ProjectStatus = "production" | "inDev" | "beta" | "done" | "paused"
 
 interface Project {
   title: string
   description: string
-  version: string
-  statusKey: ProjectStatus
-  statusLabel: string
+  version?: string
+  statusKey?: ProjectStatus
+  statusLabel?: string
   chips: string[]
   href?: string
   highlight?: boolean
@@ -20,6 +20,7 @@ const statusStyles: Record<ProjectStatus, string> = {
   inDev: "bg-amber-500/10  text-amber-600  dark:text-amber-400",
   beta: "bg-blue-500/10   text-blue-600   dark:text-blue-400",
   done: "bg-muted         text-muted-foreground",
+  paused: "bg-muted/60    text-muted-foreground",
 }
 
 function GlowOverlay({ glowX, glowY }: { glowX: MotionValue<string>; glowY: MotionValue<string> }) {
@@ -85,10 +86,14 @@ export function ProjectCard({ project }: { project: Project }) {
 
       <div className="relative z-10">
         <div className="flex justify-between items-start mb-3">
-          <span className={`text-xs px-2.5 py-0.5 rounded-full font-medium ${statusStyles[project.statusKey]}`}>
-            {project.statusLabel}
-          </span>
-          <span className="font-mono text-xs text-muted-foreground">{project.version}</span>
+          {project.statusLabel && (
+            <span className={`text-xs px-2.5 py-0.5 rounded-full font-medium ${statusStyles[project.statusKey || "done"]}`}>
+              {project.statusLabel}
+            </span>
+          )}
+          {project.version && (
+            <span className="font-mono text-xs text-muted-foreground">{project.version}</span>
+          )}
         </div>
         <h3 className="font-medium text-sm mb-1.5 text-foreground">{project.title}</h3>
         <p className="text-xs text-muted-foreground leading-relaxed mb-4">{project.description}</p>
