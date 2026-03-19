@@ -48,13 +48,9 @@
       "beta": "beta",
       "done": "done"
     },
-    "diocese": {
-      "title": "Diocese SaaS Platform",
-      "description": "Turborepo monorepo. RBAC Diocese→Chapel→Editor. Multi-tenancy with RLS and per-tenant Feature Flags. Own stack without external CMS dependency."
-    },
-    "capelas": {
-      "title": "Chapel Management",
-      "description": "1 admin + 200 branches with editable layouts. Headless Strapi architecture. Scaling limits motivated a complete refactor to own stack."
+    "portfolio": {
+      "title": "Portfolio",
+      "description": "Portfolio developed as a technical positioning artifact, continuously evolving with improvements in architecture, UX, and narrative."
     },
     "waas": {
       "title": "Website as a Service",
@@ -64,9 +60,21 @@
       "title": "C4ts Market Research",
       "description": "Platform for freelance client acquisition and local positioning. Forms and blob for quote requests and product briefs."
     },
+    "airulessystem": {
+      "title": "AI Rules System",
+      "description": "Personal system of principles and guidelines for consistent AI use in software development. Focus on architecture and decisions that increase adaptability and longevity."
+    },
     "beautycare": {
       "title": "BeautyCare",
       "description": "Project focused on visual design and experience, exploring elegant UI and modern frontend structure."
+    },
+    "diocese": {
+      "title": "Diocese SaaS Platform",
+      "description": "Turborepo monorepo. RBAC Diocese→Chapel→Editor. Multi-tenancy with RLS and per-tenant Feature Flags. Own stack without external CMS dependency."
+    },
+    "capelas": {
+      "title": "Chapel Management",
+      "description": "1 admin + 200 branches with editable layouts. Headless Strapi architecture. Scaling limits motivated a complete refactor to own stack."
     },
     "staticmockup": {
       "title": "Static Mockup",

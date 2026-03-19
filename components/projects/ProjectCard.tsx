@@ -79,7 +79,7 @@ export function ProjectCard({ project }: { project: Project }) {
         }
       }}
       className={`
-        relative rounded-xl border bg-card p-5 cursor-pointer overflow-hidden
+        relative rounded-xl border bg-card p-5 cursor-pointer overflow-hidden h-full flex flex-col
         ${project.highlight ? "border-amber-500/50" : "border-border"}
       `}
     >

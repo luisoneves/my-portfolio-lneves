@@ -140,9 +140,21 @@ export function HomeClient({ locale, latestPosts }: HomeClientProps) {
             </motion.div>
           </div>
 
-          {/* COLUNA DIREITA - Espaço para imagem futura */}
+          {/* COLUNA DIREITA - Logo */}
           <div className="hidden md:flex items-center justify-center min-h-[400px]">
-            {/* Espaço reservado para foto/ilustração futura */}
+            <div className="relative">
+              <img
+                src="/logo.svg"
+                alt="Logo Luís Neves"
+                className="w-[280px] h-auto opacity-80 dark:hidden"
+              />
+              <img
+                src="/logo-darkmode.svg"
+                alt="Logo Luís Neves"
+                className="w-[280px] h-auto opacity-80 hidden dark:block"
+              />
+              <div className="absolute -bottom-4 left-1/2 -translate-x-1/2 w-24 h-px bg-gradient-to-r from-transparent via-amber-500/50 to-transparent" />
+            </div>
           </div>
 
           </div>

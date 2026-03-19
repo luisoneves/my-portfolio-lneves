@@ -48,6 +48,26 @@
       "beta": "beta",
       "done": "concluído"
     },
+    "portfolio": {
+      "title": "Portfolio",
+      "description": "Portfólio desenvolvido como artefato de posicionamento técnico, evoluindo continuamente com melhorias de arquitetura, UX e narrativa."
+    },
+    "waas": {
+      "title": "Website as a Service",
+      "description": "1 deploy + N clientes. Engine config-driven com Registry Pattern, renderer dinâmico e theme engine com CSS variables. Multi-tenant por host."
+    },
+    "market": {
+      "title": "C4ts Market Research",
+      "description": "Plataforma para captação de clientes freela e posicionamento local. Forms e blob para receber pedidos de orçamento."
+    },
+    "airulessystem": {
+      "title": "AI Rules System",
+      "description": "Sistema pessoal de princípios e diretrizes para uso consistente de IA no desenvolvimento de software. Foco em arquitetura e decisões que aumentam adaptabilidade e longevidade."
+    },
+    "beautycare": {
+      "title": "BeautyCare",
+      "description": "Projeto focado em design e experiência visual, explorando UI elegante e estrutura frontend moderna."
+    },
     "diocese": {
       "title": "Diocese SaaS Platform",
       "description": "Monorepo Turborepo. RBAC Diocese→Chapel→Editor. Multi-tenancy com RLS e Feature Flags por tenant. Stack própria sem dependência de CMS externo."
@@ -55,18 +75,6 @@
     "capelas": {
       "title": "Gestão de Capelas",
       "description": "1 admin + 200 filiais com layouts editáveis. Arquitetura headless Strapi. O limite ao escalar motivou a refatoração completa para stack própria."
-    },
-    "waas": {
-      "title": "Website as a Service",
-      "description": "1 deploy + N clientes. Engine config-driven com Registry Pattern, renderer dinâmico e theme engine via CSS variables. Multi-tenant por host."
-    },
-    "market": {
-      "title": "C4ts Market Research",
-      "description": "Plataforma para captação de clientes freela e posicionamento local. Forms e blob para receber pedidos de orçamento."
-    },
-    "beautycare": {
-      "title": "BeautyCare",
-      "description": "Projeto focado em design e experiência visual, explorando UI elegante e estrutura frontend moderna."
     },
     "staticmockup": {
       "title": "Mockup Estático",

@@ -18,9 +18,9 @@ const item = {
 type ProjectCategory = "emEvolucao" | "experimentacao" | "pausados"
 
 const projectCategories: Record<ProjectCategory, string[]> = {
-  emEvolucao: ["diocese", "market"],
+  emEvolucao: ["portfolio", "waas", "market", "airulessystem"],
   experimentacao: ["beautycare", "capelas"],
-  pausados: ["staticmockup"],
+  pausados: ["diocese", "staticmockup"],
 }
 
 export function ProjectsSection() {
@@ -58,7 +58,7 @@ export function ProjectsSection() {
         chips: [] as string[],
         href: undefined as string | undefined,
         links,
-        highlight: id === "diocese",
+        highlight: id === "portfolio",
       }
     })
   }
@@ -72,6 +72,36 @@ export function ProjectsSection() {
           </span>
         </div>
         <h2 className="text-2xl font-medium mb-8">{t("title")}</h2>
+
+        {/* Evolution Timeline */}
+        <div className="mb-10 pb-6 border-b border-border/50">
+          <p className="text-xs font-mono text-muted-foreground mb-4">Trilha de evolução</p>
+          <div className="flex items-center gap-2 overflow-x-auto pb-2">
+            {[
+              { label: "Portfolio", status: "active" },
+              { label: "WaaS", status: "active" },
+              { label: "C4TS", status: "active" },
+              { label: "AI Rules", status: "active" },
+              { label: "Capelas", status: "experiment" },
+              { label: "BeautyCare", status: "experiment" },
+              { label: "Diocese", status: "paused" },
+              { label: "Mockup", status: "paused" },
+            ].map((item, i) => (
+              <div key={item.label} className="flex items-center gap-2">
+                <span className={`text-xs font-mono px-2 py-1 rounded whitespace-nowrap ${
+                  item.status === "active" 
+                    ? "bg-amber-500/10 text-amber-600 dark:text-amber-400 border border-amber-500/30" 
+                    : item.status === "experiment"
+                      ? "bg-blue-500/10 text-blue-600 dark:text-blue-400 border border-blue-500/30"
+                      : "bg-muted text-muted-foreground border border-border"
+                }`}>
+                  {item.label}
+                </span>
+                {i < 7 && <span className="text-muted-foreground/50">→</span>}
+              </div>
+            ))}
+          </div>
+        </div>
 
         {/* Em Evolução */}
         <div className="mb-10 space-y-4">

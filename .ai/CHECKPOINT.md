@@ -3,6 +3,50 @@
 
 ---
 
+## Estado em 19/03/2026 - PHASE 5 INICIADA
+
+```
+[x] PHASE2 completo — design system + blog MDX + contato com Resend
+[x] PHASE3 completo — dark mode fix + email env vars + Clarity env var
+[x] PHASE4 completo — Vercel Analytics + Speed Insights + DNS validacao email
+[x] Deploy production validado
+[~] PHASE5 em progresso — layout refinement + narrative alignment
+```
+
+### PHASE5 Executado em 19/03/2026:
+
+#### PHASE5 Milestone criado
+- `.ai/milestones/PHASE5_MILESTONES.md` detalhado com:
+  - Etapa 1: Hero + Timeline (logo + timeline restaurada)
+  - Etapa 2: Scroll fantasma
+  - Etapa 3: Cards padronizados
+  - Etapa 4: Reorganização de projetos + AI Rules System
+  - Etapa 5: Navegação corrigida
+  - Etapa 6: Documentação
+  - Etapa 7: Checkpoint
+
+#### Estrutura de projetos refinada:
+**Em evolução:**
+1. Portfolio
+2. WaaS (Website as a Service)
+3. C4TS Market Research
+4. AI Rules System (NOVO)
+
+**Experimentação:**
+- BeautyCare
+- Gestão de Capelas
+
+**Pausados:**
+- Diocese SaaS
+- Static Mockup
+
+#### Commits PHASE5 (em progresso):
+```
+9effd86 - feat: add beautycare and staticmockup projects + fix pt.json i18n
+```
+
+---
+
 ## Estado em 19/03/2026 - ATUALIZADO
 
 ```
