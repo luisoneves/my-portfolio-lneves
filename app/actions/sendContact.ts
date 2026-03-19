@@ -30,7 +30,7 @@ export async function sendContactEmail(data: unknown) {
 
   try {
     await resend.emails.send({
-      from:    "Portfolio <onboarding@resend.dev>",
+      from:    "Portfolio <contato@dev-luisneves.me>",
       to:      [toEmail],
       replyTo: email,
       subject: `[Portfolio] ${subjectLabel} — ${name}`,
@@ -51,7 +51,7 @@ export async function sendContactEmail(data: unknown) {
     })
 
     await resend.emails.send({
-      from:    "Luis Neves <onboarding@resend.dev>",
+      from:    "Luis Neves <contato@dev-luisneves.me>",
       to:      [email],
       subject: "Recebi sua mensagem!",
       html: `
