@@ -1,6 +1,7 @@
 "use client"
 import { motion } from "framer-motion"
 import { useTranslations } from "next-intl"
+import TypewriterLoop from "@/components/TypewriterLoop"
 import { ManifestoBlock } from "@/components/sections/ManifestoBlock"
 import { ProjectsSection } from "@/components/sections/ProjectsSection"
 import { ArchitectureSection } from "@/components/sections/ArchitectureSection"
@@ -46,6 +47,24 @@ export function HomeClient({ locale, latestPosts }: HomeClientProps) {
           {t("title1")}
         </motion.h1>
 
+        <motion.h2
+          initial={{ opacity: 0, y: 10 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.2, duration: 0.5 }}
+          className="text-xl md:text-2xl font-medium text-amber-500 dark:text-amber-400 mb-8"
+        >
+          <TypewriterLoop
+            texts={[
+              "Estruturo sistemas.",
+              "Projeto arquiteturas escaláveis.",
+              "Construo software que evolui.",
+            ]}
+            typingSpeed={40}
+            deletingSpeed={25}
+            pauseTime={1000}
+          />
+        </motion.h2>
+
         <motion.div
           initial={{ opacity: 0, y: 10 }}
           animate={{ opacity: 1, y: 0 }}
@@ -63,7 +82,7 @@ export function HomeClient({ locale, latestPosts }: HomeClientProps) {
         <motion.p
           initial={{ opacity: 0, y: 10 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.35, duration: 0.5 }}
+          transition={{ delay: 0.45, duration: 0.5 }}
           className="text-sm text-amber-600 dark:text-amber-400 italic mb-8"
         >
           {t("aiNote")}
@@ -72,7 +91,7 @@ export function HomeClient({ locale, latestPosts }: HomeClientProps) {
         <motion.div
           initial={{ opacity: 0, y: 10 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.45, duration: 0.5 }}
+          transition={{ delay: 0.55, duration: 0.5 }}
           className="flex gap-8 mb-8 text-sm"
         >
           <div>
@@ -116,8 +135,6 @@ export function HomeClient({ locale, latestPosts }: HomeClientProps) {
           </a>
         </motion.div>
       </section>
-
-      <ManifestoBlock />
       <ProjectsSection />
       <ArchitectureSection />
       <CICDSection />
