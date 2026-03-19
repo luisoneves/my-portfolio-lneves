@@ -56,8 +56,8 @@ export function HomeClient({ locale, latestPosts }: HomeClientProps) {
           <TypewriterLoop
             texts={[
               "Estruturo sistemas.",
-              "Projeto arquiteturas.",
-              "Construo software.",
+              "Projeto arquiteturas escaláveis.",
+              "Construo software que evolui.",
             ]}
             typingSpeed={40}
             deletingSpeed={25}
