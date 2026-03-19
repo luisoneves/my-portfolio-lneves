@@ -26,7 +26,7 @@ export function Navbar() {
       <div className="max-w-5xl mx-auto flex items-center justify-between px-4 py-3">
         <Link href="/" className="flex items-center gap-2">
           <span className="font-mono text-lg font-bold text-foreground hover:text-amber-500 transition-colors select-none">
-            ~LN_
+            ~LN
           </span>
         </Link>
 

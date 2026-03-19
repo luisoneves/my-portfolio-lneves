@@ -51,13 +51,13 @@ export function HomeClient({ locale, latestPosts }: HomeClientProps) {
           initial={{ opacity: 0, y: 10 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.2, duration: 0.5 }}
-          className="text-xl md:text-2xl font-medium text-amber-500 dark:text-amber-400 mb-8"
+          className="text-xl md:text-2xl font-medium text-amber-500 dark:text-amber-400 mb-8 max-w-xl"
         >
           <TypewriterLoop
             texts={[
               "Estruturo sistemas.",
-              "Projeto arquiteturas escaláveis.",
-              "Construo software que evolui.",
+              "Projeto arquiteturas.",
+              "Construo software.",
             ]}
             typingSpeed={40}
             deletingSpeed={25}
