@@ -10,20 +10,19 @@ export function ManifestoBlock() {
   const inView = useInView(ref, { once: true, margin: "-80px" })
 
   return (
-    <motion.blockquote
+    <motion.section
       ref={ref}
-      initial={{ opacity: 0, x: -20 }}
-      animate={inView ? { opacity: 1, x: 0 } : {}}
+      initial={{ opacity: 0, y: 20 }}
+      animate={inView ? { opacity: 1, y: 0 } : {}}
       transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
-      className="border-l-2 border-amber-500 pl-5 py-4 my-12
-        bg-muted/40 rounded-r-xl pr-5"
+      className="my-12 py-8 border-t border-b border-border"
     >
-      <p className="text-base font-medium text-foreground leading-relaxed">
-        &ldquo;{t("quote")}&rdquo;
+      <h3 className="text-lg font-medium text-foreground mb-3">
+        {t("title")}
+      </h3>
+      <p className="text-base text-muted-foreground leading-relaxed max-w-2xl">
+        {t("quote")}
       </p>
-      <footer className="mt-2 text-xs text-muted-foreground font-mono">
-        — {t("author")}
-      </footer>
-    </motion.blockquote>
+    </motion.section>
   )
 }

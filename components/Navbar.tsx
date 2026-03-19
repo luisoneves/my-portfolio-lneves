@@ -12,6 +12,7 @@ const navItems = [
   { key: "architecture", href: "#arquitetura" },
   { key: "stack", href: "#stack" },
   { key: "notes", href: "#notas" },
+  { key: "contact", href: "/contato" },
   { key: "blog", href: "/blog" },
   { key: "resume", href: "/curriculo" },
 ]
@@ -46,7 +47,9 @@ export function Navbar() {
           {navItems.map((item) => {
             const resolvedHref = item.href.startsWith("#")
               ? item.href
-              : `/${locale}${item.href}`
+              : item.key === "contact"
+                ? `/${locale}/contato`
+                : `/${locale}${item.href}`
             return (
               <Link
                 key={item.key}

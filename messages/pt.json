@@ -11,11 +11,10 @@
   "hero": {
     "badge": "Engineering Lead · Software Architect · FATEC ADS",
     "available": "disponível",
-    "title1": "Não escrevo features.",
-    "phrases": ["Estruturo sistemas.", "Dirijo a IA.", "Entrego produção.", "Penso em arquitetura."],
-    "description": "15+ anos de TI e infraestrutura. Fullstack moderno com arquitetura-primeiro.",
-    "highlight": "Quem entende o sistema dirige a IA.",
-    "subtitle": "Quem só sabe sintaxe concorre com ela.",
+    "title1": "Engenharia de software orientada a sistemas.",
+    "description": "Atender requisitos é o básico. Projetar sistemas que evoluem é o diferencial.",
+    "highlight": "O foco não é apenas atender requisitos, mas tomar decisões que permitam evolução contínua, deploy seguro e escalabilidade.",
+    "aiNote": "IA amplifica resultados — mas sem arquitetura, amplifica o caos.",
     "stats": {
       "yearsLabel": "anos em TI",
       "projectsLabel": "projetos em produção",
@@ -29,8 +28,9 @@
     }
   },
   "manifesto": {
-    "quote": "Não serei o dev que pega a maior feature. Serei quem garante que as features de todos funcionam juntas — dentro do padrão, com qualidade, prontas para produção.",
-    "author": "Plano de Contribuição · março 2025"
+    "title": "Sistemas projetados para evoluir",
+    "quote": "Cada parte pode ser modificada, substituída ou escalada sem comprometer o restante — reduzindo acoplamento e aumentando a vida útil do sistema.",
+    "author": "Princípio de design"
   },
   "projects": {
     "sectionLabel": "// trilha de projetos — problema → solução → refatoração",
@@ -68,6 +68,7 @@
   "architecture": {
     "sectionLabel": "// arquitetura — decisões que permitem trocar tecnologia sem reescrever o sistema",
     "title": "Arquitetura",
+    "description": "Sistemas sustentáveis: projetados para evoluir sem desperdício, com baixo acoplamento e alta adaptabilidade.",
     "monorepoTitle": "estrutura monorepo",
     "layersTitle": "camadas (clean architecture)",
     "monorepo": {

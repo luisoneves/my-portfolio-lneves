@@ -1,7 +1,6 @@
 "use client"
 import { motion } from "framer-motion"
 import { useTranslations } from "next-intl"
-import { TypingCycle } from "@/components/hero/TypingCycle"
 import { ManifestoBlock } from "@/components/sections/ManifestoBlock"
 import { ProjectsSection } from "@/components/sections/ProjectsSection"
 import { ArchitectureSection } from "@/components/sections/ArchitectureSection"
@@ -42,36 +41,38 @@ export function HomeClient({ locale, latestPosts }: HomeClientProps) {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.15, duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
-          className="text-4xl md:text-5xl font-medium leading-tight mb-2"
+          className="text-3xl md:text-4xl font-medium leading-relaxed mb-4"
         >
           {t("title1")}
         </motion.h1>
-        <motion.p
-          initial={{ opacity: 0, y: 20 }}
+
+        <motion.div
+          initial={{ opacity: 0, y: 10 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.25, duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
-          className="text-4xl md:text-5xl font-medium leading-tight mb-6"
-          aria-live="polite"
-          aria-atomic="true"
+          transition={{ delay: 0.25, duration: 0.5 }}
+          className="space-y-4 mb-8"
         >
-          <TypingCycle />
-        </motion.p>
+          <p className="text-base text-foreground leading-relaxed">
+            {t("highlight")}
+          </p>
+          <p className="text-sm text-muted-foreground leading-relaxed">
+            {t("description")}
+          </p>
+        </motion.div>
 
         <motion.p
           initial={{ opacity: 0, y: 10 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.4, duration: 0.5 }}
-          className="text-base text-muted-foreground max-w-xl leading-relaxed mb-8"
+          transition={{ delay: 0.35, duration: 0.5 }}
+          className="text-sm text-amber-600 dark:text-amber-400 italic mb-8"
         >
-          {t("description")}{" "}
-          <strong className="text-foreground font-medium">{t("highlight")}</strong>{" "}
-          {t("subtitle")}
+          {t("aiNote")}
         </motion.p>
 
         <motion.div
           initial={{ opacity: 0, y: 10 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.55, duration: 0.5 }}
+          transition={{ delay: 0.45, duration: 0.5 }}
           className="flex gap-8 mb-8 text-sm"
         >
           <div>
@@ -97,7 +98,7 @@ export function HomeClient({ locale, latestPosts }: HomeClientProps) {
         <motion.div
           initial={{ opacity: 0, y: 10 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.7, duration: 0.5 }}
+          transition={{ delay: 0.55, duration: 0.5 }}
           className="flex gap-3 flex-wrap"
         >
           <a href="#projetos" className="btn-primary">{t("cta.projects")}</a>

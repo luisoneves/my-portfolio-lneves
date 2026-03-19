@@ -11,11 +11,10 @@
   "hero": {
     "badge": "Engineering Lead · Software Architect · FATEC ADS",
     "available": "available",
-    "title1": "I don't write features.",
-    "phrases": ["I architect systems.", "I drive the AI.", "I ship to production.", "I think in architecture."],
-    "description": "15+ years in IT and infrastructure. Modern fullstack with architecture-first approach.",
-    "highlight": "Those who understand the system drive the AI.",
-    "subtitle": "Those who only know syntax compete with it.",
+    "title1": "Systems-oriented software engineering.",
+    "description": "Meeting requirements is basic. Designing systems that evolve is the difference.",
+    "highlight": "The focus is not just meeting requirements, but making decisions that enable continuous evolution, safe deployment, and scalability.",
+    "aiNote": "AI amplifies results — but without architecture, it amplifies chaos.",
     "stats": {
       "yearsLabel": "years in IT",
       "projectsLabel": "projects in production",
@@ -29,8 +28,9 @@
     }
   },
   "manifesto": {
-    "quote": "I won't be the dev who grabs the biggest feature. I'll be the one who ensures everyone's features work together — on standard, with quality, production-ready.",
-    "author": "Contribution Plan · March 2025"
+    "title": "Systems designed to evolve",
+    "quote": "Each part can be modified, replaced, or scaled without compromising the rest — reducing coupling and increasing the system's lifespan.",
+    "author": "Design principle"
   },
   "projects": {
     "sectionLabel": "// project trail — problem → solution → refactoring",
@@ -68,6 +68,7 @@
   "architecture": {
     "sectionLabel": "// architecture — decisions that allow swapping technology without rewriting the system",
     "title": "Architecture",
+    "description": "Sustainable systems: designed to evolve without waste, with low coupling and high adaptability.",
     "monorepoTitle": "monorepo structure",
     "layersTitle": "layers (clean architecture)",
     "monorepo": {
