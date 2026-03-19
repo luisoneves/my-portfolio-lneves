@@ -46,8 +46,6 @@ function AnimatedLayer({
 
 export function ArchitectureSection() {
   const t = useTranslations("architecture")
-  const ref = useRef(null)
-  const inView = useInView(ref, { once: true, margin: "-40px" })
   
   const monorepoStructure = [
     { path: "apps/web",       desc: t("monorepo.appsWeb"),         color: "text-amber-500",   border: "border-amber-500/30",   bg: "bg-amber-500/5"  },
@@ -67,15 +65,19 @@ export function ArchitectureSection() {
 
   return (
     <section id="arquitetura" className="py-16">
-      <div className="mb-6">
-        <span className="font-mono text-xs text-muted-foreground tracking-wider">
-          {t("sectionLabel")}
-        </span>
-        <p className="text-sm text-muted-foreground mt-2 max-w-2xl">
-          {t("description")}
-        </p>
-      </div>
-      <h2 className="text-2xl font-medium mb-8">{t("title")}</h2>
+      <div className="max-w-6xl mx-auto px-6 md:px-8 lg:px-12">
+        <div className="mb-6">
+          <span className="font-mono text-xs text-muted-foreground tracking-wider">
+            {t("sectionLabel")}
+          </span>
+          <p className="text-sm text-muted-foreground mt-2 max-w-2xl">
+            {t("description")}
+          </p>
+          <p className="text-sm text-amber-600 dark:text-amber-400 mt-2 max-w-2xl font-medium">
+            Construindo um sistema de conhecimento para padronizar decisões de arquitetura, qualidade e uso de IA.
+          </p>
+        </div>
+        <h2 className="text-2xl font-medium mb-8">{t("title")}</h2>
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         {/* Monorepo */}
@@ -107,6 +109,7 @@ export function ArchitectureSection() {
               />
             ))}
           </div>
+        </div>
         </div>
       </div>
     </section>

@@ -33,12 +33,13 @@ export function StackSection() {
 
   return (
     <section id="stack" className="py-16">
-      <div className="mb-2">
-        <span className="font-mono text-xs text-muted-foreground tracking-wider">
-          {t("sectionLabel")}
-        </span>
-      </div>
-      <h2 className="text-2xl font-medium mb-8">{t("title")}</h2>
+      <div className="max-w-6xl mx-auto px-6 md:px-8 lg:px-12">
+        <div className="mb-2">
+          <span className="font-mono text-xs text-muted-foreground tracking-wider">
+            {t("sectionLabel")}
+          </span>
+        </div>
+        <h2 className="text-2xl font-medium mb-8">{t("title")}</h2>
 
       <motion.div
         className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4"
@@ -71,6 +72,7 @@ export function StackSection() {
           </motion.div>
         ))}
       </motion.div>
+      </div>
     </section>
   )
 }

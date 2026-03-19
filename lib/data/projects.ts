@@ -1,7 +1,7 @@
 export type ProjectStatus = "production" | "inDev" | "beta" | "done"
 
 export interface ProjectData {
-  id: "diocese" | "capelas" | "waas" | "market"
+  id: "diocese" | "capelas" | "waas" | "market" | "beautycare" | "staticmockup"
   version: string
   status: ProjectStatus
   chips: string[]
@@ -38,5 +38,17 @@ export const projectsData: ProjectData[] = [
     status: "beta",
     chips: ["Next.js 16", "TypeScript", "Git Flow"],
     href: "https://c4ts-project-market-research.vercel.app",
+  },
+  {
+    id: "beautycare",
+    version: "beauty",
+    status: "done",
+    chips: ["Design", "UI/UX", "Frontend"],
+  },
+  {
+    id: "staticmockup",
+    version: "v1",
+    status: "done",
+    chips: ["Mockup", "Layout", "Estrutura"],
   },
 ]

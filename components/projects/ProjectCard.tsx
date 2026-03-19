@@ -12,6 +12,7 @@ interface Project {
   statusLabel?: string
   chips: string[]
   href?: string
+  links?: { label: string; url: string }[]
   highlight?: boolean
 }
 
@@ -97,7 +98,7 @@ export function ProjectCard({ project }: { project: Project }) {
         </div>
         <h3 className="font-medium text-sm mb-1.5 text-foreground">{project.title}</h3>
         <p className="text-xs text-muted-foreground leading-relaxed mb-4">{project.description}</p>
-        <div className="flex flex-wrap gap-1.5">
+        <div className="flex flex-wrap gap-1.5 mb-2">
           {project.chips.map((chip) => (
             <span
               key={chip}
@@ -111,6 +112,22 @@ export function ProjectCard({ project }: { project: Project }) {
             </span>
           ))}
         </div>
+        {project.links && project.links.length > 0 && (
+          <div className="flex gap-4 mt-4 pt-4 border-t border-border/40">
+            {project.links.map(link => (
+              <a
+                key={link.label}
+                href={link.url}
+                target="_blank"
+                rel="noopener noreferrer"
+                onClick={(e) => e.stopPropagation()}
+                className="text-xs font-medium text-foreground hover:text-amber-500 transition-colors flex items-center gap-1.5 font-mono"
+              >
+                {link.label} ↗
+              </a>
+            ))}
+          </div>
+        )}
       </div>
     </motion.article>
   )

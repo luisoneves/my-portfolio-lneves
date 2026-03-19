@@ -15,11 +15,12 @@ const item = {
   show:   { opacity: 1, y: 0, transition: { duration: 0.5, ease: [0.22, 1, 0.36, 1] as [number, number, number, number] } },
 }
 
-type ProjectCategory = "emEvolucao" | "experimentacao"
+type ProjectCategory = "emEvolucao" | "experimentacao" | "pausados"
 
 const projectCategories: Record<ProjectCategory, string[]> = {
   emEvolucao: ["diocese", "market"],
-  experimentacao: ["capelas", "waas"],
+  experimentacao: ["beautycare", "capelas"],
+  pausados: ["staticmockup"],
 }
 
 export function ProjectsSection() {
@@ -27,19 +28,40 @@ export function ProjectsSection() {
 
   const getProjectsByCategory = (category: ProjectCategory) => {
     const ids = projectCategories[category]
-    return ids.map((id) => ({
-      title: t(`${id}.title`),
-      description: t(`${id}.description`),
-      chips: [] as string[],
-      href: undefined as string | undefined,
-      highlight: id === "diocese",
-    }))
-  }
+    return ids.map((id) => {
+      let links: { label: string; url: string }[] = []
+      if (id === "market") {
+        links = [
+          { label: "GitHub", url: "https://github.com/luisoneves/c4ts-project-market-research" },
+          { label: "Demo", url: "https://c4ts-project-market-research.vercel.app/" }
+        ]
+      } else if (id === "beautycare") {
+        links = [
+          { label: "GitHub", url: "https://github.com/luisoneves/BeautyCare" },
+          { label: "Demo", url: "https://beauty-care-smoky.vercel.app/" }
+        ]
+      } else if (id === "capelas") {
+        links = [
+          { label: "GitHub", url: "https://github.com/luisoneves/gestao-capelas-frontend" },
+          { label: "Demo", url: "https://gestao-capelas.vercel.app/" }
+        ]
+      } else if (id === "staticmockup") {
+        links = [
+          { label: "GitHub", url: "https://github.com/luisoneves/web-static-mockup" },
+          { label: "Demo", url: "https://web-static-mockup.vercel.app/" }
+        ]
+      }
 
-  const allProjects = [
-    ...getProjectsByCategory("emEvolucao"),
-    ...getProjectsByCategory("experimentacao"),
-  ]
+      return {
+        title: t(`${id}.title`),
+        description: t(`${id}.description`),
+        chips: [] as string[],
+        href: undefined as string | undefined,
+        links,
+        highlight: id === "diocese",
+      }
+    })
+  }
 
   return (
     <section id="projetos" className="py-16">
@@ -92,6 +114,29 @@ export function ProjectsSection() {
             viewport={{ once: true, margin: "-80px" }}
           >
             {getProjectsByCategory("experimentacao").map((p) => (
+              <motion.div key={p.title} variants={item}>
+                <ProjectCard project={p} />
+              </motion.div>
+            ))}
+          </motion.div>
+        </div>
+        {/* Pausados */}
+        <div className="space-y-4 pt-6">
+          <div className="flex items-center gap-3">
+            <span className="w-2 h-2 rounded-full bg-muted-foreground" />
+            <h3 className="text-sm font-medium text-foreground">Pausados</h3>
+          </div>
+          <p className="text-xs text-muted-foreground max-w-2xl">
+            Projetos ou mockups arquivados, utilizados para experimentação de layout e estrutura.
+          </p>
+          <motion.div
+            className="grid grid-cols-1 md:grid-cols-2 gap-4"
+            variants={container}
+            initial="hidden"
+            whileInView="show"
+            viewport={{ once: true, margin: "-80px" }}
+          >
+            {getProjectsByCategory("pausados").map((p) => (
               <motion.div key={p.title} variants={item}>
                 <ProjectCard project={p} />
               </motion.div>

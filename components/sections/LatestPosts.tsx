@@ -11,7 +11,8 @@ export function LatestPosts({ posts, locale }: LatestPostsProps) {
   const isEn = locale === "en"
   return (
     <section className="py-16">
-      <div className="flex justify-between items-center mb-2">
+      <div className="max-w-6xl mx-auto px-6 md:px-8 lg:px-12">
+        <div className="flex justify-between items-center mb-2">
         <span className="section-label">
           {isEn ? "// latest posts" : "// últimas notas de engenharia"}
         </span>
@@ -26,6 +27,7 @@ export function LatestPosts({ posts, locale }: LatestPostsProps) {
         {posts.map((post) => (
           <PostCard key={post.slug} post={post} locale={locale} />
         ))}
+      </div>
       </div>
     </section>
   )

@@ -8,7 +8,8 @@ export function ContactCTA({ locale }: ContactCTAProps) {
   const isEn = locale === "en"
   return (
     <section className="py-12">
-      <div className="card-highlight flex flex-col md:flex-row items-center justify-between gap-6">
+      <div className="max-w-6xl mx-auto px-6 md:px-8 lg:px-12">
+        <div className="card-highlight flex flex-col md:flex-row items-center justify-between gap-6">
         <div>
           <h3 className="h3 mb-1">
             {isEn ? "Open to opportunities" : "Aberto a oportunidades"}
@@ -27,6 +28,7 @@ export function ContactCTA({ locale }: ContactCTAProps) {
             {isEn ? "resume ↓" : "currículo ↓"}
           </Link>
         </div>
+      </div>
       </div>
     </section>
   )

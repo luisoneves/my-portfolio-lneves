@@ -2,7 +2,6 @@
 import { motion } from "framer-motion"
 import { useTranslations } from "next-intl"
 import TypewriterLoop from "@/components/TypewriterLoop"
-import { ManifestoBlock } from "@/components/sections/ManifestoBlock"
 import { ProjectsSection } from "@/components/sections/ProjectsSection"
 import { ArchitectureSection } from "@/components/sections/ArchitectureSection"
 import { CICDSection } from "@/components/sections/CICDSection"
@@ -22,9 +21,10 @@ export function HomeClient({ locale, latestPosts }: HomeClientProps) {
   const a11y = useTranslations("a11y")
 
   return (
-    <main className="max-w-6xl mx-auto px-6 lg:px-12">
-      <section className="min-h-[85vh] flex items-center pt-12">
-        <div className="grid md:grid-cols-2 gap-12 items-center w-full">
+    <main className="flex flex-col min-h-screen">
+      <section className="min-h-[80vh] flex items-center pt-12">
+        <div className="max-w-6xl mx-auto px-6 md:px-8 lg:px-12 w-full">
+          <div className="grid md:grid-cols-2 gap-12 items-center">
           
           {/* COLUNA ESQUERDA - Texto */}
           <div className="max-w-xl">
@@ -46,10 +46,24 @@ export function HomeClient({ locale, latestPosts }: HomeClientProps) {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.15, duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
-              className="text-3xl md:text-4xl font-medium leading-tight mb-4 max-w-[500px]"
+              className="text-3xl md:text-4xl font-medium leading-tight mb-4 max-w-[600px]"
             >
               {t("title1")}
             </motion.h1>
+
+            <motion.div
+              initial={{ opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.25, duration: 0.5 }}
+              className="space-y-4 mb-6"
+            >
+              <p className="text-base text-foreground leading-relaxed max-w-[500px]">
+                {t("highlight")}
+              </p>
+              <p className="text-sm text-muted-foreground leading-relaxed max-w-[500px]">
+                {t("description")}
+              </p>
+            </motion.div>
 
             <motion.h2
               initial={{ opacity: 0, y: 10 }}
@@ -68,20 +82,6 @@ export function HomeClient({ locale, latestPosts }: HomeClientProps) {
                 pauseTime={1000}
               />
             </motion.h2>
-
-            <motion.div
-              initial={{ opacity: 0, y: 10 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.25, duration: 0.5 }}
-              className="space-y-4 mb-8"
-            >
-              <p className="text-base text-foreground leading-relaxed">
-                {t("highlight")}
-              </p>
-              <p className="text-sm text-muted-foreground leading-relaxed">
-                {t("description")}
-              </p>
-            </motion.div>
 
             <motion.p
               initial={{ opacity: 0, y: 10 }}
@@ -145,6 +145,7 @@ export function HomeClient({ locale, latestPosts }: HomeClientProps) {
             {/* Espaço reservado para foto/ilustração futura */}
           </div>
 
+          </div>
         </div>
       </section>
 

@@ -63,6 +63,14 @@
     "market": {
       "title": "C4ts Market Research",
       "description": "Platform for freelance client acquisition and local positioning. Forms and blob for quote requests and product briefs."
+    },
+    "beautycare": {
+      "title": "BeautyCare",
+      "description": "Project focused on visual design and experience, exploring elegant UI and modern frontend structure."
+    },
+    "staticmockup": {
+      "title": "Static Mockup",
+      "description": "Static mockup used to experiment with layout and structure."
     }
   },
   "architecture": {

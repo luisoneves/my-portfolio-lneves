@@ -63,6 +63,14 @@
     "market": {
       "title": "C4ts Market Research",
       "description": "Plataforma para captação de clientes freela e posicionamento local. Forms e blob para receber pedidos de orçamento."
+    },
+    "beautycare": {
+      "title": "BeautyCare",
+      "description": "Projeto focado em design e experiência visual, explorando UI elegante e estrutura frontend moderna."
+    },
+    "staticmockup": {
+      "title": "Mockup Estático",
+      "description": "Mockup estático utilizado para experimentação de layout e estrutura."
     }
   },
   "architecture": {
