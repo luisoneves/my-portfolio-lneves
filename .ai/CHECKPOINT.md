@@ -3,12 +3,36 @@
 
 ---
 
-## Estado em 18/03/2026 - ATUALIZADO
+## Estado em 19/03/2026 - ATUALIZADO
 
 ```
 [x] PHASE2 completo — design system + blog MDX + contato com Resend
 [x] PHASE3 completo — dark mode fix + email env vars + Clarity env var
+[x] PHASE4 completo — Vercel Analytics + Speed Insights + DNS validacao email
 [x] Deploy production validado
+```
+
+### PHASE4 executado em 19/03/2026:
+
+#### DNS Domain Verification
+- Domínio `dev-luisneves.me` adicionado no Resend
+- Status: Aguardando propagação DNS (~2h)
+- DNS records configurados na Namecheap
+
+#### Vercel Analytics + Speed Insights
+- `@vercel/analytics` instalado
+- `@vercel/speed-insights` instalado
+- Componentes adicionados em `app/[locale]/layout.tsx`
+
+#### Email Form (em validacao)
+- `from` address: `contato@dev-luisneves.me` (domínio verificado)
+- `to` support: múltiplos emails via vírgula
+- Aguardando DNS validar para testar envio externo
+
+#### Commits:
+```
+314ed3f - fix: from address using verified domain
+2f6453b - feat: add Vercel Analytics and Speed Insights
 ```
 
 ### PHASE3 executado em 18/03/2026:
@@ -164,6 +188,25 @@ Analytics A2 → A1 → A3  (~45 min, 1 deploy)
 ```
 
 Ver: `.ai/milestones/ANALYTICS_MILESTONES.md`
+
+---
+
+## Pendências PHASE4 (aguarda DNS):
+
+- [ ] DNS propagacao completa (~2h apos config)
+- [ ] Testar envio de email para email externo (terceiro)
+- [ ] Validar que auto-resposta chega no email do visitante
+- [ ] Verificar logs no Resend para confirmar entrega
+
+---
+
+## Próximo passo apos DNS validar:
+
+```
+1. Testar formulario com email externo (amigo/parceiro)
+2. Verificar se emails chegam em 1991lotavio@gmail.com e 1991lotavion@gmail.com
+3. Confirmar auto-resposta chega no email de quem enviou
+```
 
 ---
 
