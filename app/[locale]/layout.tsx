@@ -12,6 +12,8 @@ import { Footer } from "@/components/Footer"
 import { CommandPalette } from "@/components/CommandPalette"
 import { ClarityProvider } from "@/components/providers/ClarityProvider"
 import { ThemeProvider } from "@/components/providers/ThemeProvider"
+import { Analytics } from "@vercel/analytics/next"
+import { SpeedInsights } from "@vercel/speed-insights/next"
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -120,6 +122,8 @@ export default async function LocaleLayout({
               </PageTransition>
               <Footer />
               <Toaster position="bottom-right" />
+              <Analytics />
+              <SpeedInsights />
             </SmoothScrollProvider>
           </ThemeProvider>
         </NextIntlClientProvider>
