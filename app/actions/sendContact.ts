@@ -26,12 +26,12 @@ export async function sendContactEmail(data: unknown) {
 
   const { name, email, subject, message } = parsed.data
   const subjectLabel = subjectLabels[subject] ?? subject
-  const toEmail = process.env.CONTACT_TO_EMAIL ?? "contato@luisneves.dev.br"
+  const toEmails = process.env.CONTACT_TO_EMAIL?.split(",").map(e => e.trim()) ?? ["contato@luisneves.dev.br"]
 
   try {
     await resend.emails.send({
-      from:    "Portfolio <contato@dev-luisneves.me>",
-      to:      [toEmail],
+      from:    "Portfolio <onboarding@resend.dev>",
+      to:      toEmails,
       replyTo: email,
       subject: `[Portfolio] ${subjectLabel} — ${name}`,
       html: `
@@ -51,7 +51,7 @@ export async function sendContactEmail(data: unknown) {
     })
 
     await resend.emails.send({
-      from:    "Luis Neves <contato@dev-luisneves.me>",
+      from:    "Luis Neves <onboarding@resend.dev>",
       to:      [email],
       subject: "Recebi sua mensagem!",
       html: `
