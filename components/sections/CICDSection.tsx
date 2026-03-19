@@ -23,7 +23,7 @@ export function CICDSection() {
 
   return (
     <section className="py-12">
-      <div className="max-w-5xl mx-auto px-4">
+      <div className="max-w-6xl mx-auto px-6 md:px-8 lg:px-12">
         <div className="mb-2">
           <span className="font-mono text-xs text-muted-foreground tracking-wider">
             {t("sectionLabel")}
@@ -31,28 +31,28 @@ export function CICDSection() {
         </div>
 
         <div className="rounded-xl border border-border bg-card p-5 mt-4">
-        <motion.div
-          className="flex items-center gap-0 overflow-x-auto"
-          variants={container}
-          initial="hidden"
-          whileInView="show"
-          viewport={{ once: true }}
-        >
-          {steps.map((s, i) => (
-            <div key={s.id} className="flex items-center shrink-0">
-              <motion.div variants={step} className="flex flex-col items-center gap-2 min-w-[72px]">
-                <div className={`w-10 h-10 rounded-lg border flex items-center justify-center font-mono text-xs font-medium ${s.color}`}>
-                  {s.label}
-                </div>
-                <span className="text-[11px] text-muted-foreground text-center leading-tight">{s.sub}</span>
-              </motion.div>
-              {i < steps.length - 1 && (
-                <div className="w-8 h-px bg-border mx-1 shrink-0" />
-              )}
-            </div>
-          ))}
-        </motion.div>
-      </div>
+          <motion.div
+            className="flex items-center gap-0 overflow-x-auto"
+            variants={container}
+            initial="hidden"
+            whileInView="show"
+            viewport={{ once: true }}
+          >
+            {steps.map((s, i) => (
+              <div key={s.id} className="flex items-center shrink-0">
+                <motion.div variants={step} className="flex flex-col items-center gap-2 min-w-[72px]">
+                  <div className={`w-10 h-10 rounded-lg border flex items-center justify-center font-mono text-xs font-medium ${s.color}`}>
+                    {s.label}
+                  </div>
+                  <span className="text-[11px] text-muted-foreground text-center leading-tight">{s.sub}</span>
+                </motion.div>
+                {i < steps.length - 1 && (
+                  <div className="w-8 h-px bg-border mx-1 shrink-0" />
+                )}
+              </div>
+            ))}
+          </motion.div>
+        </div>
       </div>
     </section>
   )

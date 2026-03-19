@@ -43,7 +43,7 @@ export function ProjectsSection() {
 
   return (
     <section id="projetos" className="py-16">
-      <div className="max-w-5xl mx-auto px-4">
+      <div className="max-w-6xl mx-auto px-6 md:px-8 lg:px-12">
         <div className="mb-2">
           <span className="font-mono text-xs text-muted-foreground tracking-wider">
             {t("sectionLabel")}
@@ -52,12 +52,12 @@ export function ProjectsSection() {
         <h2 className="text-2xl font-medium mb-8">{t("title")}</h2>
 
         {/* Em Evolução */}
-        <div className="mb-10">
-          <div className="flex items-center gap-3 mb-4">
+        <div className="mb-10 space-y-4">
+          <div className="flex items-center gap-3">
             <span className="w-2 h-2 rounded-full bg-amber-500" />
             <h3 className="text-sm font-medium text-foreground">Em Evolução</h3>
           </div>
-          <p className="text-xs text-muted-foreground mb-4 max-w-2xl">
+          <p className="text-xs text-muted-foreground max-w-2xl">
             Projetos ativos com desenvolvimento contínuo, focados em arquitetura escalável e decisões técnicas de longo prazo.
           </p>
           <motion.div
@@ -76,12 +76,12 @@ export function ProjectsSection() {
         </div>
 
         {/* Experimentação */}
-        <div>
-          <div className="flex items-center gap-3 mb-4">
+        <div className="space-y-4">
+          <div className="flex items-center gap-3">
             <span className="w-2 h-2 rounded-full bg-blue-500" />
             <h3 className="text-sm font-medium text-foreground">Experimentação</h3>
           </div>
-          <p className="text-xs text-muted-foreground mb-4 max-w-2xl">
+          <p className="text-xs text-muted-foreground max-w-2xl">
             Projetos de aprendizado e exploração tecnológica, onde o foco é entender padrões e validar abordagens.
           </p>
           <motion.div
